@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0B0B14"/>
+      <stop offset="100%" stop-color="#1a103a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#A78BFA"/>
+      <stop offset="55%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+    <radialGradient id="orb1" cx="0.2" cy="0.3" r="0.5">
+      <stop offset="0%" stop-color="#A78BFA" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#A78BFA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2" cx="0.8" cy="0.7" r="0.5">
+      <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#orb1)"/>
+  <rect width="1200" height="630" fill="url(#orb2)"/>
+  <g transform="translate(180,200)" stroke="url(#accent)" stroke-width="28" fill="none" stroke-linecap="square" stroke-linejoin="miter">
+    <polyline points="20,18 80,222 140,18"/>
+    <line x1="200" y1="18" x2="380" y2="222"/>
+    <line x1="380" y1="18" x2="200" y2="222"/>
+    <polyline points="440,18 500,222 560,18"/>
+    <polygon points="660,18 800,18 840,120 800,222 660,222 620,120"/>
+  </g>
+  <text x="600" y="540" text-anchor="middle" fill="#E5E7EB" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI" font-size="34" letter-spacing="6">A STUDIO BUILDING SOFTWARE, GAMES &amp; TOOLS</text>
+</svg>

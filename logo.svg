@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" fill="none" role="img" aria-label="VXVO">
+  <defs>
+    <linearGradient id="vxvo-grad" x1="0" y1="0" x2="480" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#A78BFA"/>
+      <stop offset="55%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+    <filter id="vxvo-soft" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="0.4"/>
+    </filter>
+  </defs>
+  <g filter="url(#vxvo-soft)" stroke="url(#vxvo-grad)" stroke-width="14" stroke-linecap="square" stroke-linejoin="miter" fill="none">
+    <!-- V -->
+    <polyline points="20,18 60,102 100,18"/>
+    <!-- X -->
+    <line x1="130" y1="18" x2="210" y2="102"/>
+    <line x1="210" y1="18" x2="130" y2="102"/>
+    <!-- V -->
+    <polyline points="240,18 280,102 320,18"/>
+    <!-- O (hex) -->
+    <polygon points="370,18 440,18 460,60 440,102 370,102 350,60" stroke-linejoin="miter"/>
+  </g>
+</svg>
