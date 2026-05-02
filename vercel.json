@@ -1,5 +1,5 @@
 {
-  "cleanUrls": true,
+  "cleanUrls": false,
   "headers": [
     {
       "source": "/(.*)\\.(svg|css|js|woff2)",
