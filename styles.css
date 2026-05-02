@@ -250,6 +250,28 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px);
   transition: transform .25s ease, color .25s ease;
 }
 .card:hover .card-arrow { transform: translate(3px, -3px); color: var(--ink); }
+
+/* Coming-soon variant: not clickable, dimmed art, status pill */
+.card-soon { cursor: default; }
+.card-soon:hover { transform: none; border-color: var(--line); }
+.card-soon:hover::before { opacity: 0; }
+.card-soon .card-art { filter: saturate(0.55) brightness(0.78); }
+.card-soon .card-body h3 { color: var(--ink-dim); }
+.card[data-status]::before {
+  /* gradient border still possible; status pill uses its own ::after slot below */
+}
+.card[data-status] .card-art::before {
+  content: attr(data-status);
+  position: absolute; top: 14px; left: 14px;
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink);
+  padding: 6px 10px;
+  background: rgba(11,11,20,0.7);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
 .card-body p { margin: 0; color: var(--ink-dim); font-size: 14.5px; }
 .chips { list-style: none; padding: 0; margin: 6px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .chips li {
