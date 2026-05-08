@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>VXVO — A studio building software, games & tools</title>
+  <meta name="description" content="VXVO is an independent studio shipping web apps, mobile apps, and games. Selected work, contact, and what we're building next." />
+  <meta name="theme-color" content="#0B0B14" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="canonical" href="https://vxvo.co.uk/" />
+  <meta property="og:title" content="VXVO" />
+  <meta property="og:description" content="A studio building software, games & tools." />
+  <meta property="og:image" content="https://vxvo.co.uk/og.svg" />
+  <meta property="og:url" content="https://vxvo.co.uk/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="VXVO" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orbs" aria-hidden="true">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+  </div>
+  <div class="bg-noise" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="VXVO home">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <defs>
+          <linearGradient id="nav-g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#A78BFA"/>
+            <stop offset="60%" stop-color="#22D3EE"/>
+            <stop offset="100%" stop-color="#34D399"/>
+          </linearGradient>
+        </defs>
+        <g stroke="url(#nav-g)" stroke-width="5" fill="none" stroke-linecap="square">
+          <polyline points="8,12 18,52 28,12"/>
+          <line x1="34" y1="12" x2="56" y2="52"/>
+          <line x1="56" y1="12" x2="34" y2="52"/>
+        </g>
+      </svg>
+      <span class="brand-word">VXVO</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow"><span class="dot"></span> Independent studio · est. 2023</p>
+      <h1 class="hero-title">
+        <span class="line">We build software,</span>
+        <span class="line gradient">games &amp; tools</span>
+        <span class="line">that ship.</span>
+      </h1>
+      <p class="hero-sub">VXVO is the umbrella for a body of work spanning AI-powered web apps, mobile productivity tools, and original games. Every product on this page was designed, built, and maintained in-house.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#work">See the work <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+      <dl class="stats">
+        <div><dt>Shipped products</dt><dd data-count="9">9</dd></div>
+        <div><dt>Platforms</dt><dd data-count="4">4</dd></div>
+        <div><dt>Years building</dt><dd data-count="3">3</dd></div>
+      </dl>
+    </section>
+
+    <section id="work" class="section">
+      <header class="section-head">
+        <span class="kicker">01 — Selected work</span>
+        <h2>A cross-section of what VXVO ships.</h2>
+        <p>Productivity, education, communication, and play. Each product solves a real problem for the people using it.</p>
+      </header>
+
+      <div class="cards">
+        <article class="card card-soon" data-tag="App" data-status="Coming soon" aria-label="Daniel Rise — coming soon">
+          <div class="card-art art-rise"></div>
+          <div class="card-body">
+            <h3>Daniel Rise</h3>
+            <p>An AI-assisted personal site and writing platform. Next.js, Supabase, and Anthropic on the backend.</p>
+            <ul class="chips"><li>Next.js</li><li>Supabase</li><li>Claude</li></ul>
+          </div>
+        </article>
+
+        <article class="card card-soon" data-tag="App" data-status="Coming soon" aria-label="LifePlanner — coming soon">
+          <div class="card-art art-life"></div>
+          <div class="card-body">
+            <h3>LifePlanner</h3>
+            <p>A long-horizon planner that turns goals into days. Iterated through four major versions to nail the daily loop.</p>
+            <ul class="chips"><li>Mobile</li><li>Habits</li><li>Planning</li></ul>
+          </div>
+        </article>
+
+        <a class="card card-shot" data-tag="App" href="https://Pace-Nutrition.vercel.app" target="_blank" rel="noopener" aria-label="Pace Nutrition — open in a new tab">
+          <div class="card-art">
+            <img src="media/nutrition.png" alt="Pace nutrition tracker — calories, macros, and a daily log on iOS." loading="lazy" decoding="async" />
+          </div>
+          <div class="card-body">
+            <h3>Pace Nutrition <span class="card-arrow" aria-hidden="true">↗</span></h3>
+            <p>An AI nutrition coach. Quietly practical — fast logging, real numbers, no fluff.</p>
+            <ul class="chips"><li>Health</li><li>Tracking</li><li>iOS / Android</li></ul>
+          </div>
+        </a>
+
+        <article class="card card-soon" data-tag="App" data-status="Coming soon" aria-label="Friendship Flowers — coming soon">
+          <div class="card-art art-flowers"></div>
+          <div class="card-body">
+            <h3>Friendship Flowers</h3>
+            <p>A relationship CRM disguised as a garden. Tend the people you care about; watch the flowers grow.</p>
+            <ul class="chips"><li>Mobile</li><li>Social</li><li>Delight</li></ul>
+          </div>
+        </article>
+
+        <article class="card card-soon" data-tag="App" data-status="Coming soon" aria-label="Translator — coming soon">
+          <div class="card-art art-translator"></div>
+          <div class="card-body">
+            <h3>Translator</h3>
+            <p>A pocket translator built for travel and conversation, not just word lookups. Streaming responses, no friction.</p>
+            <ul class="chips"><li>Mobile</li><li>AI</li><li>Realtime</li></ul>
+          </div>
+        </article>
+
+        <a class="card card-shot" data-tag="Edu" href="https://klaroacademy.com" target="_blank" rel="noopener" aria-label="Klaro Academy — open in a new tab">
+          <div class="card-art">
+            <img src="media/klaro.png" alt="Klaro Academy homepage — Land the job you actually want." loading="lazy" decoding="async" />
+          </div>
+          <div class="card-body">
+            <h3>Klaro Academy <span class="card-arrow" aria-hidden="true">↗</span></h3>
+            <p>Friendly, structured interview coaching for graduates and early-career professionals. Two weeks of personalised prep.</p>
+            <ul class="chips"><li>Coaching</li><li>Careers</li><li>Shopify</li></ul>
+          </div>
+        </a>
+
+        <article class="card card-soon" data-tag="Game" data-status="Coming soon" aria-label="BootlegZoo — coming soon">
+          <div class="card-art art-bootleg"></div>
+          <div class="card-body">
+            <h3>BootlegZoo</h3>
+            <p>A wonderfully weird zoo full of creatures that probably shouldn't exist. A game about discovery and chaos.</p>
+            <ul class="chips"><li>Game</li><li>Sandbox</li><li>Original IP</li></ul>
+          </div>
+        </article>
+
+        <article class="card card-soon" data-tag="Game" data-status="Coming soon" aria-label="Turbulence — coming soon">
+          <div class="card-art art-turbulence"></div>
+          <div class="card-body">
+            <h3>Turbulence</h3>
+            <p>A high-velocity arcade game about staying upright when the world won't stop moving. Tight controls, big feel.</p>
+            <ul class="chips"><li>Game</li><li>Arcade</li><li>Reflex</li></ul>
+          </div>
+        </article>
+
+        <article class="card card-soon" data-tag="Infra" data-status="Coming soon" aria-label="Arena — coming soon">
+          <div class="card-art art-arena"></div>
+          <div class="card-body">
+            <h3>Arena</h3>
+            <p>An internal multiplayer worker powering live experiences. Cloudflare Workers, real-time state, low latency.</p>
+            <ul class="chips"><li>Workers</li><li>Realtime</li><li>Backend</li></ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" class="section about">
+      <header class="section-head">
+        <span class="kicker">02 — About</span>
+        <h2>Small studio. Wide range.</h2>
+      </header>
+      <div class="about-grid">
+        <div>
+          <p>VXVO is an independent studio. The remit is broad on purpose — productivity tools one week, an arcade game the next, a translator the week after. The throughline is taste, polish, and shipping.</p>
+          <p>Everything is designed and built end-to-end: visual identity, frontend, backend, mobile, and the boring infrastructure that keeps it running. The studio works in tight loops with users and ships small.</p>
+        </div>
+        <ul class="capabilities">
+          <li><span>Web</span> Next.js, React, TypeScript, edge runtimes</li>
+          <li><span>Mobile</span> Native + cross-platform on iOS and Android</li>
+          <li><span>AI</span> Claude, GPT, structured generation, agents</li>
+          <li><span>Backend</span> Supabase, Postgres, Cloudflare Workers</li>
+          <li><span>Design</span> Identity, product UI, motion, illustration</li>
+          <li><span>Games</span> Original titles, sandbox systems, arcade</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <header class="section-head">
+        <span class="kicker">03 — Contact</span>
+        <h2>Let's talk.</h2>
+        <p>Press, partnerships, or just curious — drop a line.</p>
+      </header>
+      <div class="contact-card">
+        <div>
+          <p class="contact-label">Email</p>
+          <a class="contact-value" href="mailto:daniel@vxvo.co.uk">daniel@vxvo.co.uk</a>
+        </div>
+        <div>
+          <p class="contact-label">Studio</p>
+          <p class="contact-value">VXVO — independent</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-row">
+      <div class="brand brand-sm">
+        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+          <defs>
+            <linearGradient id="foot-g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#A78BFA"/>
+              <stop offset="60%" stop-color="#22D3EE"/>
+              <stop offset="100%" stop-color="#34D399"/>
+            </linearGradient>
+          </defs>
+          <g stroke="url(#foot-g)" stroke-width="5" fill="none" stroke-linecap="square">
+            <polyline points="8,12 18,52 28,12"/>
+            <line x1="34" y1="12" x2="56" y2="52"/>
+            <line x1="56" y1="12" x2="34" y2="52"/>
+          </g>
+        </svg>
+        <span class="brand-word">VXVO</span>
+      </div>
+      <p class="footer-meta">© <span id="year"></span> VXVO. Built in-house.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

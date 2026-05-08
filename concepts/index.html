@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VXVO · 4 design directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#0E0E12;
+  --panel:#15151B;
+  --line:rgba(255,255,255,.08);
+  --line-2:rgba(255,255,255,.16);
+  --ink:#EAEAF0;
+  --ink-dim:#9A9AA8;
+  --ink-faint:#5E5E6B;
+  --accent:#F1C56B;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+
+.head{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:32px;
+  padding:36px clamp(20px,4vw,48px) 28px;
+  border-bottom:1px solid var(--line);
+}
+.head .pre{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint)}
+.head h1{
+  font-family:'Fraunces',serif;font-weight:300;font-style:normal;
+  font-variation-settings:"opsz" 144;
+  font-size:clamp(36px,5vw,68px);line-height:1;letter-spacing:-.02em;margin:0 0 6px;
+}
+.head h1 em{font-style:italic;color:var(--accent)}
+.head p{margin:0;color:var(--ink-dim);font-size:15px;max-width:60ch;line-height:1.55}
+.head .right{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);text-align:right;line-height:1.8}
+.head .right b{color:var(--ink);font-weight:500}
+
+.grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:24px;
+  padding:32px clamp(20px,4vw,48px) 64px;
+}
+.tile{
+  background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:border-color .25s ease,transform .25s ease;
+}
+.tile:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.tile-head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:18px;flex-wrap:wrap;
+  padding:18px 22px 14px;border-bottom:1px solid var(--line);
+}
+.tile-head .num{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);
+}
+.tile-head h2{
+  margin:6px 0 0;font-family:'Fraunces',serif;font-weight:300;
+  font-variation-settings:"opsz" 96;
+  font-size:30px;letter-spacing:-.015em;line-height:1.05;
+}
+.tile-head h2 em{font-style:italic;color:var(--accent)}
+.tile-head .vibe{
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);
+}
+.tile-blurb{
+  padding:0 22px 18px;color:var(--ink-dim);font-size:14px;line-height:1.55;max-width:60ch;
+}
+.tile-blurb b{color:var(--ink);font-weight:500}
+
+.preview{
+  position:relative;background:#000;border-top:1px solid var(--line);
+  aspect-ratio:16/10;
+  overflow:hidden;
+}
+.preview iframe{
+  position:absolute;left:0;top:0;
+  width:200%;height:200%;
+  border:0;
+  transform:scale(.5);transform-origin:0 0;
+  pointer-events:none;
+  background:#000;
+}
+.preview .scrim{
+  position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,.55));
+  pointer-events:none;
+}
+
+.tile-foot{
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:14px 18px;border-top:1px solid var(--line);
+}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-dim);padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.02);
+}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 14px;border-radius:999px;
+  background:#fff;color:#0B0913;font-weight:600;font-size:13px;letter-spacing:-.005em;
+  border:1px solid #fff;transition:transform .2s,background .2s;
+}
+.btn:hover{transform:translateY(-1px);background:var(--accent);border-color:var(--accent)}
+.btn .arr{transition:transform .2s}
+.btn:hover .arr{transform:translateX(3px)}
+
+.foot{
+  border-top:1px solid var(--line);
+  padding:18px clamp(20px,4vw,48px);
+  display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);
+}
+.foot a{color:var(--ink-dim)}
+.foot a:hover{color:var(--ink)}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .head{grid-template-columns:1fr;gap:14px}
+  .head .right{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div>
+    <span class="pre">VXVO · Studio rebrand · Concepts</span>
+    <h1>Cool palette, <em>lifted.</em></h1>
+    <p>You liked 10b but said it was too dark. Two new variants in the same cool direction. <b style="color:#fff">10d Twilight</b> — same indigo character but lifted to a slate blue (still dark, much less heavy). <b style="color:#fff">10e Mist</b> — pure light cool paper with deep navy ink and sapphire italics, in case lifted-dark still feels too dark. Pick one — or tell me which way to push (lighter still? a touch warmer? a single sharper accent?).</p>
+  </div>
+  <div class="right">
+    Daniel · VXVO<br>
+    <b>Round 06</b> · Lifted cool<br>
+    Filed · today
+  </div>
+</header>
+
+<section class="grid">
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 10d · Twilight</span>
+        <h2>Lifted slate. <em>Cool, but airier.</em></h2>
+      </div>
+      <span class="vibe">Cabinet Grotesk · Slate blue · Sky italics</span>
+    </div>
+    <p class="tile-blurb">Same cool indigo direction as 10b, but the background lifts from near-black <b>#0A0F1A</b> up to slate <b>#1E2942</b>. Still dark, but the page breathes. Italics in a slightly lighter sky <b>#B8CDF2</b> for contrast on the lifted bg. Plate shadows softened to match. <b>Most direct answer to "10b but too dark."</b></p>
+    <div class="preview">
+      <iframe src="10d-twilight.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Lifted dark</span><span class="tag">Slate</span><span class="tag">Cool</span><span class="tag">Airy</span></div>
+      <a class="btn" href="10d-twilight.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 10e · Mist</span>
+        <h2>Cool paper. <em>Sapphire ink.</em></h2>
+      </div>
+      <span class="vibe">Cabinet Grotesk · Mist · Sapphire</span>
+    </div>
+    <p class="tile-blurb">If even lifted-dark feels too dark, this is the inverse. Cool pale paper <b>#EBEFF6</b>, deep navy ink <b>#0E1525</b>, single sapphire-blue accent <b>#2348B0</b> for italics. Same cool family as 10b, fully light. Reads like an Apple keynote slide.</p>
+    <div class="preview">
+      <iframe src="10e-mist.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Light</span><span class="tag">Cool paper</span><span class="tag">Sapphire</span><span class="tag">Crisp</span></div>
+      <a class="btn" href="10e-mist.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile" style="opacity:.75">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 10b · Midnight</span>
+        <h2>Original (too dark, you said).</h2>
+      </div>
+      <span class="vibe">Cabinet Grotesk · Indigo near-black</span>
+    </div>
+    <p class="tile-blurb">The deep cool indigo you liked the direction of, kept here for side-by-side comparison with the lifted 10d.</p>
+    <div class="preview">
+      <iframe src="10b-cool.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Reference</span><span class="tag">Deep indigo</span></div>
+      <a class="btn" href="10b-cool.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile" style="opacity:.55">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 10a · Onyx</span>
+        <h2>Pure black <em>&amp; white.</em></h2>
+      </div>
+      <span class="vibe">Cabinet Grotesk · Pure achromatic</span>
+    </div>
+    <p class="tile-blurb">Inky <b>#0A0A0B</b> with crisp white type. No warmth, no tint, no accent colour — italics differentiate purely through Sentient's serif curves. The most modern, "Apple/Linear/Vercel-tier" reading of the design. <b>Probably the safest professional choice.</b></p>
+    <div class="preview">
+      <iframe src="10a-onyx.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Inky</span><span class="tag">Achromatic</span><span class="tag">Modern</span></div>
+      <a class="btn" href="10a-onyx.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 10b · Midnight</span>
+        <h2>Cool indigo. <em>Premium.</em></h2>
+      </div>
+      <span class="vibe">Cabinet Grotesk · Indigo &amp; sky</span>
+    </div>
+    <p class="tile-blurb">Deep cool indigo <b>#0A0F1A</b> with cool off-white type and a soft sky-blue accent <b>#9DB7E8</b> for italic moments. Reads premium and tech-y without being warm. The most "studio at midnight" of the three.</p>
+    <div class="preview">
+      <iframe src="10b-cool.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Indigo dark</span><span class="tag">Cool</span><span class="tag">Premium</span></div>
+      <a class="btn" href="10b-cool.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 10c · Bone</span>
+        <h2>Cream paper. <em>Forest ink.</em></h2>
+      </div>
+      <span class="vibe">Cabinet Grotesk · Bone &amp; forest</span>
+    </div>
+    <p class="tile-blurb">Cream paper <b>#F2EEE5</b> with deep ink and a single deep forest-green accent <b>#1F4E36</b> for italics. The light counterpart — clean, editorial, elevated. If you want light theme without the boredom of pure white-on-grey.</p>
+    <div class="preview">
+      <iframe src="10c-bone.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Light</span><span class="tag">Cream</span><span class="tag">Forest accent</span></div>
+      <a class="btn" href="10c-bone.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile" style="opacity:.65">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 10 · Cocoa (original)</span>
+        <h2>Warm cocoa. <em>You said no.</em></h2>
+      </div>
+      <span class="vibe">Cabinet Grotesk · Cocoa &amp; cream</span>
+    </div>
+    <p class="tile-blurb">The original warm chocolate-near-black with cream type. Kept here for reference — you said you hate the colour, so 10a/10b/10c are the live options.</p>
+    <div class="preview">
+      <iframe src="10-monograph.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Warm</span><span class="tag">Reference only</span></div>
+      <a class="btn" href="10-monograph.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 08 · Considered (Light)</span>
+        <h2>The reset. <em>Light.</em></h2>
+      </div>
+      <span class="vibe">Inter Tight · Warm white · Achromatic</span>
+    </div>
+    <p class="tile-blurb">Warm white paper, black ink, <b>Inter Tight</b> at one weight. Zero accent colours — colour comes only from the real product imagery. Pace appears in a clean iPhone frame, Klaro in a browser frame; the rest of the work lives as an elegant typographic Index. No badges, no live dots, no mono captions, no marquees. <b>Open this one full-screen first</b> — it's where the brief should land.</p>
+    <div class="preview">
+      <iframe src="08-considered.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Light</span><span class="tag">Achromatic</span><span class="tag">Studio</span><span class="tag">Restraint</span></div>
+      <a class="btn" href="08-considered.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 09 · Considered (Dark)</span>
+        <h2>The reset. <em>Dark.</em></h2>
+      </div>
+      <span class="vibe">Inter Tight · Warm black · Achromatic</span>
+    </div>
+    <p class="tile-blurb">Same brief, inverted. Warm near-black, off-white type, <b>Inter Tight</b> at one weight. Same achromatic discipline — zero accent colours, the product imagery does all the colour work. The dark counterpart of 08; pick whichever theme feels more like VXVO.</p>
+    <div class="preview">
+      <iframe src="09-considered-dark.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Dark</span><span class="tag">Achromatic</span><span class="tag">Studio</span><span class="tag">Restraint</span></div>
+      <a class="btn" href="09-considered-dark.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 05 · Modern Dark</span>
+        <h2>Linear / <em>Vercel calm.</em></h2>
+      </div>
+      <span class="vibe">Geist · Black · Coral accent</span>
+    </div>
+    <p class="tile-blurb">Near-black canvas, <b>Geist</b> sans-serif throughout, a single warm coral accent, and big real product screenshots in framed feature cards. Confident hero, two large "Now shipping" rails for Pace and Klaro, then a 3×3 bento for the in-studio products. Restrained motion — soft glow that follows the cursor, scroll-stagger fades. The tightest, most product-y direction.</p>
+    <div class="preview">
+      <iframe src="05-modern-dark.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Dark</span><span class="tag">Geist</span><span class="tag">Modern</span><span class="tag">Restrained</span></div>
+      <a class="btn" href="05-modern-dark.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 06 · Modern Light</span>
+        <h2>Apple iPad Pro / <em>Cobalt restraint.</em></h2>
+      </div>
+      <span class="vibe">Geist · Cream · Brick red</span>
+    </div>
+    <p class="tile-blurb">Warm cream paper, sharp deep brick-red accent used once or twice, big <b>Geist</b> bold display. Hero splits into a confident phrase + a "now playing" panel listing live products. Live work gets full feature cards with framed screenshots; in-studio work goes into a clean tabular list with hover states. The most editorial-modern of the set.</p>
+    <div class="preview">
+      <iframe src="06-modern-light.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Light</span><span class="tag">Geist</span><span class="tag">Modern</span><span class="tag">Editorial</span></div>
+      <a class="btn" href="06-modern-light.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 07 · Cinematic</span>
+        <h2>Scroll-driven <em>showcase.</em></h2>
+      </div>
+      <span class="vibe">Geist · Per-product themes · Sticky rail</span>
+    </div>
+    <p class="tile-blurb">Each of the nine products gets its own full-bleed scene with its own colour theme — Pace coral, Klaro peach, Daniel Rise gold, LifePlanner forest, Friendship Flowers rose, Translator ocean, BootlegZoo lime, Turbulence electric, Arena violet. A sticky "Now playing" rail tracks which one you're on, the nav clock and brand mark adopt the current theme, and the page glow shifts as you scroll. Most cinematic, most ambitious.</p>
+    <div class="preview">
+      <iframe src="07-cinematic.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Dark</span><span class="tag">Cinematic</span><span class="tag">Scroll-driven</span><span class="tag">Themed</span></div>
+      <a class="btn" href="07-cinematic.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 01 · Editorial</span>
+        <h2>Quarterly. <em>Like a magazine.</em></h2>
+      </div>
+      <span class="vibe">Cream · Serif · Mono captions</span>
+    </div>
+    <p class="tile-blurb">Cream paper, big <b>Fraunces</b> serif paired with mono captions and asymmetric magazine grid. Each product is a "plate" with a figure caption. Reads like a high-end print quarterly — composed, considered, expensive-feeling.</p>
+    <div class="preview">
+      <iframe src="01-editorial.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Light</span><span class="tag">Serif</span><span class="tag">Editorial</span><span class="tag">Calm</span></div>
+      <a class="btn" href="01-editorial.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 02 · Brutalist</span>
+        <h2>Terminal. <em>Mono everywhere.</em></h2>
+      </div>
+      <span class="vibe">Black · Mono · Acid yellow</span>
+    </div>
+    <p class="tile-blurb">Pure black, dense gridded layout, ASCII rules, status indicators in brackets, and one acid-yellow accent. <b>JetBrains Mono</b> throughout. Reads like a developer manifesto — confident, technical, contrarian. Hover state inverts everything.</p>
+    <div class="preview">
+      <iframe src="02-brutalist.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Dark</span><span class="tag">Mono</span><span class="tag">Brutalist</span><span class="tag">Technical</span></div>
+      <a class="btn" href="02-brutalist.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 03 · Maximal</span>
+        <h2>Loud. <em>Confident colour.</em></h2>
+      </div>
+      <span class="vibe">Cream · Red · Blue · Lime</span>
+    </div>
+    <p class="tile-blurb">Saturated Swiss-poster energy. Oversized <b>Bricolage Grotesque</b> display, italic <b>Caprasimo</b> accents, scrolling marquees, and a colour-blocked bento of work tiles that 3D-tilt on hover. The kind of site that gets shared on Twitter.</p>
+    <div class="preview">
+      <iframe src="03-maximal.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Light</span><span class="tag">Bold</span><span class="tag">Maximal</span><span class="tag">Playful</span></div>
+      <a class="btn" href="03-maximal.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+  <article class="tile">
+    <div class="tile-head">
+      <div>
+        <span class="num">Concept 04 · Spatial</span>
+        <h2>Glass. <em>Cinematic depth.</em></h2>
+      </div>
+      <span class="vibe">Mesh · Glass · Italic serif</span>
+    </div>
+    <p class="tile-blurb">A real <b>WebGL fluid shader</b> background that warps under your cursor. Boot-up intro, custom cursor with eased trail, scroll-progress bar, magnetic CTA, animated stat counters, scrambling section titles, hero word-lifts with shimmering italics, parallax-tilt cards with a cursor spotlight, and a slow-rotating press stamp by the contact card. <i>Open this one full-screen and move your mouse around.</i></p>
+    <div class="preview">
+      <iframe src="04-glass.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="scrim"></div>
+    </div>
+    <div class="tile-foot">
+      <div class="tags"><span class="tag">Dark</span><span class="tag">Glass</span><span class="tag">Cinematic</span><span class="tag">Premium</span></div>
+      <a class="btn" href="04-glass.html" target="_blank">Open <span class="arr">↗</span></a>
+    </div>
+  </article>
+
+</section>
+
+<footer class="foot">
+  <span>VXVO · Concepts round 01</span>
+  <span><a href="../index.html">← back to live site</a></span>
+  <span>Tell me which to polish</span>
+</footer>
+
+</body>
+</html>

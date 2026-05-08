@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VXVO — Volume I · Editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#EDE6D6;
+  --paper-2:#E4DCC8;
+  --ink:#15130E;
+  --ink-2:#3A352A;
+  --ink-faint:#6E6552;
+  --rule:#15130E;
+  --accent:#8A2A1F;
+  --accent-2:#1F3A2E;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Fraunces',Georgia,serif;
+  font-feature-settings:"ss01","ss02","liga","dlig","ss03";
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+/* paper grain */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.08  0 0 0 0 0.07  0 0 0 0 0.05  0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode:multiply;opacity:.55;
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(ellipse at 50% 0%, rgba(0,0,0,0) 0%, rgba(0,0,0,.10) 90%);
+}
+
+/* masthead */
+.mast{
+  position:relative;z-index:2;
+  border-bottom:1px solid var(--rule);
+  padding:14px clamp(20px,4vw,48px);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+}
+.mast .l{color:var(--ink-faint)}
+.mast .c{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;letter-spacing:.02em;text-transform:none;color:var(--ink)}
+.mast .r{text-align:right;color:var(--ink-faint)}
+.mast .r b{color:var(--ink);font-weight:500}
+
+/* nameplate */
+.plate{
+  position:relative;z-index:2;
+  padding:36px clamp(20px,4vw,48px) 28px;
+  border-bottom:3px double var(--rule);
+}
+.plate-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.plate-name{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(64px,13vw,200px);
+  line-height:.85;letter-spacing:-.04em;
+  font-variation-settings:"opsz" 144,"SOFT" 30;
+  margin:0;
+}
+.plate-name em{font-style:italic;font-family:'Instrument Serif',serif;font-weight:400;letter-spacing:-.02em}
+.plate-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-2);max-width:300px;text-align:right;line-height:1.7;
+}
+.plate-meta b{color:var(--ink);font-weight:700}
+
+.wrap{position:relative;z-index:2;padding:0 clamp(20px,4vw,48px)}
+
+/* hero / lede */
+.lede{
+  display:grid;grid-template-columns:1fr 2fr;gap:48px;
+  padding:64px 0 80px;border-bottom:1px solid var(--rule);
+}
+.lede aside{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-faint);line-height:1.9;
+  padding-top:18px;
+}
+.lede aside .num{
+  font-family:'Fraunces',serif;font-style:italic;
+  font-size:80px;letter-spacing:-.04em;color:var(--ink);
+  line-height:1;margin-bottom:16px;font-weight:300;
+}
+.lede aside hr{border:0;border-top:1px solid var(--rule);margin:18px 0}
+.lede aside p{margin:0 0 8px}
+.lede h1{
+  font-family:'Fraunces',serif;
+  font-weight:300;
+  font-size:clamp(44px,7.2vw,108px);
+  line-height:1.0;letter-spacing:-.02em;margin:0;
+  font-variation-settings:"opsz" 144;
+}
+.lede h1 em{font-style:italic;font-family:'Instrument Serif',serif;font-weight:400;color:var(--accent)}
+.lede h1 .amp{font-style:italic;font-family:'Instrument Serif',serif;font-weight:400;color:var(--ink-faint)}
+.lede .deck{
+  font-family:'Fraunces',serif;font-weight:400;
+  font-size:22px;line-height:1.5;letter-spacing:-.005em;
+  margin:36px 0 0;max-width:62ch;color:var(--ink-2);
+  column-count:2;column-gap:36px;
+}
+.lede .deck::first-letter{
+  font-family:'Fraunces',serif;font-weight:700;
+  font-size:88px;line-height:.85;float:left;
+  margin:6px 10px -6px 0;color:var(--accent);
+}
+
+/* ticker */
+.ticker{
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  padding:14px 0;overflow:hidden;white-space:nowrap;
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:32px;letter-spacing:-.01em;color:var(--ink-2);
+}
+.ticker-track{display:inline-flex;gap:48px;animation:tick 38s linear infinite}
+.ticker span:nth-child(odd){color:var(--accent)}
+.ticker .dot{font-family:'Fraunces',serif;font-style:normal;color:var(--ink-faint)}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* section heads */
+.sec{padding:80px 0;border-bottom:1px solid var(--rule)}
+.sec-head{
+  display:grid;grid-template-columns:140px 1fr 220px;gap:24px;
+  align-items:end;margin-bottom:56px;
+}
+.sec-num{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);
+  border-top:2px solid var(--rule);padding-top:8px;
+}
+.sec-num b{display:block;font-family:'Fraunces',serif;font-style:italic;
+  font-weight:300;font-size:54px;letter-spacing:-.03em;color:var(--ink);margin-top:4px;line-height:1}
+.sec-title{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:clamp(32px,4.4vw,64px);line-height:1;letter-spacing:-.02em;margin:0;
+}
+.sec-title em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent)}
+.sec-kicker{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);line-height:1.7;
+  text-align:right;
+}
+
+/* plates / works */
+.plates{display:grid;grid-template-columns:repeat(12,1fr);gap:36px 32px}
+.work{position:relative}
+.work-fig{
+  position:relative;background:var(--paper-2);
+  border:1px solid var(--rule);overflow:hidden;
+  aspect-ratio:4/3;
+}
+.work-fig::after{
+  content:"";position:absolute;inset:8px;
+  border:1px solid rgba(21,19,14,.18);pointer-events:none;
+}
+.work-fig img{width:100%;height:100%;object-fit:cover;filter:contrast(.96) saturate(.92)}
+.work-art{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:120px;letter-spacing:-.03em;color:var(--ink);
+  background:linear-gradient(135deg,var(--paper-2),var(--paper));
+}
+.work-art.alt{background:linear-gradient(135deg,#D9C9A8,#E5DBC3);color:var(--accent)}
+.work-art.dark{background:#15130E;color:#EDE6D6}
+.work-art.crimson{background:#8A2A1F;color:#EDE6D6}
+.work-art.olive{background:#3D4A1F;color:#EDE6D6}
+.work-art.indigo{background:#1F2740;color:#EDE6D6}
+.work-art.peach{background:#E8B595;color:#15130E}
+.work-cap{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;
+  gap:12px;padding-top:14px;border-top:1px solid var(--rule);margin-top:14px;
+}
+.work-cap .pl{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);
+}
+.work-cap .ti{
+  font-family:'Fraunces',serif;font-weight:500;font-size:22px;
+  letter-spacing:-.01em;
+}
+.work-cap .ti em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--accent)}
+.work-cap .st{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);
+}
+.work-cap .st b{color:var(--accent)}
+.work-cap .st.live b{color:var(--accent-2)}
+.work-blurb{
+  font-family:'Fraunces',serif;font-size:15.5px;line-height:1.55;color:var(--ink-2);
+  margin:8px 0 0;max-width:42ch;
+}
+.work-tags{
+  list-style:none;padding:0;margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+}
+.work-tags li{color:var(--ink-faint)}
+.work-tags li::before{content:"·  ";color:var(--ink-faint)}
+.work-tags li:first-child::before{content:""}
+
+/* span helpers */
+.c-12{grid-column:span 12}
+.c-8{grid-column:span 8}
+.c-7{grid-column:span 7}
+.c-6{grid-column:span 6}
+.c-5{grid-column:span 5}
+.c-4{grid-column:span 4}
+.c-3{grid-column:span 3}
+.offset-1{grid-column-start:2}
+
+.work a.lift{display:block}
+.work .work-fig{transition:transform .5s ease}
+.work a.lift:hover .work-fig{transform:translateY(-4px)}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.about-grid p{
+  font-family:'Fraunces',serif;font-size:20px;line-height:1.55;color:var(--ink-2);
+  margin:0 0 16px;max-width:52ch;
+}
+.about-grid p em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent)}
+.cap-list{list-style:none;padding:0;margin:0;border-top:1px solid var(--rule)}
+.cap-list li{
+  display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:baseline;
+  padding:18px 0;border-bottom:1px solid var(--rule);
+}
+.cap-list li b{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;
+}
+.cap-list li span{
+  font-family:'Fraunces',serif;font-size:20px;line-height:1.4;color:var(--ink);
+}
+.cap-list li span em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent);font-weight:400}
+
+/* colophon / contact */
+.colophon{
+  display:grid;grid-template-columns:1fr 2fr;gap:48px;align-items:end;
+  padding:80px 0 40px;
+}
+.colophon h3{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:clamp(48px,8vw,140px);line-height:.92;letter-spacing:-.03em;
+  margin:0;font-variation-settings:"opsz" 144;
+}
+.colophon h3 em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent)}
+.colophon .info{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);line-height:2;
+}
+.colophon .info a{
+  font-family:'Instrument Serif',serif;font-style:italic;font-size:30px;
+  letter-spacing:-.01em;text-transform:none;color:var(--ink);
+  border-bottom:1px solid var(--rule);padding-bottom:2px;
+  background:linear-gradient(currentColor,currentColor) bottom left/0 1px no-repeat;
+  transition:background-size .35s ease;
+}
+.colophon .info a:hover{background-size:100% 1px}
+.colophon .info hr{border:0;border-top:1px solid var(--rule);margin:18px 0}
+
+footer.foot{
+  border-top:3px double var(--rule);
+  padding:24px clamp(20px,4vw,48px);
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);
+}
+footer.foot em{font-family:'Instrument Serif',serif;font-style:italic;font-size:14px;text-transform:none;color:var(--ink);letter-spacing:-.005em}
+
+/* responsive */
+@media (max-width:900px){
+  .lede{grid-template-columns:1fr;gap:24px}
+  .lede .deck{column-count:1}
+  .sec-head{grid-template-columns:1fr;gap:8px}
+  .sec-kicker{text-align:left}
+  .plates{grid-template-columns:repeat(6,1fr);gap:32px 20px}
+  .c-8,.c-7,.c-6,.c-5,.c-4,.c-3,.offset-1{grid-column:span 6;grid-column-start:auto}
+  .about-grid,.colophon{grid-template-columns:1fr;gap:24px}
+  .plate-row{align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="l">Vol. I · No. 03 · MMXXVI</div>
+  <div class="c"><em>The VXVO Quarterly</em></div>
+  <div class="r">An independent record of <b>work shipped</b></div>
+</header>
+
+<section class="plate">
+  <div class="plate-row">
+    <h1 class="plate-name">VX<em>v</em>O</h1>
+    <p class="plate-meta">A studio for <b>software, games &amp; tools</b><br>Independent · Est. 2023<br>Daniel — proprietor</p>
+  </div>
+</section>
+
+<div class="wrap">
+
+<section class="lede">
+  <aside>
+    <span class="num">№01</span>
+    <p>Editorial</p>
+    <hr/>
+    <p>Filed in: studio,<br>practice, intent</p>
+    <p>Words · 312</p>
+    <p>Read · 2 min</p>
+  </aside>
+  <div>
+    <h1>We make <em>quiet, useful</em> things <span class="amp">&amp;</span> the occasional loud one.</h1>
+    <p class="deck">VXVO is the umbrella for a body of work spanning AI-assisted web apps, mobile productivity tools, and original games. Every product on these pages was designed, built, and maintained in-house — frontend, backend, identity, and the boring infrastructure that keeps it all running. The remit is broad on purpose; the throughline is taste, polish, and the discipline of shipping.</p>
+  </div>
+</section>
+
+</div>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Shipping since 2023</span><span class="dot">◆</span>
+    <span>Nine products in flight</span><span class="dot">◆</span>
+    <span>iOS · Android · Web · Edge</span><span class="dot">◆</span>
+    <span>One studio, end-to-end</span><span class="dot">◆</span>
+    <span>Shipping since 2023</span><span class="dot">◆</span>
+    <span>Nine products in flight</span><span class="dot">◆</span>
+    <span>iOS · Android · Web · Edge</span><span class="dot">◆</span>
+    <span>One studio, end-to-end</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<section id="work" class="sec">
+  <header class="sec-head">
+    <div class="sec-num">Section<b>02</b></div>
+    <h2 class="sec-title">A cross-section of <em>work in flight.</em></h2>
+    <p class="sec-kicker">Plates 01–09<br>Photographed & rendered<br>in studio, MMXXVI</p>
+  </header>
+
+  <div class="plates">
+
+    <article class="work c-7">
+      <a class="lift" href="https://Pace-Nutrition.vercel.app" target="_blank" rel="noopener">
+        <figure class="work-fig"><img src="../media/nutrition.png" alt="Pace nutrition"></figure>
+      </a>
+      <div class="work-cap">
+        <span class="pl">Plate 01 · App</span>
+        <span class="ti">Pace <em>Nutrition</em></span>
+        <span class="st live">Status · <b>Live</b></span>
+      </div>
+      <p class="work-blurb">An AI nutrition coach. Quietly practical — fast logging, real numbers, no fluff.</p>
+      <ul class="work-tags"><li>Health</li><li>Tracking</li><li>iOS / Android</li></ul>
+    </article>
+
+    <article class="work c-5">
+      <figure class="work-fig"><div class="work-art crimson">DR</div></figure>
+      <div class="work-cap">
+        <span class="pl">Plate 02 · App</span>
+        <span class="ti">Daniel <em>Rise</em></span>
+        <span class="st">Status · <b>In studio</b></span>
+      </div>
+      <p class="work-blurb">An AI-assisted personal site &amp; writing platform. Next.js, Supabase, Anthropic.</p>
+      <ul class="work-tags"><li>Next.js</li><li>Supabase</li><li>Claude</li></ul>
+    </article>
+
+    <article class="work c-4">
+      <figure class="work-fig"><div class="work-art olive">LP</div></figure>
+      <div class="work-cap">
+        <span class="pl">Plate 03 · App</span>
+        <span class="ti">Life<em>Planner</em></span>
+        <span class="st">Status · <b>In studio</b></span>
+      </div>
+      <p class="work-blurb">A long-horizon planner that turns goals into days. Iterated through four major versions.</p>
+      <ul class="work-tags"><li>Mobile</li><li>Habits</li><li>Planning</li></ul>
+    </article>
+
+    <article class="work c-4">
+      <figure class="work-fig"><div class="work-art peach">FF</div></figure>
+      <div class="work-cap">
+        <span class="pl">Plate 04 · App</span>
+        <span class="ti">Friendship <em>Flowers</em></span>
+        <span class="st">Status · <b>In studio</b></span>
+      </div>
+      <p class="work-blurb">A relationship CRM disguised as a garden. Tend the people you care about; watch the flowers grow.</p>
+      <ul class="work-tags"><li>Mobile</li><li>Social</li><li>Delight</li></ul>
+    </article>
+
+    <article class="work c-4">
+      <figure class="work-fig"><div class="work-art indigo">TR</div></figure>
+      <div class="work-cap">
+        <span class="pl">Plate 05 · App</span>
+        <span class="ti">Trans<em>lator</em></span>
+        <span class="st">Status · <b>In studio</b></span>
+      </div>
+      <p class="work-blurb">A pocket translator built for travel and conversation, not just word lookups.</p>
+      <ul class="work-tags"><li>Mobile</li><li>AI</li><li>Realtime</li></ul>
+    </article>
+
+    <article class="work c-7 offset-1">
+      <a class="lift" href="https://klaroacademy.com" target="_blank" rel="noopener">
+        <figure class="work-fig"><img src="../media/klaro.png" alt="Klaro Academy"></figure>
+      </a>
+      <div class="work-cap">
+        <span class="pl">Plate 06 · Edu</span>
+        <span class="ti">Klaro <em>Academy</em></span>
+        <span class="st live">Status · <b>Live</b></span>
+      </div>
+      <p class="work-blurb">Friendly, structured interview coaching for graduates and early-career professionals. Two weeks of personalised prep.</p>
+      <ul class="work-tags"><li>Coaching</li><li>Careers</li><li>Shopify</li></ul>
+    </article>
+
+    <article class="work c-4">
+      <figure class="work-fig"><div class="work-art alt">BZ</div></figure>
+      <div class="work-cap">
+        <span class="pl">Plate 07 · Game</span>
+        <span class="ti">Bootleg<em>Zoo</em></span>
+        <span class="st">Status · <b>In studio</b></span>
+      </div>
+      <p class="work-blurb">A wonderfully weird zoo full of creatures that probably shouldn't exist. About discovery and chaos.</p>
+      <ul class="work-tags"><li>Game</li><li>Sandbox</li><li>Original IP</li></ul>
+    </article>
+
+    <article class="work c-4">
+      <figure class="work-fig"><div class="work-art dark">TB</div></figure>
+      <div class="work-cap">
+        <span class="pl">Plate 08 · Game</span>
+        <span class="ti">Turbu<em>lence</em></span>
+        <span class="st">Status · <b>In studio</b></span>
+      </div>
+      <p class="work-blurb">A high-velocity arcade game about staying upright when the world won't stop moving.</p>
+      <ul class="work-tags"><li>Game</li><li>Arcade</li><li>Reflex</li></ul>
+    </article>
+
+    <article class="work c-4">
+      <figure class="work-fig"><div class="work-art">AR</div></figure>
+      <div class="work-cap">
+        <span class="pl">Plate 09 · Infra</span>
+        <span class="ti">Are<em>na</em></span>
+        <span class="st">Status · <b>In studio</b></span>
+      </div>
+      <p class="work-blurb">An internal multiplayer worker powering live experiences. Cloudflare Workers, real-time state.</p>
+      <ul class="work-tags"><li>Workers</li><li>Realtime</li><li>Backend</li></ul>
+    </article>
+
+  </div>
+</section>
+
+<section id="about" class="sec">
+  <header class="sec-head">
+    <div class="sec-num">Section<b>03</b></div>
+    <h2 class="sec-title">Small studio. <em>Wide range.</em></h2>
+    <p class="sec-kicker">On practice, scope<br>and the discipline<br>of shipping</p>
+  </header>
+
+  <div class="about-grid">
+    <div>
+      <p>VXVO is an independent studio. The remit is broad on purpose — productivity tools one week, an arcade game the next, a translator the week after. The throughline is <em>taste, polish, and shipping.</em></p>
+      <p>Everything is designed and built end-to-end: visual identity, frontend, backend, mobile, and the boring infrastructure that keeps it running. The studio works in tight loops with users and ships small.</p>
+    </div>
+    <ul class="cap-list">
+      <li><b>Web</b><span>Next.js, React, TypeScript, <em>edge runtimes</em></span></li>
+      <li><b>Mobile</b><span>Native &amp; cross-platform on iOS and Android</span></li>
+      <li><b>AI</b><span>Claude, GPT, structured generation, <em>agents</em></span></li>
+      <li><b>Backend</b><span>Supabase, Postgres, Cloudflare Workers</span></li>
+      <li><b>Design</b><span>Identity, product UI, motion, <em>illustration</em></span></li>
+      <li><b>Games</b><span>Original titles, sandbox systems, arcade</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact" class="colophon">
+  <h3>Let's <em>talk</em>.</h3>
+  <div class="info">
+    <p>Press · Partnerships · Curiosity</p>
+    <p><a href="mailto:daniel@vxvo.co.uk">daniel@vxvo.co.uk</a></p>
+    <hr/>
+    <p>Studio · VXVO, Independent</p>
+    <p>Filed from the United Kingdom</p>
+  </div>
+</section>
+
+</div>
+
+<footer class="foot">
+  <span>© <span id="y"></span> VXVO · Built in-house</span>
+  <em>Set in Fraunces &amp; Instrument Serif</em>
+  <span>End of Volume I</span>
+</footer>
+
+<script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+</body>
+</html>

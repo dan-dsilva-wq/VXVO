@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>VXVO — Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#08080A;
+  --bg-2:#0E0E11;
+  --bg-3:#15151A;
+  --ink:#F5F5F7;
+  --ink-dim:rgba(245,245,247,.62);
+  --ink-faint:rgba(245,245,247,.40);
+  --ink-quiet:rgba(245,245,247,.20);
+  --hairline:rgba(255,255,255,.07);
+  --hairline-2:rgba(255,255,255,.14);
+  --tint:rgba(255,255,255,.04);
+  --tint-2:rgba(255,255,255,.08);
+  --coral:#FF6A4D;
+  --coral-2:#FFB07A;
+  --emerald:#5DD3A8;
+  --soft:#E8E5DE;
+  --maxw:1260px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'Geist',ui-sans-serif,system-ui,sans-serif;
+  font-size:15px;line-height:1.6;letter-spacing:-.005em;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;min-height:100dvh;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(255,106,77,.30);color:#fff}
+
+/* ambient grain */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode:overlay;opacity:.6;
+}
+
+/* container */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4vw,40px);position:relative;z-index:1}
+
+/* ───── Top notice strip ───── */
+.notice{
+  border-bottom:1px solid var(--hairline);
+  background:var(--bg);
+  position:relative;z-index:5;
+}
+.notice .row{
+  display:flex;justify-content:space-between;align-items:center;gap:18px;
+  padding:10px 0;font-family:'Geist Mono',monospace;font-size:11.5px;
+  letter-spacing:.04em;color:var(--ink-faint);
+}
+.notice .row b{color:var(--ink-dim);font-weight:500}
+.notice .pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:4px 10px 4px 8px;border-radius:999px;
+  background:rgba(93,211,168,.10);color:var(--emerald);
+  border:1px solid rgba(93,211,168,.25);
+}
+.notice .pill .dot{
+  width:6px;height:6px;border-radius:50%;background:var(--emerald);
+  box-shadow:0 0 10px var(--emerald);animation:p 1.6s ease-in-out infinite;
+}
+@keyframes p{50%{opacity:.4}}
+
+/* ───── Nav ───── */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(8,8,10,.72);backdrop-filter:blur(18px) saturate(160%);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  border-bottom:1px solid var(--hairline);
+}
+.nav .row{
+  display:flex;justify-content:space-between;align-items:center;gap:24px;
+  padding:14px 0;
+}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;font-size:16px}
+.brand .mark{
+  width:22px;height:22px;border-radius:6px;
+  background:linear-gradient(135deg,var(--coral),var(--coral-2));
+  position:relative;overflow:hidden;
+}
+.brand .mark::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 60%,rgba(255,255,255,.4));
+}
+.nav-links{display:flex;align-items:center;gap:6px;font-size:13.5px}
+.nav-links a{
+  padding:8px 12px;border-radius:8px;color:var(--ink-dim);
+  transition:color .2s,background .2s;
+}
+.nav-links a:hover{color:var(--ink);background:var(--tint)}
+.nav-links a.cta{
+  color:var(--bg);background:var(--ink);font-weight:600;
+  padding:8px 14px;
+}
+.nav-links a.cta:hover{background:#fff;color:var(--bg)}
+
+/* ───── Hero ───── */
+.hero{padding:84px 0 36px;position:relative}
+.hero .glow{
+  position:absolute;left:50%;top:-100px;transform:translateX(-50%);
+  width:1100px;height:600px;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,106,77,.16),transparent 70%);
+  filter:blur(40px);
+  z-index:-1;
+}
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 12px 6px 8px;border-radius:999px;
+  background:var(--tint);border:1px solid var(--hairline-2);
+  font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.02em;color:var(--ink-dim);
+}
+.tag .dot{width:6px;height:6px;border-radius:50%;background:var(--coral);box-shadow:0 0 8px var(--coral);animation:p 1.6s ease-in-out infinite}
+
+.hero h1{
+  font-weight:600;
+  font-size:clamp(48px,8.4vw,120px);
+  line-height:.96;letter-spacing:-.035em;
+  margin:24px 0 28px;
+  max-width:18ch;
+}
+.hero h1 .muted{color:var(--ink-faint)}
+.hero h1 .accent{
+  background:linear-gradient(135deg,var(--coral),var(--coral-2));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero .deck{
+  font-size:19px;line-height:1.55;color:var(--ink-dim);max-width:56ch;margin:0 0 32px;
+}
+.hero .deck b{color:var(--ink);font-weight:500}
+.hero .cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:11px 16px;border-radius:10px;
+  font-family:'Geist',sans-serif;font-weight:500;font-size:14px;letter-spacing:-.005em;
+  background:var(--tint);border:1px solid var(--hairline-2);color:var(--ink);
+  transition:all .2s ease;cursor:pointer;
+}
+.btn:hover{background:var(--tint-2);border-color:rgba(255,255,255,.22)}
+.btn.primary{
+  background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600;
+}
+.btn.primary:hover{background:#fff;border-color:#fff}
+.btn .arr{transition:transform .25s ease}
+.btn:hover .arr{transform:translateX(3px)}
+
+/* logo strip */
+.strip{
+  margin:80px 0 0;padding:18px 0;
+  border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);
+  display:grid;grid-template-columns:auto repeat(4,1fr);gap:24px;align-items:center;
+  font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--ink-faint);
+  text-transform:uppercase;
+}
+.strip > div{padding:6px 0}
+.strip .label{color:var(--ink-quiet)}
+.strip b{color:var(--ink-dim);font-weight:500;font-size:13px;letter-spacing:.02em;text-transform:none;font-family:'Geist'}
+
+/* ───── Featured rail ───── */
+.feat{padding:96px 0 32px}
+.feat-head{
+  display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:36px;
+}
+.kicker{font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.04em;color:var(--ink-faint);text-transform:uppercase}
+.kicker b{color:var(--coral)}
+.h2{
+  margin:6px 0 0;font-weight:600;
+  font-size:clamp(28px,3.6vw,46px);line-height:1.05;letter-spacing:-.025em;
+}
+.h2 .muted{color:var(--ink-faint)}
+.see-all{
+  color:var(--ink-dim);font-size:13px;
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid var(--hairline-2);padding:8px 12px;border-radius:8px;background:var(--tint);
+}
+.see-all:hover{color:var(--ink);background:var(--tint-2)}
+
+.feature{
+  display:grid;grid-template-columns:1fr 1.5fr;gap:36px;align-items:center;
+  background:var(--bg-2);border:1px solid var(--hairline);border-radius:24px;
+  padding:36px;position:relative;overflow:hidden;
+  transition:border-color .25s,transform .35s;
+}
+.feature:hover{border-color:var(--hairline-2);transform:translateY(-2px)}
+.feature::before{
+  content:"";position:absolute;left:-20%;top:-30%;width:60%;height:160%;
+  background:radial-gradient(closest-side,rgba(255,106,77,.10),transparent 70%);
+  filter:blur(40px);pointer-events:none;
+}
+.feature.alt::before{
+  left:auto;right:-20%;
+  background:radial-gradient(closest-side,rgba(93,211,168,.10),transparent 70%);
+}
+.feature .meta{position:relative;z-index:1}
+.feature .num{
+  font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--ink-faint);text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;
+}
+.feature .num .live{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:3px 8px 3px 7px;border-radius:999px;
+  background:rgba(93,211,168,.14);border:1px solid rgba(93,211,168,.32);
+  color:var(--emerald);
+}
+.feature .num .live .ld{width:5px;height:5px;border-radius:50%;background:var(--emerald);box-shadow:0 0 8px var(--emerald);animation:p 1.6s ease-in-out infinite}
+.feature h3{
+  font-weight:600;font-size:clamp(28px,3.6vw,52px);line-height:1.0;letter-spacing:-.025em;
+  margin:14px 0 14px;
+}
+.feature p{margin:0 0 18px;color:var(--ink-dim);max-width:46ch;font-size:16px}
+.feature .chips{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:0 0 22px}
+.feature .chips li{
+  font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.02em;
+  padding:4px 10px;border-radius:999px;background:var(--tint);border:1px solid var(--hairline-2);color:var(--ink-dim);
+}
+.feature .links{display:flex;gap:10px;flex-wrap:wrap}
+
+.feature .shot{
+  position:relative;z-index:1;
+  border-radius:18px;overflow:hidden;
+  background:var(--bg-3);border:1px solid var(--hairline-2);
+  box-shadow:0 60px 120px -40px rgba(0,0,0,.7),0 20px 40px -20px rgba(0,0,0,.5);
+  transition:transform .6s cubic-bezier(.2,.8,.2,1);
+  aspect-ratio:16/10;
+}
+.feature:hover .shot{transform:translateY(-4px) scale(1.01)}
+.feature .shot img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.feature.alt{grid-template-columns:1.5fr 1fr;margin-top:18px}
+.feature.alt .meta{order:2}
+.feature.alt .shot{order:1}
+
+/* ───── Bento (in studio) ───── */
+.bento-sec{padding:96px 0}
+.bento{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:14px;
+  grid-auto-rows:minmax(220px,auto);
+}
+.tile{
+  position:relative;border-radius:20px;
+  background:var(--bg-2);border:1px solid var(--hairline);
+  padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;
+  overflow:hidden;
+  transition:border-color .25s,transform .35s;
+  isolation:isolate;
+}
+.tile:hover{border-color:var(--hairline-2);transform:translateY(-3px)}
+.tile a.surface{position:absolute;inset:0;z-index:5}
+.tile .h-row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tile .pl{font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);text-transform:uppercase}
+.tile .st{
+  font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;
+  padding:4px 8px;border-radius:6px;background:var(--tint);border:1px solid var(--hairline);color:var(--ink-dim);
+}
+.tile h4{
+  margin:0 0 8px;font-weight:600;font-size:24px;line-height:1.05;letter-spacing:-.02em;
+}
+.tile p{margin:0;color:var(--ink-dim);font-size:14px;line-height:1.55;max-width:36ch}
+.tile .chips{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:14px 0 0}
+.tile .chips li{
+  font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.02em;
+  padding:3px 8px;border-radius:999px;background:var(--tint);border:1px solid var(--hairline);color:var(--ink-dim);
+}
+
+/* abstract artworks for in-studio tiles */
+.art{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  opacity:.95;mix-blend-mode:screen;
+}
+.art-rise{
+  background:
+    radial-gradient(60% 50% at 80% 0%,rgba(255,106,77,.30),transparent 70%),
+    repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 1px,transparent 1px 18px);
+}
+.art-life{
+  background:
+    radial-gradient(60% 60% at 20% 10%,rgba(93,211,168,.18),transparent 70%),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 22px),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 22px);
+}
+.art-flowers{
+  background:
+    radial-gradient(circle at 80% 80%,rgba(255,176,122,.32),transparent 50%),
+    radial-gradient(circle at 30% 60%,rgba(255,106,77,.22),transparent 55%),
+    radial-gradient(circle at 60% 30%,rgba(232,229,222,.10),transparent 55%);
+}
+.art-trans{
+  background:
+    radial-gradient(60% 60% at 50% 0%,rgba(120,160,255,.18),transparent 70%),
+    repeating-linear-gradient(180deg,rgba(255,255,255,.05) 0 18px,transparent 18px 36px);
+}
+.art-zoo{
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,176,122,.20),transparent 40%),
+    radial-gradient(circle at 75% 35%,rgba(93,211,168,.18),transparent 35%),
+    radial-gradient(circle at 50% 80%,rgba(255,106,77,.15),transparent 40%);
+}
+.art-turb{
+  background:
+    radial-gradient(120% 60% at 50% 100%,rgba(255,106,77,.22),transparent 70%),
+    repeating-linear-gradient(120deg,rgba(255,255,255,.05) 0 1px,transparent 1px 14px);
+}
+.art-arena{
+  background:
+    radial-gradient(60% 60% at 50% 50%,rgba(120,160,255,.18),transparent 70%),
+    radial-gradient(rgba(255,255,255,.10) 1px,transparent 1.4px) 0 0/18px 18px;
+}
+
+.tile .glyph{
+  position:relative;z-index:1;
+  font-weight:700;font-size:74px;line-height:.9;letter-spacing:-.04em;
+  color:var(--ink);opacity:.92;
+  font-family:'Geist',sans-serif;
+}
+.tile .glyph .lo{color:var(--ink-faint)}
+.tile.coral .glyph{color:var(--coral)}
+.tile.coral2 .glyph{color:var(--coral-2)}
+.tile.emerald .glyph{color:var(--emerald)}
+.tile.soft .glyph{color:var(--soft)}
+
+.s-12{grid-column:span 12}.s-8{grid-column:span 8}.s-7{grid-column:span 7}
+.s-6{grid-column:span 6}.s-5{grid-column:span 5}.s-4{grid-column:span 4}
+.s-3{grid-column:span 3}.r-2{grid-row:span 2}
+
+/* ───── About ───── */
+.about{padding:96px 0 0}
+.about-grid{
+  display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:start;
+  border-top:1px solid var(--hairline);padding-top:32px;
+}
+.about p{
+  font-size:22px;line-height:1.5;color:var(--ink);margin:0 0 18px;max-width:48ch;font-weight:400;
+}
+.about p .muted{color:var(--ink-faint)}
+.cap-list{list-style:none;padding:0;margin:0}
+.cap-list li{
+  display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:baseline;
+  padding:14px 0;border-bottom:1px solid var(--hairline);
+}
+.cap-list li:last-child{border-bottom:0}
+.cap-list li b{
+  font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.02em;color:var(--ink-faint);font-weight:500;
+}
+.cap-list li span{color:var(--ink);font-size:15px;line-height:1.5}
+
+/* ───── Contact ───── */
+.contact{padding:96px 0 64px}
+.contact-row{
+  display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:end;
+  border-top:1px solid var(--hairline);padding-top:32px;
+}
+.contact h2{
+  font-weight:600;font-size:clamp(48px,8vw,120px);line-height:.95;letter-spacing:-.035em;margin:0;
+}
+.contact h2 .muted{color:var(--ink-faint)}
+.contact-info{display:flex;flex-direction:column;gap:14px}
+.contact-info .lab{font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.02em;color:var(--ink-faint);text-transform:uppercase;margin:0 0 4px}
+.contact-info a.mail{
+  font-size:24px;font-weight:500;letter-spacing:-.01em;color:var(--ink);
+  display:inline-flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--hairline-2);padding-bottom:4px;
+  width:fit-content;
+}
+.contact-info a.mail .arr{transition:transform .25s}
+.contact-info a.mail:hover{border-color:var(--coral)}
+.contact-info a.mail:hover .arr{transform:translate(3px,-3px)}
+.contact-info span{color:var(--ink-dim);font-size:14px}
+
+footer.foot{
+  border-top:1px solid var(--hairline);
+  padding:18px 0;
+  display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.02em;color:var(--ink-faint);
+}
+footer.foot b{color:var(--ink-dim)}
+
+@media (max-width:900px){
+  .strip{grid-template-columns:1fr 1fr;gap:14px}
+  .feature,.feature.alt{grid-template-columns:1fr}
+  .feature.alt .meta{order:1}
+  .feature.alt .shot{order:2}
+  .s-12,.s-8,.s-7,.s-6,.s-5,.s-4,.s-3{grid-column:span 6}
+  .about-grid,.contact-row{grid-template-columns:1fr}
+  .notice .row > span:nth-child(2){display:none}
+}
+@media (max-width:600px){
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .s-12,.s-8,.s-7,.s-6,.s-5,.s-4,.s-3{grid-column:span 2}
+  .nav-links a:not(.cta){display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="notice">
+  <div class="wrap row">
+    <span><b>VXVO</b> — Independent studio</span>
+    <span>Pace Nutrition is live · Klaro Academy is live</span>
+    <span class="pill"><span class="dot"></span> Shipping</span>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap row">
+    <a class="brand" href="#top"><span class="mark"></span> VXVO</a>
+    <nav class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a class="cta" href="#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="tag"><span class="dot"></span> Est. 2023 · London · Independent</span>
+    <h1>One studio building <span class="accent">software, games</span> <span class="muted">&amp; tools that ship.</span></h1>
+    <p class="deck">VXVO is the umbrella for a body of work spanning <b>AI-assisted web apps, mobile productivity tools, and original games.</b> Designed and built end-to-end — visual identity, frontend, backend, mobile, and the boring infrastructure that keeps it all running.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#work">View the work <span class="arr">→</span></a>
+      <a class="btn" href="#contact">Get in touch</a>
+    </div>
+
+    <div class="strip">
+      <div class="label">In rotation</div>
+      <div><b>Pace Nutrition</b></div>
+      <div><b>Klaro Academy</b></div>
+      <div><b>LifePlanner</b></div>
+      <div><b>Daniel Rise</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="feat" id="work">
+  <div class="wrap">
+    <div class="feat-head">
+      <div>
+        <span class="kicker"><b>● Now shipping</b> · 2 products live</span>
+        <h2 class="h2">Currently in rotation. <span class="muted">Real users, real numbers.</span></h2>
+      </div>
+      <a class="see-all" href="#bento">All work →</a>
+    </div>
+
+    <a class="feature" href="https://Pace-Nutrition.vercel.app" target="_blank" rel="noopener">
+      <div class="meta">
+        <div class="num">PLATE 01 · App <span class="live"><span class="ld"></span> Live</span></div>
+        <h3>Pace Nutrition</h3>
+        <p>An AI nutrition coach. Quietly practical — fast logging, real numbers, no fluff. Built for the people who actually want to track without the friction.</p>
+        <ul class="chips"><li>Health</li><li>Tracking</li><li>iOS / Android</li><li>AI</li></ul>
+        <div class="links">
+          <span class="btn primary">Visit site <span class="arr">→</span></span>
+          <span class="btn">pace-nutrition.vercel.app</span>
+        </div>
+      </div>
+      <div class="shot"><img src="../media/nutrition.png" alt="Pace nutrition tracker"></div>
+    </a>
+
+    <a class="feature alt" href="https://klaroacademy.com" target="_blank" rel="noopener">
+      <div class="shot"><img src="../media/klaro.png" alt="Klaro Academy homepage"></div>
+      <div class="meta">
+        <div class="num">PLATE 06 · Edu <span class="live"><span class="ld"></span> Live</span></div>
+        <h3>Klaro Academy</h3>
+        <p>Friendly, structured interview coaching for graduates and early-career professionals. Two weeks of personalised prep — clear, kind, effective.</p>
+        <ul class="chips"><li>Coaching</li><li>Careers</li><li>Shopify</li></ul>
+        <div class="links">
+          <span class="btn primary">Visit site <span class="arr">→</span></span>
+          <span class="btn">klaroacademy.com</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="bento-sec" id="bento">
+  <div class="wrap">
+    <div class="feat-head">
+      <div>
+        <span class="kicker">In studio · 7 products in flight</span>
+        <h2 class="h2">A wider cross-section. <span class="muted">Quietly building.</span></h2>
+      </div>
+    </div>
+
+    <div class="bento">
+
+      <article class="tile s-6 coral">
+        <div class="art art-rise"></div>
+        <div class="h-row"><span class="pl">Plate 02 · App</span><span class="st">In studio</span></div>
+        <div class="glyph">Daniel<br><span class="lo">Rise.</span></div>
+        <div>
+          <h4>Daniel Rise</h4>
+          <p>An AI-assisted personal site &amp; writing platform. Next.js, Supabase, Anthropic on the backend.</p>
+          <ul class="chips"><li>Next.js</li><li>Supabase</li><li>Claude</li></ul>
+        </div>
+      </article>
+
+      <article class="tile s-6 emerald">
+        <div class="art art-life"></div>
+        <div class="h-row"><span class="pl">Plate 03 · App</span><span class="st">In studio</span></div>
+        <div class="glyph">Life<br><span class="lo">Planner.</span></div>
+        <div>
+          <h4>LifePlanner</h4>
+          <p>A long-horizon planner that turns goals into days. Iterated through four major versions to nail the daily loop.</p>
+          <ul class="chips"><li>Mobile</li><li>Habits</li><li>Planning</li></ul>
+        </div>
+      </article>
+
+      <article class="tile s-4 coral2">
+        <div class="art art-flowers"></div>
+        <div class="h-row"><span class="pl">Plate 04 · App</span><span class="st">In studio</span></div>
+        <div class="glyph">Friendship<br><span class="lo">Flowers.</span></div>
+        <div>
+          <h4>Friendship Flowers</h4>
+          <p>A relationship CRM disguised as a garden. Tend the people you care about; watch the flowers grow.</p>
+        </div>
+      </article>
+
+      <article class="tile s-4 soft">
+        <div class="art art-trans"></div>
+        <div class="h-row"><span class="pl">Plate 05 · App</span><span class="st">In studio</span></div>
+        <div class="glyph">Trans<br><span class="lo">lator.</span></div>
+        <div>
+          <h4>Translator</h4>
+          <p>A pocket translator built for travel and conversation, not just word lookups. Streaming responses, no friction.</p>
+        </div>
+      </article>
+
+      <article class="tile s-4 emerald">
+        <div class="art art-arena"></div>
+        <div class="h-row"><span class="pl">Plate 09 · Infra</span><span class="st">In studio</span></div>
+        <div class="glyph">Arena.</div>
+        <div>
+          <h4>Arena</h4>
+          <p>An internal multiplayer worker powering live experiences. Cloudflare Workers, real-time state, low latency.</p>
+        </div>
+      </article>
+
+      <article class="tile s-4 coral">
+        <div class="art art-zoo"></div>
+        <div class="h-row"><span class="pl">Plate 07 · Game</span><span class="st">In studio</span></div>
+        <div class="glyph">Bootleg<br><span class="lo">Zoo.</span></div>
+        <div>
+          <h4>BootlegZoo</h4>
+          <p>A wonderfully weird zoo full of creatures that probably shouldn't exist. A game about discovery and chaos.</p>
+        </div>
+      </article>
+
+      <article class="tile s-4 coral2">
+        <div class="art art-turb"></div>
+        <div class="h-row"><span class="pl">Plate 08 · Game</span><span class="st">In studio</span></div>
+        <div class="glyph">Turbu<br><span class="lo">lence.</span></div>
+        <div>
+          <h4>Turbulence</h4>
+          <p>A high-velocity arcade game about staying upright when the world won't stop moving.</p>
+        </div>
+      </article>
+
+      <article class="tile s-4 soft">
+        <div class="art art-life"></div>
+        <div class="h-row"><span class="pl">More</span><span class="st">Soon</span></div>
+        <div class="glyph">+ <span class="lo">More.</span></div>
+        <div>
+          <h4>And the next thing</h4>
+          <p>Always one more in the pipe. Drop a line if you want a heads-up when something new is in the wild.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="feat-head">
+      <div>
+        <span class="kicker">About · The studio</span>
+        <h2 class="h2">Small studio. <span class="muted">Wide range.</span></h2>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>VXVO is an independent studio. The remit is broad on purpose — productivity tools one week, an arcade game the next, a translator the week after. <span class="muted">The throughline is taste, polish, and shipping.</span></p>
+        <p class="muted" style="font-size:17px">Everything is designed and built end-to-end: visual identity, frontend, backend, mobile, and the boring infrastructure that keeps it running. The studio works in tight loops with users and ships small.</p>
+      </div>
+      <ul class="cap-list">
+        <li><b>Web</b><span>Next.js, React, TypeScript, edge runtimes</span></li>
+        <li><b>Mobile</b><span>Native &amp; cross-platform on iOS and Android</span></li>
+        <li><b>AI</b><span>Claude, GPT, structured generation, agents</span></li>
+        <li><b>Backend</b><span>Supabase, Postgres, Cloudflare Workers</span></li>
+        <li><b>Design</b><span>Identity, product UI, motion, illustration</span></li>
+        <li><b>Games</b><span>Original titles, sandbox systems, arcade</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-row">
+      <h2>Want to work together? <span class="muted">Drop a line.</span></h2>
+      <div class="contact-info">
+        <div>
+          <p class="lab">Email</p>
+          <a class="mail" href="mailto:daniel@vxvo.co.uk">daniel@vxvo.co.uk <span class="arr">↗</span></a>
+        </div>
+        <div>
+          <p class="lab">Studio</p>
+          <span>VXVO · Independent · United Kingdom</span>
+        </div>
+      </div>
+    </div>
+    <footer class="foot" style="margin-top:64px">
+      <span>© <span id="y"></span> · <b>VXVO</b> · Built in-house</span>
+      <span>Set in <b>Geist</b></span>
+      <span>v0.6 · Modern Dark</span>
+    </footer>
+  </div>
+</section>
+
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+
+// hero glow follows pointer slightly
+(function(){
+  const g=document.querySelector('.hero .glow');
+  if(!g) return;
+  document.querySelector('.hero').addEventListener('pointermove',e=>{
+    const r=e.currentTarget.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width-.5)*40;
+    g.style.transform=`translateX(calc(-50% + ${x}px))`;
+  });
+})();
+
+// fade-in on scroll
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.opacity='1';
+      e.target.style.transform='translateY(0)';
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('.feature, .tile').forEach((el,i)=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(18px)';
+  el.style.transition=`opacity .8s cubic-bezier(.2,.8,.2,1) ${(i%4)*60}ms, transform .8s cubic-bezier(.2,.8,.2,1) ${(i%4)*60}ms, border-color .25s`;
+  io.observe(el);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VXVO //  TERMINAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=VT323&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#050505;
+  --bg-2:#0C0C0C;
+  --ink:#F2F2F2;
+  --ink-dim:#8A8A85;
+  --ink-faint:#3A3A38;
+  --line:#1F1F1D;
+  --acid:#E4FF1A;
+  --acid-dim:#A6BD0C;
+  --warn:#FF4A1C;
+  --ok:#5DFF8E;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  font-size:13.5px;line-height:1.55;letter-spacing:.005em;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* dot grid + scanline */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);
+  background-size:24px 24px;
+  mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 80%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0,rgba(255,255,255,.012) 1px,transparent 1px,transparent 3px);
+  mix-blend-mode:overlay;
+}
+
+/* layout frame */
+.frame{
+  position:relative;z-index:1;
+  border:1px solid var(--line);
+  margin:14px;min-height:calc(100vh - 28px);
+}
+.tape{
+  display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:18px;
+  padding:10px 16px;border-bottom:1px solid var(--line);
+  font-size:11px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.18em;
+}
+.tape .led{width:8px;height:8px;background:var(--acid);box-shadow:0 0 12px var(--acid);display:inline-block;margin-right:8px;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.tape b{color:var(--ink);font-weight:500}
+
+/* top bar */
+.bar{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:14px 22px;border-bottom:1px solid var(--line);gap:18px;
+  font-size:11px;text-transform:uppercase;letter-spacing:.2em;color:var(--ink-dim);
+}
+.bar .nav{display:flex;gap:22px;justify-content:flex-end}
+.bar .nav a{position:relative;color:var(--ink-dim);transition:color .15s}
+.bar .nav a::before{content:"[ ";color:var(--ink-faint)}
+.bar .nav a::after{content:" ]";color:var(--ink-faint)}
+.bar .nav a:hover{color:var(--acid)}
+.bar .logo{
+  font-weight:800;font-size:13px;letter-spacing:.3em;color:var(--ink);
+  border:1px solid var(--ink);padding:6px 12px;
+}
+.bar .logo span{color:var(--acid)}
+
+/* hero */
+.hero{padding:48px 22px 40px;border-bottom:1px solid var(--line);position:relative}
+.hero-meta{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
+  padding-bottom:28px;margin-bottom:28px;border-bottom:1px dashed var(--line);
+  font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--ink-dim);
+}
+.hero-meta b{display:block;color:var(--ink);font-weight:500;margin-bottom:4px;font-size:11px}
+.hero-meta .v{color:var(--acid);font-weight:700;font-size:11px}
+.hero h1{
+  font-family:'JetBrains Mono',monospace;font-weight:800;
+  font-size:clamp(40px,9vw,148px);line-height:.92;letter-spacing:-.03em;
+  margin:0 0 22px;color:var(--ink);
+}
+.hero h1 .y{color:var(--acid)}
+.hero h1 .ghost{color:var(--ink-faint)}
+.hero h1 .strike{position:relative;display:inline-block}
+.hero h1 .strike::after{
+  content:"";position:absolute;left:-2%;right:-2%;top:50%;height:6px;
+  background:var(--acid);transform:translateY(-50%);
+}
+.hero h1 .strike span{position:relative;z-index:1;color:var(--bg);mix-blend-mode:screen}
+
+.hero .deck{
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;
+  padding-top:28px;border-top:1px dashed var(--line);
+}
+.hero .deck p{margin:0;color:var(--ink-dim);max-width:60ch;font-size:14.5px;line-height:1.7}
+.hero .deck p b{color:var(--ink);font-weight:500}
+.hero-cta{display:flex;gap:14px;margin-top:22px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 16px;border:1px solid var(--ink);background:transparent;color:var(--ink);
+  font-family:inherit;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  cursor:pointer;transition:all .15s ease;
+}
+.btn:hover{background:var(--acid);color:var(--bg);border-color:var(--acid)}
+.btn.acid{background:var(--acid);color:var(--bg);border-color:var(--acid)}
+.btn.acid:hover{background:var(--bg);color:var(--acid)}
+.btn .arrow{font-weight:800}
+
+/* ascii heading */
+.ascii{
+  font-family:'VT323','JetBrains Mono',monospace;
+  font-size:13px;line-height:1;color:var(--ink-faint);
+  white-space:pre;overflow:hidden;
+  padding:14px 22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.ascii .acc{color:var(--acid)}
+
+/* sections */
+.sec{padding:40px 22px;border-bottom:1px solid var(--line)}
+.sec-head{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:24px;
+  padding-bottom:18px;margin-bottom:36px;border-bottom:1px solid var(--line);
+}
+.sec-head .id{color:var(--acid);font-weight:700;font-size:13px;letter-spacing:.18em}
+.sec-head h2{
+  margin:0;color:var(--ink);
+  font-weight:700;font-size:clamp(24px,3vw,44px);letter-spacing:-.01em;line-height:1;
+}
+.sec-head h2 em{font-style:normal;color:var(--ink-faint)}
+.sec-head .meta{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);
+  text-align:right;line-height:1.7;
+}
+
+/* table-style work list */
+.list{border-top:1px solid var(--line)}
+.row{
+  display:grid;grid-template-columns:60px 1.6fr 2fr 1fr 110px 60px;
+  align-items:start;gap:18px;
+  padding:22px 0;border-bottom:1px solid var(--line);
+  position:relative;cursor:pointer;
+  transition:background .15s ease;
+}
+.row:hover{background:rgba(228,255,26,.04)}
+.row a.surface{position:absolute;inset:0;z-index:2}
+.row .n{color:var(--ink-faint);font-weight:700;font-size:13px}
+.row .ti{
+  font-size:22px;letter-spacing:-.01em;color:var(--ink);font-weight:700;line-height:1.15;
+}
+.row .ti .arr{color:var(--acid);margin-left:6px;opacity:0;transition:opacity .15s,transform .15s}
+.row:hover .ti .arr{opacity:1;transform:translateX(2px)}
+.row .blurb{color:var(--ink-dim);font-size:13.5px;max-width:62ch;line-height:1.55}
+.row .tags{
+  font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-dim);
+  display:flex;flex-wrap:wrap;gap:0 14px;
+}
+.row .tags li{list-style:none}
+.row .tags li::before{content:"// ";color:var(--ink-faint)}
+.row .st{
+  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);
+  white-space:nowrap;
+}
+.row .st b{color:var(--acid);font-weight:700}
+.row .st.live b{color:var(--ok)}
+.row .arrow-cell{font-size:18px;color:var(--ink-faint);text-align:right}
+.row:hover .arrow-cell{color:var(--acid)}
+
+/* image plates row (live products get image preview floating right of grid? keep simple — show image as small thumb) */
+.row .thumb{display:none}
+
+/* dense product cards with images at bottom */
+.shots{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:36px;
+}
+.shot{
+  border:1px solid var(--line);background:var(--bg-2);
+  position:relative;overflow:hidden;
+  transition:border-color .2s ease,transform .2s ease;
+}
+.shot:hover{border-color:var(--acid);transform:translateY(-2px)}
+.shot .head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 14px;border-bottom:1px solid var(--line);
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);
+}
+.shot .head b{color:var(--acid)}
+.shot img{
+  width:100%;height:auto;display:block;
+  filter:saturate(.9) contrast(1.05);
+}
+.shot .foot{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 14px;border-top:1px solid var(--line);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim);
+}
+.shot .foot b{color:var(--ink)}
+
+/* about grid (kv table) */
+.kv{border-top:1px solid var(--line)}
+.kv-row{
+  display:grid;grid-template-columns:160px 1fr;gap:20px;
+  padding:14px 0;border-bottom:1px solid var(--line);align-items:baseline;
+}
+.kv-row b{color:var(--ink-dim);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+.kv-row span{color:var(--ink);font-size:14px}
+.kv-row span em{font-style:normal;color:var(--acid)}
+
+.about-cols{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.about-cols p{color:var(--ink-dim);font-size:14.5px;line-height:1.75;margin:0 0 14px;max-width:60ch}
+.about-cols p b{color:var(--ink);font-weight:500}
+
+/* contact strip */
+.contact{
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;
+  padding:48px 22px;border-bottom:1px solid var(--line);
+}
+.contact h3{
+  margin:0;font-size:clamp(36px,7vw,108px);font-weight:800;letter-spacing:-.025em;line-height:.95;
+}
+.contact h3 .acid{color:var(--acid)}
+.contact .right{text-align:right;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);line-height:2}
+.contact .right a.mail{
+  display:inline-block;font-size:18px;letter-spacing:0;text-transform:none;color:var(--ink);
+  border:1px solid var(--ink);padding:10px 14px;margin-top:6px;
+}
+.contact .right a.mail:hover{background:var(--acid);color:var(--bg);border-color:var(--acid)}
+
+/* footer */
+.foot{
+  display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  padding:14px 22px;
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);
+}
+.foot b{color:var(--ink)}
+.foot .blink{display:inline-block;width:10px;height:14px;background:var(--acid);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+@media (max-width:900px){
+  .hero-meta{grid-template-columns:repeat(2,1fr)}
+  .hero .deck{grid-template-columns:1fr;gap:18px}
+  .row{grid-template-columns:36px 1fr 1fr 90px 32px}
+  .row .blurb{display:none}
+  .sec-head{grid-template-columns:1fr;gap:8px}
+  .sec-head .meta{text-align:left}
+  .shots{grid-template-columns:1fr}
+  .about-cols{grid-template-columns:1fr}
+  .contact{grid-template-columns:1fr;text-align:left}
+  .contact .right{text-align:left}
+  .ascii{font-size:9px}
+}
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+  <div class="tape">
+    <span><span class="led"></span>SYS · ONLINE</span>
+    <span>VXVO TERMINAL · BUILD 26.5.06 · NODE-PROD-LON-01</span>
+    <span>UPTIME · <b>1,043d</b></span>
+    <span>USER · <b>guest@vxvo</b></span>
+  </div>
+
+  <div class="bar">
+    <span>NODE/03 · LDN</span>
+    <a class="logo" href="#top"><span>V</span>XVO<span>.</span></a>
+    <nav class="nav">
+      <a href="#work">work</a>
+      <a href="#about">about</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+
+  <section class="hero" id="top">
+    <div class="hero-meta">
+      <div><b>STATUS</b><span class="v">▌ SHIPPING</span></div>
+      <div><b>STUDIO</b>VXVO · INDEPENDENT</div>
+      <div><b>SINCE</b>2023 · LDN</div>
+      <div><b>SURFACE</b>WEB · iOS · ANDROID · EDGE</div>
+    </div>
+
+    <h1>
+      <span class="ghost">&gt;</span> we build<br>
+      software<span class="y">,</span> games<br>
+      <span class="strike"><span>&amp; tools</span></span> that ship.
+    </h1>
+
+    <div class="deck">
+      <p>VXVO is the umbrella for a body of <b>web apps, mobile productivity tools, and original games</b>. Every product on this page was designed, built, and maintained in-house — frontend, backend, identity, and the boring infrastructure underneath.</p>
+      <div>
+        <p>Independent studio. Wide remit. The throughline is <b>taste, polish,</b> and the discipline of shipping small.</p>
+        <div class="hero-cta">
+          <a class="btn acid" href="#work">VIEW WORK <span class="arrow">→</span></a>
+          <a class="btn" href="#contact">GET IN TOUCH</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <pre class="ascii">┌──────────────────────────────────────────────────────────────────────────────┐
+│  <span class="acc">██╗   ██╗██╗  ██╗██╗   ██╗ ██████╗</span>     V O L U M E   I I I  ·  M M X X V I  │
+│  <span class="acc">██║   ██║╚██╗██╔╝██║   ██║██╔═══██╗</span>    9 P R O D U C T S  ·  4 P L A T F O R M S │
+│  <span class="acc">██║   ██║ ╚███╔╝ ██║   ██║██║   ██║</span>    1   S T U D I O   ·   E N D - T O - E N D │
+│  <span class="acc">╚██╗ ██╔╝ ██╔██╗ ╚██╗ ██╔╝██║   ██║</span>                                              │
+│   <span class="acc">╚████╔╝ ██╔╝ ██╗ ╚████╔╝ ╚██████╔╝</span>    L A S T   D E P L O Y  ·  T - 4 7 m       │
+│    <span class="acc">╚═══╝  ╚═╝  ╚═╝  ╚═══╝   ╚═════╝</span>                                               │
+└──────────────────────────────────────────────────────────────────────────────┘</pre>
+
+  <section id="work" class="sec">
+    <div class="sec-head">
+      <div class="id">[ 01 / WORK ]</div>
+      <h2>Selected output <em>// 9 records</em></h2>
+      <div class="meta">SORT · STATUS DESC<br>FILTER · ALL · LIVE · BUILD</div>
+    </div>
+
+    <div class="list">
+
+      <a href="https://Pace-Nutrition.vercel.app" target="_blank" rel="noopener" class="row" style="display:grid">
+        <span class="n">01</span>
+        <span class="ti">Pace Nutrition <span class="arr">→</span></span>
+        <span class="blurb">An AI nutrition coach. Quietly practical — fast logging, real numbers, no fluff.</span>
+        <ul class="tags"><li>Health</li><li>Tracking</li><li>iOS / Android</li></ul>
+        <span class="st live">[ <b>LIVE</b> ]</span>
+        <span class="arrow-cell">↗</span>
+      </a>
+
+      <div class="row">
+        <span class="n">02</span>
+        <span class="ti">Daniel Rise</span>
+        <span class="blurb">An AI-assisted personal site &amp; writing platform. Next.js, Supabase, Anthropic on the backend.</span>
+        <ul class="tags"><li>Next.js</li><li>Supabase</li><li>Claude</li></ul>
+        <span class="st">[ <b>BUILDING</b> ]</span>
+        <span class="arrow-cell">●</span>
+      </div>
+
+      <div class="row">
+        <span class="n">03</span>
+        <span class="ti">LifePlanner</span>
+        <span class="blurb">A long-horizon planner that turns goals into days. Iterated through four major versions to nail the daily loop.</span>
+        <ul class="tags"><li>Mobile</li><li>Habits</li><li>Planning</li></ul>
+        <span class="st">[ <b>BUILDING</b> ]</span>
+        <span class="arrow-cell">●</span>
+      </div>
+
+      <div class="row">
+        <span class="n">04</span>
+        <span class="ti">Friendship Flowers</span>
+        <span class="blurb">A relationship CRM disguised as a garden. Tend the people you care about; watch the flowers grow.</span>
+        <ul class="tags"><li>Mobile</li><li>Social</li><li>Delight</li></ul>
+        <span class="st">[ <b>BUILDING</b> ]</span>
+        <span class="arrow-cell">●</span>
+      </div>
+
+      <div class="row">
+        <span class="n">05</span>
+        <span class="ti">Translator</span>
+        <span class="blurb">A pocket translator built for travel and conversation, not just word lookups. Streaming responses, no friction.</span>
+        <ul class="tags"><li>Mobile</li><li>AI</li><li>Realtime</li></ul>
+        <span class="st">[ <b>BUILDING</b> ]</span>
+        <span class="arrow-cell">●</span>
+      </div>
+
+      <a href="https://klaroacademy.com" target="_blank" rel="noopener" class="row" style="display:grid">
+        <span class="n">06</span>
+        <span class="ti">Klaro Academy <span class="arr">→</span></span>
+        <span class="blurb">Friendly, structured interview coaching for graduates and early-career professionals. Two weeks of personalised prep.</span>
+        <ul class="tags"><li>Coaching</li><li>Careers</li><li>Shopify</li></ul>
+        <span class="st live">[ <b>LIVE</b> ]</span>
+        <span class="arrow-cell">↗</span>
+      </a>
+
+      <div class="row">
+        <span class="n">07</span>
+        <span class="ti">BootlegZoo</span>
+        <span class="blurb">A wonderfully weird zoo full of creatures that probably shouldn't exist. A game about discovery and chaos.</span>
+        <ul class="tags"><li>Game</li><li>Sandbox</li><li>Original IP</li></ul>
+        <span class="st">[ <b>BUILDING</b> ]</span>
+        <span class="arrow-cell">●</span>
+      </div>
+
+      <div class="row">
+        <span class="n">08</span>
+        <span class="ti">Turbulence</span>
+        <span class="blurb">A high-velocity arcade game about staying upright when the world won't stop moving. Tight controls, big feel.</span>
+        <ul class="tags"><li>Game</li><li>Arcade</li><li>Reflex</li></ul>
+        <span class="st">[ <b>BUILDING</b> ]</span>
+        <span class="arrow-cell">●</span>
+      </div>
+
+      <div class="row">
+        <span class="n">09</span>
+        <span class="ti">Arena</span>
+        <span class="blurb">An internal multiplayer worker powering live experiences. Cloudflare Workers, real-time state, low latency.</span>
+        <ul class="tags"><li>Workers</li><li>Realtime</li><li>Backend</li></ul>
+        <span class="st">[ <b>BUILDING</b> ]</span>
+        <span class="arrow-cell">●</span>
+      </div>
+
+    </div>
+
+    <div class="shots">
+      <a class="shot" href="https://Pace-Nutrition.vercel.app" target="_blank" rel="noopener">
+        <div class="head"><span>// LIVE PREVIEW · 01</span><b>PACE</b></div>
+        <img src="../media/nutrition.png" alt="Pace nutrition tracker">
+        <div class="foot"><span>pace-nutrition.vercel.app</span><b>OPEN ↗</b></div>
+      </a>
+      <a class="shot" href="https://klaroacademy.com" target="_blank" rel="noopener">
+        <div class="head"><span>// LIVE PREVIEW · 06</span><b>KLARO</b></div>
+        <img src="../media/klaro.png" alt="Klaro Academy">
+        <div class="foot"><span>klaroacademy.com</span><b>OPEN ↗</b></div>
+      </a>
+    </div>
+  </section>
+
+  <section id="about" class="sec">
+    <div class="sec-head">
+      <div class="id">[ 02 / ABOUT ]</div>
+      <h2>Small studio. <em>// wide range.</em></h2>
+      <div class="meta">SCOPE · END-TO-END<br>OPS · SOLO + COLLAB</div>
+    </div>
+
+    <div class="about-cols">
+      <p>VXVO is an <b>independent studio</b>. The remit is broad on purpose — productivity tools one week, an arcade game the next, a translator the week after. The throughline is taste, polish, and shipping.</p>
+      <p>Everything is designed and built end-to-end: <b>visual identity, frontend, backend, mobile,</b> and the boring infrastructure that keeps it running. Tight loops with users. Ship small.</p>
+    </div>
+
+    <div class="kv" style="margin-top:32px">
+      <div class="kv-row"><b>WEB</b><span>Next.js, React, TypeScript, <em>edge runtimes</em></span></div>
+      <div class="kv-row"><b>MOBILE</b><span>Native + cross-platform · iOS &amp; Android</span></div>
+      <div class="kv-row"><b>AI</b><span>Claude, GPT, structured generation, <em>agents</em></span></div>
+      <div class="kv-row"><b>BACKEND</b><span>Supabase, Postgres, Cloudflare Workers</span></div>
+      <div class="kv-row"><b>DESIGN</b><span>Identity, product UI, motion, illustration</span></div>
+      <div class="kv-row"><b>GAMES</b><span>Original titles, sandbox systems, arcade</span></div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h3>// LET'S<br>TALK<span class="acid">.</span></h3>
+    <div class="right">
+      <div>PRESS · PARTNERSHIPS · CURIOSITY</div>
+      <a class="mail" href="mailto:daniel@vxvo.co.uk">daniel@vxvo.co.uk →</a>
+      <div style="margin-top:12px">STUDIO · VXVO · INDEPENDENT</div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>© <span id="y"></span> · <b>VXVO</b> · BUILT IN-HOUSE</span>
+    <span>SET IN <b>JETBRAINS MONO</b></span>
+    <span>READY <span class="blink"></span></span>
+  </div>
+
+</div>
+
+<script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+</body>
+</html>
