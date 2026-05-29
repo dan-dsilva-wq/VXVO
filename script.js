@@ -1,57 +1,122 @@
-// Year
-document.getElementById('year').textContent = new Date().getFullYear();
+/* VXVO — interactions
+   reveal-on-scroll · count-up · card tilt + glare · cursor spotlight · nav */
 
-// Reveal-on-scroll
-const revealTargets = document.querySelectorAll('.section, .card, .hero-title .line, .hero-sub, .hero-cta, .stats, .eyebrow');
-revealTargets.forEach(el => el.classList.add('reveal'));
+(() => {
+  "use strict";
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('in');
-      io.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-revealTargets.forEach(el => io.observe(el));
+  /* ── current year ─────────────────────────────────────────── */
+  const yr = document.getElementById("yr");
+  if (yr) yr.textContent = new Date().getFullYear();
 
-// Subtle parallax on background orbs
-const orbs = document.querySelectorAll('.orb');
-let raf = 0, mx = 0, my = 0, tx = 0, ty = 0;
-window.addEventListener('pointermove', (e) => {
-  mx = (e.clientX / window.innerWidth - 0.5) * 2;
-  my = (e.clientY / window.innerHeight - 0.5) * 2;
-  if (!raf) raf = requestAnimationFrame(loop);
-}, { passive: true });
-function loop() {
-  raf = 0;
-  tx += (mx - tx) * 0.06;
-  ty += (my - ty) * 0.06;
-  orbs.forEach((o, i) => {
-    const k = (i + 1) * 14;
-    o.style.transform = `translate3d(${tx * k}px, ${ty * k}px, 0)`;
-  });
-  if (Math.abs(mx - tx) > 0.001 || Math.abs(my - ty) > 0.001) raf = requestAnimationFrame(loop);
-}
+  /* ── nav: condense on scroll ──────────────────────────────── */
+  const nav = document.getElementById("nav");
+  const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 24);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
 
-// Count-up for stats
-const counters = document.querySelectorAll('.stats dd[data-count]');
-const countObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const el = e.target;
+  /* ── mobile menu ──────────────────────────────────────────── */
+  const burger = document.getElementById("burger");
+  const menu = document.getElementById("mobileMenu");
+  if (burger && menu) {
+    const toggle = (open) => {
+      const next = open ?? menu.hasAttribute("hidden");
+      menu.toggleAttribute("hidden", !next);
+      nav.classList.toggle("open", next);
+      burger.setAttribute("aria-expanded", String(next));
+    };
+    burger.addEventListener("click", () => toggle());
+    menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => toggle(false)));
+  }
+
+  /* ── reveal on scroll ─────────────────────────────────────── */
+  const revealables = document.querySelectorAll(".reveal");
+  if (reduce || !("IntersectionObserver" in window)) {
+    revealables.forEach((el) => el.classList.add("in"));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add("in");
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+    revealables.forEach((el) => io.observe(el));
+  }
+
+  /* ── count-up ─────────────────────────────────────────────── */
+  const counters = document.querySelectorAll("[data-count]");
+  const runCount = (el) => {
     const target = parseInt(el.dataset.count, 10);
-    const duration = 1100;
-    const start = performance.now();
-    const from = 0;
-    function tick(t) {
-      const p = Math.min(1, (t - start) / duration);
+    if (reduce || !Number.isFinite(target)) { el.textContent = target; return; }
+    const dur = 1100;
+    let start = null;
+    const tick = (t) => {
+      if (start === null) start = t;
+      const p = Math.min((t - start) / dur, 1);
       const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(from + (target - from) * eased);
+      el.textContent = Math.round(target * eased);
       if (p < 1) requestAnimationFrame(tick);
-    }
+      else el.textContent = target;
+    };
     requestAnimationFrame(tick);
-    countObserver.unobserve(el);
-  });
-}, { threshold: 0.4 });
-counters.forEach(c => countObserver.observe(c));
+  };
+  if ("IntersectionObserver" in window && !reduce) {
+    const cio = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) { runCount(e.target); cio.unobserve(e.target); }
+        }
+      },
+      { threshold: 0.6 }
+    );
+    counters.forEach((el) => cio.observe(el));
+  } else {
+    counters.forEach(runCount);
+  }
+
+  /* ── card tilt + glare (pointer, fine only) ───────────────── */
+  const fine = window.matchMedia("(pointer: fine)").matches;
+  if (fine && !reduce) {
+    const tilters = document.querySelectorAll("[data-tilt]");
+    const MAX = 5; // deg
+    tilters.forEach((card) => {
+      let raf = 0;
+      const move = (ev) => {
+        const r = card.getBoundingClientRect();
+        const px = (ev.clientX - r.left) / r.width;
+        const py = (ev.clientY - r.top) / r.height;
+        card.style.setProperty("--gx", (px * 100).toFixed(1) + "%");
+        card.style.setProperty("--gy", (py * 100).toFixed(1) + "%");
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const rx = (0.5 - py) * MAX * 2;
+          const ry = (px - 0.5) * MAX * 2;
+          card.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-4px)`;
+          raf = 0;
+        });
+      };
+      const reset = () => {
+        if (raf) cancelAnimationFrame(raf), (raf = 0);
+        card.style.transform = "";
+      };
+      card.addEventListener("pointermove", move);
+      card.addEventListener("pointerleave", reset);
+    });
+
+    /* ── cursor spotlight in hero ───────────────────────────── */
+    const spot = document.getElementById("spot");
+    const hero = document.getElementById("hero");
+    if (spot && hero) {
+      hero.addEventListener("pointermove", (e) => {
+        spot.style.opacity = "1";
+        spot.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
+      });
+      hero.addEventListener("pointerleave", () => (spot.style.opacity = "0"));
+    }
+  }
+})();

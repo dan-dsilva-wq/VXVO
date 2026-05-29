@@ -5,3 +5,6 @@
 node_modules
 
 .vercel
+
+# local-only backup of the previous site (still in git history)
+_archive/

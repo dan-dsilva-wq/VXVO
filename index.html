@@ -1,672 +1,431 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>VXVO — A studio building software, games & tools</title>
-<meta name="description" content="VXVO is an independent studio building software, games and tools — designed and built end-to-end, from identity to infrastructure." />
-<meta name="theme-color" content="#EBEFF6" />
-<link rel="icon" type="image/svg+xml" href="favicon.svg" />
-<link rel="canonical" href="https://vxvo.co.uk/" />
-<meta property="og:title" content="VXVO" />
-<meta property="og:description" content="An independent studio building software, games and tools." />
-<meta property="og:image" content="https://vxvo.co.uk/og.svg" />
-<meta property="og:url" content="https://vxvo.co.uk/" />
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="VXVO" />
-<meta name="twitter:card" content="summary_large_image" />
-<link rel="preconnect" href="https://api.fontshare.com" />
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,500,400&f[]=sentient@400i,500i,400,500&f[]=switzer@400,500,600&display=swap">
-<style>
-:root{
-  --bg:#EBEFF6;
-  --bg-2:#DEE4EE;
-  --bg-3:#CCD5E3;
-  --bg-4:#A8B5C9;
-  --ink:#0E1525;
-  --ink-2:rgba(14,21,37,.68);
-  --ink-3:rgba(14,21,37,.44);
-  --ink-4:rgba(14,21,37,.22);
-  --rule:rgba(14,21,37,.10);
-  --rule-2:rgba(14,21,37,.20);
-  --warm:#2348B0;
-  --warm-2:#1A3590;
-  --maxw:1400px;
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  background:var(--bg);color:var(--ink);
-  font-family:'Switzer',ui-sans-serif,system-ui,sans-serif;
-  font-size:16px;line-height:1.6;letter-spacing:-.005em;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-::selection{background:var(--warm);color:var(--bg)}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>VXVO — Independent software studio</title>
+  <meta name="description" content="VXVO is an independent studio designing and building AI-native software end to end — web, mobile, desktop, and the model layer in between." />
+  <meta name="theme-color" content="#07060d" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-/* Cool paper grain */
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.06  0 0 0 0 0.08  0 0 0 0 0.14  0 0 0 0.07 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  mix-blend-mode:multiply;opacity:.55;
-}
-/* Soft paper vignette */
-body::after{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(80% 60% at 50% 0%, rgba(255,255,255,.30), transparent 60%),
-    radial-gradient(70% 50% at 50% 100%, rgba(14,21,37,.05), transparent 70%);
-}
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="VXVO — Independent software studio" />
+  <meta property="og:description" content="AI-native software, designed and shipped end to end. Eleven products and counting, from one studio." />
+  <meta property="og:image" content="/og.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4vw,56px);position:relative;z-index:1}
+  <!-- Fonts: Fontshare only (matches Content-Security-Policy in vercel.json) -->
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500,700,400,300,200&f[]=satoshi@500,400,700,300,900&display=swap" rel="stylesheet" />
 
-/* ───── Top — minimal nameplate ───── */
-.top{position:sticky;top:0;z-index:50;background:rgba(235,239,246,.82);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid var(--rule)}
-.top .row{
-  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;padding:14px 0;
-}
-.brand{
-  font-family:'Cabinet Grotesk',sans-serif;font-weight:800;letter-spacing:-.025em;font-size:18px;
-  display:inline-flex;align-items:baseline;gap:6px;
-  padding:8px 14px;border:1px solid var(--rule-2);border-radius:999px;
-  transition:border-color .25s,background .25s;
-}
-.brand:hover{border-color:var(--ink);background:rgba(14,21,37,.04)}
-.brand .it{font-family:'Sentient',serif;font-style:italic;font-weight:400;color:var(--warm);font-size:.82em;letter-spacing:-.02em}
-.top .meta{
-  font-family:'Switzer';font-size:12.5px;color:var(--ink-3);letter-spacing:.005em;text-align:center;
-}
-.top .meta b{color:var(--ink);font-weight:500}
-.top nav{display:flex;gap:6px;align-items:center;font-size:13.5px;color:var(--ink-2)}
-.top nav a{position:relative;padding:8px 12px;border-radius:999px;transition:color .25s,background .25s}
-.top nav a:not(.cta):hover{color:var(--ink);background:rgba(14,21,37,.05)}
-.top nav a.cta{
-  border:1px solid var(--ink);background:var(--ink);color:var(--bg);font-weight:500;
-  padding:8px 16px;
-  transition:background .25s,color .25s,border-color .25s;
-}
-.top nav a.cta:hover{background:var(--warm);border-color:var(--warm);color:#fff}
-
-/* ───── Hero spread ───── */
-.hero{padding:96px 0 100px;position:relative;overflow:hidden}
-.hero-grid{
-  display:grid;grid-template-columns:1.05fr 1fr;gap:60px;align-items:center;
-}
-.hero .lead{position:relative;z-index:2}
-.hero .stamp{
-  font-family:'Switzer';font-weight:500;font-size:11.5px;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);
-  display:inline-flex;align-items:center;gap:14px;margin-bottom:36px;
-}
-.hero .stamp .ru{flex:0 0 38px;height:1px;background:var(--ink-3);display:inline-block}
-.hero h1{
-  font-family:'Cabinet Grotesk',sans-serif;font-weight:800;
-  font-size:clamp(56px,9vw,148px);
-  line-height:.94;letter-spacing:-.04em;
-  margin:0 0 28px;
-  color:var(--ink);
-}
-.hero h1 .it{
-  font-family:'Sentient',serif;font-style:italic;font-weight:500;
-  letter-spacing:-.02em;color:var(--warm);
-  display:inline-block;
-}
-.hero h1 .row{display:block;overflow:hidden;padding-bottom:.05em}
-.hero h1 .row > span{display:inline-block;transform:translateY(105%);opacity:0;animation:rise 1.1s cubic-bezier(.22,.7,.2,1) forwards}
-.hero h1 .row:nth-child(1) > span{animation-delay:.10s}
-.hero h1 .row:nth-child(2) > span{animation-delay:.22s}
-.hero h1 .row:nth-child(3) > span{animation-delay:.34s}
-@keyframes rise{to{transform:translateY(0);opacity:1}}
-
-.hero .deck{
-  font-family:'Sentient',serif;font-weight:400;
-  font-size:21px;line-height:1.5;color:var(--ink-2);max-width:48ch;margin:0 0 40px;letter-spacing:-.005em;
-  opacity:0;animation:fade .9s ease .55s forwards;
-}
-.hero .deck b{font-family:'Switzer';font-weight:500;color:var(--ink);font-style:normal}
-.hero .deck em{font-style:italic;color:var(--warm)}
-@keyframes fade{to{opacity:1}}
-
-.hero .meta-row{
-  display:grid;grid-template-columns:repeat(3,auto);gap:28px;
-  border-top:1px solid var(--rule);padding-top:22px;max-width:540px;
-  font-family:'Switzer';font-size:13px;color:var(--ink-3);letter-spacing:.005em;
-  opacity:0;animation:fade .9s ease .75s forwards;
-}
-.hero .meta-row .lab{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-4);margin-bottom:5px;display:block}
-.hero .meta-row b{color:var(--ink);font-weight:500;font-family:'Cabinet Grotesk';font-size:18px;letter-spacing:-.015em}
-.hero .meta-row b .it{font-family:'Sentient',serif;font-style:italic;font-weight:400;color:var(--warm);font-size:.94em}
-
-/* hero device — floats off-center, big shadow, slight tilt */
-.hero-device{
-  position:relative;display:flex;align-items:center;justify-content:center;
-  perspective:1400px;
-  transform:translateY(0);
-  opacity:0;animation:lift 1.4s cubic-bezier(.22,.7,.2,1) .35s forwards;
-}
-@keyframes lift{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-.hero-device .light{
-  position:absolute;inset:-30%;z-index:0;pointer-events:none;
-  background:radial-gradient(closest-side, rgba(35,72,176,.12), transparent 70%);
-  filter:blur(20px);
-}
-.hero-device .stage{
-  position:relative;z-index:1;
-  transform:rotate(-3deg);
-  transition:transform .8s cubic-bezier(.2,.8,.2,1);
-}
-.hero-device:hover .stage{transform:rotate(-2.2deg) scale(1.01)}
-
-/* Image plate — for marketing imagery shown at natural aspect */
-.plate{
-  width:100%;border-radius:18px;overflow:hidden;
-  background:var(--bg-3);
-  border:1px solid var(--rule-2);
-  box-shadow:
-    0 60px 110px -40px rgba(14,21,37,.30),
-    0 24px 48px -20px rgba(14,21,37,.18);
-  position:relative;
-}
-.plate img{width:100%;height:auto;display:block}
-.plate .pf{
-  display:flex;justify-content:space-between;align-items:center;gap:12px;
-  padding:13px 18px;border-top:1px solid var(--rule);background:var(--bg-2);
-  font-family:'Switzer';font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);
-}
-.plate .pf b{color:var(--ink);font-weight:500}
-
-/* Browser frame */
-.browser{
-  width:100%;border-radius:14px;overflow:hidden;
-  background:var(--bg-3);
-  border:1px solid var(--rule-2);
-  box-shadow:
-    0 60px 110px -40px rgba(14,21,37,.30),
-    0 24px 48px -20px rgba(14,21,37,.18);
-}
-.browser .bar{
-  display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--bg-2);border-bottom:1px solid var(--rule);
-}
-.browser .dots{display:inline-flex;gap:7px}
-.browser .dots i{width:11px;height:11px;border-radius:50%;background:rgba(14,21,37,.18);display:block}
-.browser .url{
-  flex:1;background:var(--bg);border:1px solid var(--rule);border-radius:8px;
-  padding:6px 12px;font-family:'Switzer';font-size:12.5px;color:var(--ink-3);text-align:center;
-}
-.browser .screen{aspect-ratio:16/10;overflow:hidden;background:var(--bg-3)}
-.browser .screen img{width:100%;height:100%;object-fit:cover;object-position:center top}
-
-/* ───── Index strip ───── */
-.index-strip{
-  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
-  background:var(--bg-2);
-}
-.index-strip .row{
-  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
-  padding:18px 0;
-  font-family:'Switzer';font-size:12.5px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;
-}
-.index-strip .row .label{color:var(--ink-4)}
-.index-strip a{color:var(--ink-2);transition:color .25s,letter-spacing .25s}
-.index-strip a:hover{color:var(--warm);letter-spacing:.08em}
-.index-strip a.dim{color:var(--ink-4)}
-.index-strip a.dim:hover{color:var(--ink-2)}
-
-/* ───── Spread (project feature) ───── */
-.spread{padding:140px 0;position:relative;border-bottom:1px solid var(--rule)}
-.spread-num{
-  font-family:'Sentient',serif;font-style:italic;font-weight:400;
-  font-size:clamp(60px,12vw,180px);line-height:.85;letter-spacing:-.04em;
-  color:var(--bg-4);
-  position:absolute;top:60px;right:clamp(20px,4vw,56px);pointer-events:none;
-  z-index:0;user-select:none;
-}
-.spread .row{
-  display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:center;
-  position:relative;z-index:1;
-}
-.spread.alt .row{grid-template-columns:1fr 1.1fr}
-.spread.alt .copy{order:2}
-.spread.alt .vis{order:1}
-.spread .copy{position:relative}
-.spread .stamp{
-  font-family:'Switzer';font-weight:500;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);
-  display:inline-flex;align-items:center;gap:14px;margin-bottom:24px;
-}
-.spread .stamp .ru{flex:0 0 28px;height:1px;background:var(--ink-3);display:inline-block}
-.spread .stamp .live{color:var(--warm)}
-.spread h2{
-  font-family:'Cabinet Grotesk',sans-serif;font-weight:800;
-  font-size:clamp(48px,7vw,108px);line-height:.94;letter-spacing:-.035em;
-  margin:0 0 24px;color:var(--ink);
-}
-.spread h2 .it{font-family:'Sentient',serif;font-style:italic;font-weight:500;color:var(--warm);letter-spacing:-.018em}
-.spread .lede{
-  font-family:'Sentient',serif;font-weight:400;font-size:21px;line-height:1.5;color:var(--ink-2);
-  max-width:48ch;margin:0 0 24px;letter-spacing:-.005em;
-}
-.spread .body{font-family:'Switzer';font-size:15.5px;line-height:1.65;color:var(--ink-2);max-width:50ch;margin:0 0 32px}
-.spread .body b{color:var(--ink);font-weight:500}
-.spread .specs{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:20px 24px;
-  border-top:1px solid var(--rule);padding-top:22px;margin-bottom:32px;max-width:520px;
-}
-.spread .specs .lab{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-4);margin:0 0 4px;display:block;font-family:'Switzer';font-weight:500}
-.spread .specs span:not(.lab){font-family:'Cabinet Grotesk';font-weight:500;color:var(--ink);font-size:15px;letter-spacing:-.01em}
-.spread .visit{
-  display:inline-flex;align-items:center;gap:14px;
-  font-family:'Switzer';font-weight:500;font-size:15px;color:var(--ink);
-  border-bottom:1px solid var(--ink);padding-bottom:6px;
-  transition:gap .35s ease,color .25s,border-color .25s;
-}
-.spread .visit:hover{gap:22px;color:var(--warm);border-color:var(--warm)}
-.spread .visit .dom{color:var(--ink-3);font-weight:400}
-.spread .visit:hover .dom{color:var(--warm)}
-
-/* ───── Studio (about) ───── */
-.studio{padding:140px 0;border-bottom:1px solid var(--rule);background:var(--bg-2)}
-.studio-grid{display:grid;grid-template-columns:auto 1.4fr 1fr;gap:48px;align-items:start}
-.studio .stamp{font-family:'Switzer';font-weight:500;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);padding-top:14px}
-.studio .stamp b{color:var(--ink);display:block;margin-top:4px}
-.studio .body p{
-  font-family:'Cabinet Grotesk';font-weight:400;
-  font-size:clamp(24px,2.6vw,32px);line-height:1.3;letter-spacing:-.02em;
-  color:var(--ink);margin:0 0 22px;
-}
-.studio .body p .it{font-family:'Sentient',serif;font-style:italic;font-weight:400;color:var(--warm)}
-.studio .body p.small{font-family:'Switzer';font-size:17px;line-height:1.55;color:var(--ink-2);font-weight:400;letter-spacing:-.005em}
-.studio .body p.small b{color:var(--ink);font-weight:500}
-.studio .caps{list-style:none;padding:0;margin:0}
-.studio .caps li{
-  display:grid;grid-template-columns:90px 1fr;gap:18px;align-items:baseline;
-  padding:14px 0;border-bottom:1px solid var(--rule);font-size:14.5px;line-height:1.45;
-}
-.studio .caps li:first-child{border-top:1px solid var(--rule)}
-.studio .caps li b{font-family:'Switzer';font-weight:500;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
-.studio .caps li span{color:var(--ink)}
-.studio .caps li span em{font-family:'Sentient',serif;font-style:italic;color:var(--warm);font-size:1.05em;font-weight:400}
-
-/* ───── In studio (the seven) ───── */
-.studio-list{padding:140px 0;border-bottom:1px solid var(--rule)}
-.studio-list .head{
-  display:grid;grid-template-columns:auto 1fr auto;gap:48px;align-items:end;margin-bottom:48px;
-}
-.studio-list .stamp{font-family:'Switzer';font-weight:500;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);padding-bottom:14px}
-.studio-list .stamp b{color:var(--ink);display:block;margin-top:4px}
-.studio-list h3{
-  font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:clamp(34px,5vw,72px);line-height:1;letter-spacing:-.03em;margin:0;
-}
-.studio-list h3 .it{font-family:'Sentient',serif;font-style:italic;font-weight:500;color:var(--warm)}
-.studio-list .meta{font-family:'Switzer';font-size:12.5px;color:var(--ink-3);letter-spacing:.005em;text-align:right}
-
-.list{border-top:1px solid var(--rule-2)}
-.list .item{
-  display:grid;grid-template-columns:60px 1.7fr 2fr 110px 28px;
-  align-items:center;gap:28px;
-  padding:30px 0;border-bottom:1px solid var(--rule);
-  position:relative;
-  transition:padding .4s cubic-bezier(.22,.7,.2,1),background .25s;
-}
-.list .item:hover{padding-left:14px;padding-right:14px;background:rgba(14,21,37,.030)}
-.list .item .n{font-family:'Sentient',serif;font-style:italic;font-weight:400;font-size:22px;color:var(--ink-3);letter-spacing:-.01em}
-.list .item:hover .n{color:var(--warm)}
-.list .item .ti{
-  font-family:'Cabinet Grotesk',sans-serif;font-weight:500;
-  font-size:clamp(24px,2.8vw,38px);line-height:1.05;letter-spacing:-.022em;color:var(--ink);
-  transition:color .25s;
-}
-.list .item .ti .it{font-family:'Sentient',serif;font-style:italic;font-weight:400;color:var(--warm)}
-.list .item:hover .ti{color:var(--warm)}
-.list .item .blurb{font-family:'Switzer';font-size:15px;color:var(--ink-2);line-height:1.55;max-width:54ch}
-.list .item .st{font-family:'Switzer';font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);text-align:right;white-space:nowrap}
-.list .item .arr{font-size:20px;color:var(--ink-3);text-align:right;transition:color .25s,transform .35s cubic-bezier(.22,.7,.2,1)}
-.list .item:hover .arr{color:var(--warm);transform:translateX(4px)}
-
-/* ───── Closing ───── */
-.contact{padding:160px 0 80px;text-align:left;position:relative;overflow:hidden}
-.contact .stamp{font-family:'Switzer';font-weight:500;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);display:inline-flex;align-items:center;gap:14px;margin-bottom:36px}
-.contact .stamp .ru{flex:0 0 38px;height:1px;background:var(--ink-3);display:inline-block}
-.contact h2{
-  font-family:'Cabinet Grotesk',sans-serif;font-weight:800;
-  font-size:clamp(64px,12vw,200px);line-height:.92;letter-spacing:-.045em;margin:0 0 48px;
-  color:var(--ink);
-}
-.contact h2 .it{font-family:'Sentient',serif;font-style:italic;font-weight:500;color:var(--warm)}
-.contact .row{
-  display:grid;grid-template-columns:1fr auto;gap:48px;align-items:end;
-  border-top:1px solid var(--rule);padding-top:32px;
-}
-.contact .info{display:flex;flex-direction:column;gap:6px;font-family:'Switzer'}
-.contact .info .lab{font-size:11.5px;color:var(--ink-3);letter-spacing:.18em;text-transform:uppercase;margin:0 0 4px}
-.contact .info a.mail{
-  font-family:'Cabinet Grotesk',sans-serif;font-weight:500;
-  font-size:clamp(24px,3vw,40px);letter-spacing:-.025em;color:var(--ink);
-  display:inline-flex;align-items:baseline;gap:14px;
-  border-bottom:1px solid var(--rule-2);padding-bottom:8px;
-  transition:gap .35s ease,color .25s,border-color .25s;
-}
-.contact .info a.mail .it{font-family:'Sentient',serif;font-style:italic;font-weight:400;color:var(--warm);font-size:.7em}
-.contact .info a.mail:hover{gap:22px;color:var(--warm);border-color:var(--warm)}
-.contact .ctx{font-family:'Sentient',serif;font-style:italic;font-weight:400;font-size:18px;color:var(--ink-2);max-width:36ch;text-align:right}
-
-footer.foot{
-  border-top:1px solid var(--rule);padding:24px 0 30px;
-}
-footer.foot .row{
-  display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
-  font-family:'Switzer';font-size:12.5px;color:var(--ink-3);letter-spacing:.005em;
-}
-footer.foot b{color:var(--ink);font-weight:500}
-footer.foot em{font-family:'Sentient',serif;font-style:italic;color:var(--ink-2);font-size:13px}
-
-@media (max-width:1000px){
-  .hero{padding:64px 0 80px}
-  .hero-grid{grid-template-columns:1fr;gap:60px}
-  .top .meta{display:none}
-  .index-strip .row{justify-content:flex-start;gap:18px}
-  .spread{padding:96px 0}
-  .spread .row,.spread.alt .row{grid-template-columns:1fr;gap:48px}
-  .spread.alt .copy{order:1}
-  .spread.alt .vis{order:2}
-  .spread-num{top:40px;font-size:120px}
-  .studio{padding:96px 0}
-  .studio-grid{grid-template-columns:1fr;gap:24px}
-  .studio-list{padding:96px 0}
-  .studio-list .head{grid-template-columns:1fr;gap:18px}
-  .studio-list .meta{text-align:left}
-  .list .item{grid-template-columns:36px 1fr 90px 22px;gap:18px;padding:22px 0}
-  .list .item .blurb{display:none}
-  .contact{padding:96px 0 64px}
-  .contact .row{grid-template-columns:1fr;gap:24px}
-  .contact .ctx{text-align:left}
-  .plate{transform:none !important}
-}
-</style>
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
+  <a class="skip" href="#work">Skip to work</a>
 
-<header class="top">
-  <div class="wrap row">
-    <a class="brand" href="#top">VXVO<span class="it">studio.</span></a>
-    <span class="meta">An independent studio · <b>Daniel</b> · est. 2026, London</span>
-    <nav>
-      <a href="#index">Index</a>
-      <a href="#studio">Studio</a>
-      <a class="cta" href="#contact">Contact</a>
-    </nav>
-  </div>
-</header>
-
-<section class="hero" id="top">
-  <div class="wrap">
-    <div class="hero-grid">
-      <div class="lead">
-        <span class="stamp"><span class="ru"></span> Volume I — Spring MMXXVI</span>
-        <h1>
-          <span class="row"><span>Carefully</span></span>
-          <span class="row"><span class="it">built</span> <span>software,</span></span>
-          <span class="row"><span>games &amp; tools.</span></span>
-        </h1>
-        <p class="deck">VXVO is a one-person studio. <b>Two products live, seven in studio, and a quiet habit of finishing things.</b> Designed and built end-to-end — identity, frontend, backend, mobile, and the boring infrastructure underneath.</p>
-        <div class="meta-row">
-          <div><span class="lab">Live</span><b>02</b></div>
-          <div><span class="lab">In studio</span><b>07</b></div>
-          <div><span class="lab">Year</span><b><span class="it">I</span></b></div>
-        </div>
-      </div>
-
-      <div class="hero-device">
-        <div class="light" aria-hidden="true"></div>
-        <a class="stage" href="https://Pace-Nutrition.vercel.app" target="_blank" rel="noopener" style="text-decoration:none;display:block">
-          <div class="plate">
-            <img src="media/nutrition.png" alt="Pace Nutrition">
-            <div class="pf"><span><b>Plate 01</b> — Pace Nutrition</span><span>Live ↗</span></div>
-          </div>
-        </a>
-      </div>
+  <!-- ── atmosphere ─────────────────────────────────────────── -->
+  <div class="bg" aria-hidden="true">
+    <div class="bg__mesh">
+      <span class="blob blob--v"></span>
+      <span class="blob blob--c"></span>
+      <span class="blob blob--e"></span>
+      <span class="blob blob--p"></span>
     </div>
+    <div class="bg__grid"></div>
+    <div class="bg__grain"></div>
+    <div class="bg__vignette"></div>
+    <div class="bg__spot" id="spot"></div>
   </div>
-</section>
 
-<div class="index-strip">
-  <div class="wrap row">
-    <span class="label">Index ↓</span>
-    <a href="#pace">01 Pace</a>
-    <a href="#klaro">02 Klaro</a>
-    <a href="#studio-list" class="dim">03 Daniel Rise</a>
-    <a href="https://planner.vxvo.co.uk">04 LifePlanner</a>
-    <a href="#studio-list" class="dim">05 Friendship Flowers</a>
-    <a href="#studio-list" class="dim">06 Translator</a>
-    <a href="#studio-list" class="dim">07 BootlegZoo</a>
-    <a href="#studio-list" class="dim">08 Turbulence</a>
-    <a href="#studio-list" class="dim">09 Arena</a>
-  </div>
-</div>
-
-<section class="spread" id="pace">
-  <div class="wrap">
-    <div class="spread-num">01</div>
-    <div class="row">
-      <div class="copy">
-        <span class="stamp"><span class="ru"></span> Plate One — App, Health <span class="live">· Live</span></span>
-        <h2>Pace <span class="it">Nutrition.</span></h2>
-        <p class="lede">An AI nutrition coach. <em>Quietly practical</em> — fast logging, real numbers, no fluff.</p>
-        <p class="body">Built for the people who actually want to track without the friction of endless taps and dropdowns. Designed to disappear into the day. The kind of app that earns its keep by getting <b>out of the way.</b></p>
-        <div class="specs">
-          <div><span class="lab">Status</span><span>Live</span></div>
-          <div><span class="lab">Surface</span><span>iOS · Android</span></div>
-          <div><span class="lab">Stack</span><span>Next.js · AI</span></div>
-        </div>
-        <a class="visit" href="https://Pace-Nutrition.vercel.app" target="_blank" rel="noopener">
-          Visit the site <span class="dom">— pace-nutrition.vercel.app</span> <span>↗</span>
-        </a>
-      </div>
-
-      <div class="vis" data-tilt>
-        <div class="plate" style="transform:rotate(1deg)">
-          <img src="media/nutrition.png" alt="Pace Nutrition">
-          <div class="pf"><span><b>pace-nutrition.vercel.app</b></span><span>Visit ↗</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="spread alt" id="klaro">
-  <div class="wrap">
-    <div class="spread-num" style="left:clamp(20px,4vw,56px);right:auto">02</div>
-    <div class="row">
-      <div class="copy">
-        <span class="stamp"><span class="ru"></span> Plate Two — Web, Education <span class="live">· Live</span></span>
-        <h2>Klaro <span class="it">Academy.</span></h2>
-        <p class="lede">Friendly, structured interview coaching for graduates and <em>early-career professionals</em>.</p>
-        <p class="body">Two weeks of personalised prep — clear, kind, effective. Built on Shopify with a great deal of restraint and a lot of conversations with the people who actually use it. <b>The hardest kind of product to make: simple.</b></p>
-        <div class="specs">
-          <div><span class="lab">Status</span><span>Live</span></div>
-          <div><span class="lab">Surface</span><span>Web · Shopify</span></div>
-          <div><span class="lab">Programme</span><span>2 weeks</span></div>
-        </div>
-        <a class="visit" href="https://klaroacademy.com" target="_blank" rel="noopener">
-          Visit the site <span class="dom">— klaroacademy.com</span> <span>↗</span>
-        </a>
-      </div>
-
-      <div class="vis" data-tilt>
-        <div class="browser" style="max-width:600px;margin:0 auto;transform:rotate(-2deg)">
-          <div class="bar">
-            <span class="dots"><i></i><i></i><i></i></span>
-            <span class="url">klaroacademy.com</span>
-          </div>
-          <div class="screen"><img src="media/klaro.png" alt="Klaro Academy"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="studio" id="studio">
-  <div class="wrap">
-    <div class="studio-grid">
-      <div class="stamp">iii.<br><b>The studio</b></div>
-      <div class="body">
-        <p>VXVO is a small studio for <span class="it">software that lasts</span> — productivity tools one week, an arcade game the next, a translator the week after. The remit is broad on purpose; the throughline is taste, polish, and the discipline of shipping.</p>
-        <p class="small">Everything is designed and built end-to-end: <b>visual identity, frontend, backend, mobile,</b> and the boring infrastructure that keeps it running. The studio works in tight loops with users and ships small, often.</p>
-      </div>
-      <ul class="caps">
-        <li><b>Web</b><span>Next.js, React, TypeScript, <em>edge</em></span></li>
-        <li><b>Mobile</b><span>iOS &amp; Android, native &amp; cross-platform</span></li>
-        <li><b>AI</b><span>Claude, GPT, agents, structured output</span></li>
-        <li><b>Backend</b><span>Supabase, Postgres, Cloudflare Workers</span></li>
-        <li><b>Design</b><span>Identity, product UI, motion, <em>illustration</em></span></li>
-        <li><b>Games</b><span>Original titles, sandbox systems, arcade</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section class="studio-list" id="studio-list">
-  <div class="wrap">
-    <div class="head">
-      <div class="stamp">iv.<br><b>In studio</b></div>
-      <h3>Seven more, <span class="it">quietly building.</span></h3>
-      <div class="meta">Updated weekly<br>Read top to bottom</div>
-    </div>
-
-    <div class="list">
-      <div class="item">
-        <span class="n">03</span>
-        <span class="ti">Daniel <span class="it">Rise.</span></span>
-        <span class="blurb">An AI-assisted personal site &amp; writing platform. Next.js, Supabase, Anthropic — designed for the kind of writing you actually publish.</span>
-        <span class="st">App · In studio</span>
-        <span class="arr">●</span>
-      </div>
-      <a class="item" href="https://planner.vxvo.co.uk" style="text-decoration:none">
-        <span class="n">04</span>
-        <span class="ti">Life<span class="it">Planner.</span></span>
-        <span class="blurb">A long-horizon planner that turns goals into days. Iterated through four major versions to nail the daily loop.</span>
-        <span class="st">App · Live ↗</span>
-        <span class="arr">●</span>
+  <!-- ── nav ────────────────────────────────────────────────── -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="brand" href="#top" aria-label="VXVO — home">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 64 40" width="34" height="22" fill="none">
+            <g stroke="url(#bm)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3,5 11,35 19,5" />
+              <line x1="26" y1="5" x2="42" y2="35" />
+              <line x1="42" y1="5" x2="26" y2="35" />
+              <polyline points="46,5 54,35 61,5" />
+            </g>
+            <defs>
+              <linearGradient id="bm" x1="0" y1="0" x2="64" y2="40" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#9b8cff" /><stop offset=".5" stop-color="#34e0e6" /><stop offset="1" stop-color="#4ade9e" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+        <span class="brand__word">VXVO</span>
       </a>
-      <div class="item">
-        <span class="n">05</span>
-        <span class="ti">Friendship <span class="it">Flowers.</span></span>
-        <span class="blurb">A relationship CRM disguised as a garden. Tend the people you care about; watch the flowers grow.</span>
-        <span class="st">Mobile · Social</span>
-        <span class="arr">●</span>
-      </div>
-      <div class="item">
-        <span class="n">06</span>
-        <span class="ti">Trans<span class="it">lator.</span></span>
-        <span class="blurb">A pocket translator built for travel and conversation, not just word lookups. Streaming responses, no friction.</span>
-        <span class="st">Mobile · AI</span>
-        <span class="arr">●</span>
-      </div>
-      <div class="item">
-        <span class="n">07</span>
-        <span class="ti">Bootleg<span class="it">Zoo.</span></span>
-        <span class="blurb">A wonderfully weird zoo full of creatures that probably shouldn't exist. A game about discovery and chaos.</span>
-        <span class="st">Game · Original</span>
-        <span class="arr">●</span>
-      </div>
-      <div class="item">
-        <span class="n">08</span>
-        <span class="ti">Turbu<span class="it">lence.</span></span>
-        <span class="blurb">A high-velocity arcade game about staying upright when the world won't stop moving. Tight controls, big feel.</span>
-        <span class="st">Game · Arcade</span>
-        <span class="arr">●</span>
-      </div>
-      <div class="item">
-        <span class="n">09</span>
-        <span class="ti">Are<span class="it">na.</span></span>
-        <span class="blurb">An internal multiplayer worker powering live experiences. Cloudflare Workers, real-time state, low latency.</span>
-        <span class="st">Infra · Internal</span>
-        <span class="arr">●</span>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#studio">Studio</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav__end">
+        <span class="status" title="Open for new projects">
+          <span class="status__dot"></span> Available
+        </span>
+        <a class="btn btn--ghost nav__cta" href="#contact">Start a project</a>
+        <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span>
+        </button>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="contact" id="contact">
-  <div class="wrap">
-    <span class="stamp"><span class="ru"></span> v. — Closing</span>
-    <h2>Want to work <span class="it">together?</span></h2>
-    <div class="row">
-      <div class="info">
-        <p class="lab">Press · partnerships · curiosity</p>
-        <a class="mail" href="mailto:daniel@vxvo.co.uk">daniel@vxvo.co.uk <span class="it">↗</span></a>
-      </div>
-      <p class="ctx">VXVO is run end-to-end by Daniel — an independent studio, filed from London, shipping since 2026.</p>
+    <div class="nav__mobile" id="mobileMenu" hidden>
+      <a href="#work">Work</a>
+      <a href="#studio">Studio</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#contact">Contact</a>
     </div>
-  </div>
-</section>
+  </header>
 
-<footer class="foot">
-  <div class="wrap row">
-    <span>© <span id="y"></span> · <b>VXVO</b> · vxvo.co.uk</span>
-    <em>Set in Cabinet Grotesk &amp; Sentient — printed in pixels</em>
-    <span>End of Volume I</span>
-  </div>
-</footer>
+  <main id="top">
 
-<script>
-document.getElementById('y').textContent=new Date().getFullYear();
+    <!-- ── hero ─────────────────────────────────────────────── -->
+    <section class="hero" id="hero">
+      <p class="eyebrow reveal" data-d="0">
+        <span class="eyebrow__tick"></span>Independent software studio — est. 2024
+      </p>
 
-// Subtle 3D tilt on devices
-document.querySelectorAll('[data-tilt]').forEach(zone=>{
-  const inner=zone.firstElementChild;
-  if(!inner) return;
-  let raf=0;
-  const original=getComputedStyle(inner).transform;
-  zone.addEventListener('pointermove',e=>{
-    const r=zone.getBoundingClientRect();
-    const x=(e.clientX-r.left)/r.width-.5;
-    const y=(e.clientY-r.top)/r.height-.5;
-    cancelAnimationFrame(raf);
-    raf=requestAnimationFrame(()=>{
-      inner.style.transform=`${original==='none'?'':original} rotateY(${x*4}deg) rotateX(${-y*4}deg)`;
-      inner.style.transition='transform .25s cubic-bezier(.2,.8,.2,1)';
-    });
-  });
-  zone.addEventListener('pointerleave',()=>{
-    inner.style.transform='';
-    inner.style.transition='transform .8s cubic-bezier(.2,.8,.2,1)';
-  });
-});
+      <h1 class="hero__title">
+        <span class="line reveal" data-d="1">Software,</span>
+        <span class="line reveal" data-d="2"><em class="grad">shipped.</em></span>
+      </h1>
 
-// Slow hero parallax
-(function(){
-  const stage=document.querySelector('.hero-device .stage');
-  if(!stage) return;
-  let raf=0;
-  const onScroll=()=>{
-    const y=window.scrollY||0;
-    cancelAnimationFrame(raf);
-    raf=requestAnimationFrame(()=>{
-      stage.style.transform=`rotate(${-3 + y*0.004}deg) translateY(${y*-0.06}px)`;
-    });
-  };
-  document.addEventListener('scroll',onScroll,{passive:true});
-})();
+      <p class="hero__sub reveal" data-d="3">
+        VXVO designs and builds AI-native products end to end — interface, backend,
+        and the model layer in between. Eleven of them so far, from nutrition coaches
+        to forecasting engines. One studio, whole stack, at speed.
+      </p>
 
-// Fade-in on enter
-const io=new IntersectionObserver(es=>{
-  es.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.style.opacity='1';
-      e.target.style.transform='translateY(0)';
-      io.unobserve(e.target);
-    }
-  });
-},{threshold:.08});
-document.querySelectorAll('.spread, .studio, .studio-list, .contact, .list .item').forEach((el,i)=>{
-  el.style.opacity='0';
-  el.style.transform='translateY(20px)';
-  el.style.transition=`opacity 1s cubic-bezier(.2,.8,.2,1) ${(i%6)*60}ms, transform 1s cubic-bezier(.2,.8,.2,1) ${(i%6)*60}ms, padding .4s, background .25s`;
-  io.observe(el);
-});
-</script>
+      <div class="hero__cta reveal" data-d="4">
+        <a class="btn btn--solid" href="#work">View the work<span class="btn__arr">↓</span></a>
+        <a class="btn btn--ghost" href="#contact">Start a project<span class="btn__arr">→</span></a>
+      </div>
+
+      <dl class="hero__stats reveal" data-d="5">
+        <div><dt>Products shipped</dt><dd data-count="11">11</dd></div>
+        <div><dt>Platforms</dt><dd data-count="4">4</dd></div>
+        <div><dt>People</dt><dd data-count="1">1</dd></div>
+        <div><dt>Building since</dt><dd>2024</dd></div>
+      </dl>
+
+      <a class="scroll" href="#studio" aria-label="Scroll to studio">
+        <span class="scroll__line"></span>
+      </a>
+    </section>
+
+    <!-- ── studio / manifesto ───────────────────────────────── -->
+    <section class="studio section" id="studio">
+      <div class="section__head">
+        <span class="kicker"><span class="kicker__no">00</span>Studio</span>
+      </div>
+      <div class="studio__grid">
+        <h2 class="studio__statement reveal">
+          One person who ships like a&nbsp;team. VXVO takes an idea from a blank
+          repo to production — <span class="u">design, frontend, backend, and AI</span> —
+          without the handoffs that slow everything down.
+        </h2>
+        <div class="studio__aside reveal" data-d="1">
+          <p>The result is software that feels considered and arrives fast: small surfaces,
+            deep care, and a model layer that only shows up where it genuinely earns its keep.</p>
+          <ul class="ticks">
+            <li>Idea to App&nbsp;Store, in-house</li>
+            <li>No templates, no agency markup</li>
+            <li>Production from week one</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── selected work ────────────────────────────────────── -->
+    <section class="work section" id="work">
+      <div class="section__head">
+        <span class="kicker"><span class="kicker__no">01</span>Selected work</span>
+        <h2 class="section__title reveal">Eleven products,<br />and counting.</h2>
+      </div>
+
+      <div class="work__featured">
+
+        <!-- Pace -->
+        <article class="card card--feature reveal" data-tilt>
+          <div class="card__media">
+            <img src="/media/nutrition.png" alt="Pace app — a Today screen showing remaining calories, macros and a photo meal log" width="900" height="430" loading="lazy" decoding="async" />
+          </div>
+          <div class="card__body">
+            <div class="card__top">
+              <span class="card__no">01</span>
+              <span class="chip chip--live">Live</span>
+            </div>
+            <h3 class="card__name">Pace</h3>
+            <p class="card__role">AI nutrition coach</p>
+            <p class="card__desc">Snap a photo of a meal and get calories and macros back. Pace tracks
+              targets, water, steps and weight, and coaches you with a model that actually understands food.</p>
+            <ul class="stack">
+              <li>Next.js</li><li>Supabase</li><li>OpenAI</li><li>Capacitor</li>
+            </ul>
+            <a class="card__link" href="https://pace-nutrition.vercel.app" target="_blank" rel="noopener">
+              Visit pace-nutrition.vercel.app <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Klaro -->
+        <article class="card card--feature reveal" data-d="1" data-tilt>
+          <div class="card__media">
+            <img src="/media/klaro.png" alt="Klaro Academy homepage — early-career interview coaching landing page" width="900" height="430" loading="lazy" decoding="async" />
+          </div>
+          <div class="card__body">
+            <div class="card__top">
+              <span class="card__no">02</span>
+              <span class="chip chip--live">Live</span>
+            </div>
+            <h3 class="card__name">Klaro Academy</h3>
+            <p class="card__role">Brand &amp; marketing site</p>
+            <p class="card__desc">Identity, copy and build for a coaching academy that helps graduates land
+              the job they actually want — warm, two-week interview prep with no jargon.</p>
+            <ul class="stack">
+              <li>Brand</li><li>Design</li><li>HTML / CSS</li>
+            </ul>
+            <span class="card__link card__link--muted">
+              Trusted by 200+ early-career pros
+            </span>
+          </div>
+        </article>
+
+        <!-- Trade — designed specimen -->
+        <article class="card card--feature reveal" data-tilt>
+          <div class="card__media card__media--spec">
+            <div class="spec spec--trade" aria-hidden="true">
+              <div class="spec__bar">
+                <span class="spec__dot"></span> trade · forecast journal
+                <span class="spec__live">● calibrating</span>
+              </div>
+              <div class="spec__row">
+                <span class="spec__q">UK general election — turnout &gt; 60%</span>
+              </div>
+              <div class="spec__p">
+                <span class="spec__plabel">P(event)</span>
+                <span class="spec__pval grad">0.62</span>
+                <span class="spec__delta up">▲ 0.04</span>
+              </div>
+              <div class="spec__bars">
+                <i style="--h:38%"></i><i style="--h:62%"></i><i style="--h:54%"></i>
+                <i style="--h:71%"></i><i style="--h:48%"></i><i style="--h:66%"></i>
+                <i style="--h:59%"></i><i style="--h:80%"></i><i style="--h:44%"></i>
+              </div>
+              <div class="spec__foot">ensemble: 7 models · isotonic-calibrated · 14–30d horizon</div>
+            </div>
+          </div>
+          <div class="card__body">
+            <div class="card__top">
+              <span class="card__no">03</span>
+              <span class="chip chip--dev">In development</span>
+            </div>
+            <h3 class="card__name">Trade</h3>
+            <p class="card__role">Forecasting engine</p>
+            <p class="card__desc">An AI ensemble that forecasts politics and news, calibrates its own
+              confidence, and hunts long-horizon edges on UK-legal prediction markets.</p>
+            <ul class="stack">
+              <li>Python</li><li>Postgres + pgvector</li><li>LLM ensemble</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Recruiter Copilot — designed specimen -->
+        <article class="card card--feature reveal" data-d="1" data-tilt>
+          <div class="card__media card__media--spec">
+            <div class="spec spec--copilot" aria-hidden="true">
+              <div class="spec__bar">
+                <span class="spec__dot spec__dot--rec"></span> live copilot
+                <span class="spec__live">● rec 12:04</span>
+              </div>
+              <p class="spec__t"><b>Candidate</b> &nbsp;…I managed a team of six through the migration…</p>
+              <p class="spec__t spec__t--int"><b>Recruiter</b> &nbsp;and how did the team change after?</p>
+              <div class="spec__coach">
+                <span class="spec__coachlabel">coach</span>
+                Ask about attrition during the migration — probe retention.
+              </div>
+              <div class="spec__checks">
+                <span class="ok">✓ Notice period</span>
+                <span class="ok">✓ Salary</span>
+                <span class="pend">• Visa status</span>
+              </div>
+            </div>
+          </div>
+          <div class="card__body">
+            <div class="card__top">
+              <span class="card__no">04</span>
+              <span class="chip chip--pilot">Pilot</span>
+            </div>
+            <h3 class="card__name">Recruiter Live Copilot</h3>
+            <p class="card__role">Desktop call assistant</p>
+            <p class="card__desc">A private desktop copilot for recruiters: live diarized transcription,
+              Claude-written prompt cards, a screening checklist, and post-call summaries — stored entirely locally.</p>
+            <ul class="stack">
+              <li>Electron</li><li>React</li><li>Deepgram</li><li>Claude</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- more from the studio -->
+      <h3 class="work__more-h reveal">More from the studio</h3>
+      <ul class="work__grid">
+        <li class="mini reveal" data-tilt>
+          <div class="mini__top"><span class="mini__no">05</span><span class="chip chip--sm">Local-first</span></div>
+          <h4>Recruitment OS</h4>
+          <p>A recruiting cockpit that discovers clients, matches and scores candidates — running entirely on local AI.</p>
+          <span class="mini__stack">SQLite · Ollama · React</span>
+        </li>
+        <li class="mini reveal" data-d="1" data-tilt>
+          <div class="mini__top"><span class="mini__no">06</span><span class="chip chip--sm">Web</span></div>
+          <h4>LifePlanner</h4>
+          <p>A calm personal operating system — goals, weeks and days on one considered surface.</p>
+          <span class="mini__stack">Web app</span>
+        </li>
+        <li class="mini reveal" data-d="2" data-tilt>
+          <div class="mini__top"><span class="mini__no">07</span><span class="chip chip--sm">App</span></div>
+          <h4>Friendship Flowers</h4>
+          <p>A garden where every friendship is a plant: it blooms when you stay in touch, and wilts when you drift.</p>
+          <span class="mini__stack">Design · App</span>
+        </li>
+        <li class="mini reveal" data-tilt>
+          <div class="mini__top"><span class="mini__no">08</span><span class="chip chip--sm">Web</span></div>
+          <h4>Translator</h4>
+          <p>A fast, no-friction translator built for everyday, real-world use.</p>
+          <span class="mini__stack">Web app</span>
+        </li>
+        <li class="mini reveal" data-d="1" data-tilt>
+          <div class="mini__top"><span class="mini__no">09</span><span class="chip chip--sm">Desktop</span></div>
+          <h4>Reader</h4>
+          <p>Paste text, hear it in sixteen natural voices, with each word highlighting as it's spoken.</p>
+          <span class="mini__stack">Python · edge-tts</span>
+        </li>
+        <li class="mini reveal" data-d="2" data-tilt>
+          <div class="mini__top"><span class="mini__no">10</span><span class="chip chip--sm">Tool</span></div>
+          <h4>Knowledge Extractor</h4>
+          <p>Turns YouTube videos and podcasts into compact study sheets — no paid AI required.</p>
+          <span class="mini__stack">Python</span>
+        </li>
+        <li class="mini reveal" data-tilt>
+          <div class="mini__top"><span class="mini__no">11</span><span class="chip chip--sm">Audio</span></div>
+          <h4>Auto-music</h4>
+          <p>Tooling that composes and renders music on autopilot, end to end.</p>
+          <span class="mini__stack">Audio · Python</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ── capabilities ─────────────────────────────────────── -->
+    <section class="caps section" id="capabilities">
+      <div class="section__head">
+        <span class="kicker"><span class="kicker__no">02</span>Capabilities</span>
+        <h2 class="section__title reveal">Full-stack,<br />including the model layer.</h2>
+      </div>
+
+      <div class="caps__grid">
+        <article class="cap reveal">
+          <span class="cap__no">/ 01</span>
+          <h3>Product &amp; interface</h3>
+          <p>From first flow to the final pixel — design systems, prototypes, and the polish that makes software feel considered.</p>
+        </article>
+        <article class="cap reveal" data-d="1">
+          <span class="cap__no">/ 02</span>
+          <h3>Full-stack web</h3>
+          <p>Next.js, TypeScript, Supabase and Vercel. Auth, data, row-level security, the lot — production-ready from the start.</p>
+        </article>
+        <article class="cap reveal" data-d="2">
+          <span class="cap__no">/ 03</span>
+          <h3>AI &amp; ML</h3>
+          <p>OpenAI and Claude integration, local Ollama, vision, calibration and agents — used where models genuinely earn their place.</p>
+        </article>
+        <article class="cap reveal" data-d="3">
+          <span class="cap__no">/ 04</span>
+          <h3>Desktop &amp; mobile</h3>
+          <p>Electron desktop apps and Capacitor / PWA builds on iOS and Android — one codebase, native where it counts.</p>
+        </article>
+      </div>
+
+      <div class="marquee reveal" aria-hidden="true">
+        <div class="marquee__track">
+          <span>Next.js</span><span>TypeScript</span><span>React</span><span>Tailwind</span><span>Supabase</span><span>Postgres</span><span>pgvector</span><span>SQLite</span><span>OpenAI</span><span>Claude</span><span>Deepgram</span><span>Ollama</span><span>Electron</span><span>Capacitor</span><span>Vercel</span><span>Python</span><span>Playwright</span><span>Vitest</span>
+          <span>Next.js</span><span>TypeScript</span><span>React</span><span>Tailwind</span><span>Supabase</span><span>Postgres</span><span>pgvector</span><span>SQLite</span><span>OpenAI</span><span>Claude</span><span>Deepgram</span><span>Ollama</span><span>Electron</span><span>Capacitor</span><span>Vercel</span><span>Python</span><span>Playwright</span><span>Vitest</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── how we work ──────────────────────────────────────── -->
+    <section class="how section" id="how">
+      <div class="section__head">
+        <span class="kicker"><span class="kicker__no">03</span>How we work</span>
+      </div>
+      <ol class="how__list">
+        <li class="how__item reveal">
+          <span class="how__no">01</span>
+          <h3>Ship, then refine.</h3>
+          <p>Real software in front of real users beats a perfect plan. Production from week one.</p>
+        </li>
+        <li class="how__item reveal" data-d="1">
+          <span class="how__no">02</span>
+          <h3>One mind, whole stack.</h3>
+          <p>Design, frontend, backend and AI decided by the same person — nothing gets lost in handoff.</p>
+        </li>
+        <li class="how__item reveal" data-d="2">
+          <span class="how__no">03</span>
+          <h3>AI where it earns it.</h3>
+          <p>Models do the work they're genuinely good at. Everything else is solid, boring engineering.</p>
+        </li>
+        <li class="how__item reveal" data-d="3">
+          <span class="how__no">04</span>
+          <h3>Small surface, deep care.</h3>
+          <p>Few screens, considered to the pixel. Restraint is a feature.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ── contact ──────────────────────────────────────────── -->
+    <section class="contact section" id="contact">
+      <div class="section__head">
+        <span class="kicker"><span class="kicker__no">04</span>Contact</span>
+      </div>
+      <div class="contact__inner">
+        <h2 class="contact__title reveal">
+          Have something<br />to build? <em class="grad">Let's talk.</em>
+        </h2>
+        <p class="contact__sub reveal" data-d="1">Currently taking on a small number of new projects for 2026.
+          Tell me what you're making and I'll tell you honestly whether I'm the right studio for it.</p>
+        <div class="contact__cta reveal" data-d="2">
+          <a class="btn btn--solid btn--lg" href="mailto:hello@vxvo.studio">hello@vxvo.studio<span class="btn__arr">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── footer ───────────────────────────────────────────── -->
+  <footer class="foot">
+    <div class="foot__inner">
+      <a class="brand brand--foot" href="#top">
+        <span class="brand__word">VXVO</span>
+      </a>
+      <nav class="foot__nav" aria-label="Footer">
+        <a href="#work">Work</a>
+        <a href="#studio">Studio</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="foot__note">Independent software studio.<br />Designed &amp; built in-house. © <span id="yr">2026</span> VXVO.</p>
+    </div>
+  </footer>
+
+  <script src="/script.js" defer></script>
 </body>
 </html>
