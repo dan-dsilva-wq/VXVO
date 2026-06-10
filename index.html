@@ -3,428 +3,595 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>VXVO — Independent software studio</title>
-  <meta name="description" content="VXVO is an independent studio designing and building AI-native software end to end — web, mobile, desktop, and the model layer in between." />
-  <meta name="theme-color" content="#07060d" />
+  <title>VXVO — The Demonstration Room. Software, shipped.</title>
+  <meta name="description" content="VXVO is an independent one-person studio building AI-native software end to end. This page doesn't describe the work — it runs it: eight working models, live in your browser." />
+  <meta name="theme-color" content="#0C1F18" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="canonical" href="https://vxvo.co.uk/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://vxvo.co.uk/" />
-  <meta property="og:title" content="VXVO — Independent software studio" />
-  <meta property="og:description" content="AI-native software, designed and shipped end to end. Eleven products and counting, from one studio." />
-  <meta property="og:image" content="/og.svg" />
+  <meta property="og:title" content="VXVO — The Demonstration Room" />
+  <meta property="og:description" content="An independent studio's demonstration room — flip the switch and eight working models of VXVO's products run live in your browser." />
+  <meta property="og:image" content="https://vxvo.co.uk/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Fonts: Fontshare only (matches Content-Security-Policy in vercel.json) -->
-  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
-  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
-  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500,700,400,300,200&f[]=satoshi@500,400,700,300,900&display=swap" rel="stylesheet" />
+  <!-- Fonts: self-hosted, variable, latin subset -->
+  <link rel="preload" href="/fonts/bricolage-grotesque-var-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/spline-sans-mono-var-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <link rel="stylesheet" href="/styles.css" />
+
+  <!-- gate the reveal/draw choreography before first paint (hash listed in CSP) -->
+  <script>document.documentElement.classList.add('js')</script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "VXVO",
+    "url": "https://vxvo.co.uk/",
+    "email": "admin@vxvo.co.uk",
+    "description": "Independent one-person software studio designing and building AI-native products end to end — web, mobile, desktop, and the model layer in between.",
+    "foundingDate": "2024",
+    "knowsAbout": ["AI-native software", "Product design", "Full-stack web", "Desktop apps", "Mobile apps"]
+  }
+  </script>
 </head>
 <body>
-  <a class="skip" href="#work">Skip to work</a>
+  <a class="skip" href="#floor">Skip to the exhibits</a>
 
-  <!-- ── atmosphere ─────────────────────────────────────────── -->
-  <div class="bg" aria-hidden="true">
-    <div class="bg__mesh">
-      <span class="blob blob--v"></span>
-      <span class="blob blob--c"></span>
-      <span class="blob blob--e"></span>
-      <span class="blob blob--p"></span>
-    </div>
-    <div class="bg__grid"></div>
-    <div class="bg__grain"></div>
-    <div class="bg__vignette"></div>
-    <div class="bg__spot" id="spot"></div>
-  </div>
+  <!-- chalk filter + shared defs -->
+  <svg class="defs" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="chalk" x="-2%" y="-2%" width="104%" height="104%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n" />
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" />
+      </filter>
+    </defs>
+  </svg>
 
-  <!-- ── nav ────────────────────────────────────────────────── -->
-  <header class="nav" id="nav">
-    <div class="nav__inner">
-      <a class="brand" href="#top" aria-label="VXVO — home">
-        <span class="brand__mark" aria-hidden="true">
-          <svg viewBox="0 0 64 40" width="34" height="22" fill="none">
-            <g stroke="url(#bm)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="3,5 11,35 19,5" />
-              <line x1="26" y1="5" x2="42" y2="35" />
-              <line x1="42" y1="5" x2="26" y2="35" />
-              <polyline points="46,5 54,35 61,5" />
-            </g>
-            <defs>
-              <linearGradient id="bm" x1="0" y1="0" x2="64" y2="40" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#9b8cff" /><stop offset=".5" stop-color="#34e0e6" /><stop offset="1" stop-color="#4ade9e" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </span>
-        <span class="brand__word">VXVO</span>
+  <!-- ── rail ─────────────────────────────────────────────────── -->
+  <header class="rail">
+    <div class="rail__in">
+      <a class="mark" href="#top" aria-label="VXVO — top of page">
+        <svg class="mark__sig" viewBox="0 0 96 24" width="76" height="19" aria-hidden="true">
+          <g class="chalkline" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3,3 11,21 19,3" />
+            <line x1="26" y1="3" x2="40" y2="21" />
+            <line x1="40" y1="3" x2="26" y2="21" />
+            <polyline points="47,3 55,21 63,3" />
+            <polygon points="74,3 88,3 92,12 88,21 74,21 70,12" />
+          </g>
+        </svg>
+        <span class="visually-hidden">VXVO</span>
       </a>
-
-      <nav class="nav__links" aria-label="Primary">
-        <a href="#work">Work</a>
+      <nav class="rail__nav" aria-label="Primary">
+        <a href="#floor">The Floor</a>
         <a href="#studio">Studio</a>
-        <a href="#capabilities">Capabilities</a>
-        <a href="#contact">Contact</a>
+        <a href="#hire">Hire</a>
       </nav>
-
-      <div class="nav__end">
-        <span class="status" title="Open for new projects">
-          <span class="status__dot"></span> Available
-        </span>
-        <a class="btn btn--ghost nav__cta" href="#contact">Start a project</a>
-        <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false">
-          <span></span><span></span>
-        </button>
+      <div class="rail__end">
+        <a class="pill" href="#hire"><span class="pill__lamp" aria-hidden="true"></span>Available — 2026</a>
+        <a class="rail__mail" href="mailto:admin@vxvo.co.uk">admin@vxvo.co.uk</a>
       </div>
-    </div>
-    <div class="nav__mobile" id="mobileMenu" hidden>
-      <a href="#work">Work</a>
-      <a href="#studio">Studio</a>
-      <a href="#capabilities">Capabilities</a>
-      <a href="#contact">Contact</a>
     </div>
   </header>
 
   <main id="top">
 
-    <!-- ── hero ─────────────────────────────────────────────── -->
-    <section class="hero" id="hero">
-      <p class="eyebrow reveal" data-d="0">
-        <span class="eyebrow__tick"></span>Independent software studio — est. 2024
-      </p>
+    <!-- ── entrance ─────────────────────────────────────────────── -->
+    <section class="entrance" aria-labelledby="entrance-title">
+      <p class="kicker reveal">VXVO · Independent software studio · Demonstration Room Nº&nbsp;01</p>
 
-      <h1 class="hero__title">
-        <span class="line reveal" data-d="1">Software,</span>
-        <span class="line reveal" data-d="2"><em class="grad">shipped.</em></span>
+      <h1 class="entrance__title" id="entrance-title">
+        <span class="reveal" data-d="1">Software,</span>
+        <span class="reveal" data-d="2">shipped<button class="dot" id="run-dot" type="button" aria-hidden="true" tabindex="-1">.</button></span>
       </h1>
 
-      <p class="hero__sub reveal" data-d="3">
-        VXVO designs and builds AI-native products end to end — interface, backend,
-        and the model layer in between. Eleven of them so far, from nutrition coaches
-        to forecasting engines. One studio, whole stack, at speed.
-      </p>
+      <div class="entrance__split">
+        <div class="entrance__lede">
+          <p class="lede reveal" data-d="3">
+            VXVO is a one-person studio that designs and builds AI-native products end to end —
+            web, mobile, desktop, and the model layer in between.
+            <strong>This page doesn't describe the work. It runs it.</strong>
+          </p>
+          <p class="caption reveal" data-d="4" id="floor-note">Eight working models on the floor — flip the switch, then scroll.</p>
 
-      <div class="hero__cta reveal" data-d="4">
-        <a class="btn btn--solid" href="#work">View the work<span class="btn__arr">↓</span></a>
-        <a class="btn btn--ghost" href="#contact">Start a project<span class="btn__arr">→</span></a>
-      </div>
+          <div class="runbox reveal" data-d="5">
+            <button class="run" id="run" type="button" aria-pressed="false" aria-describedby="floor-note">
+              <span class="run__ring" aria-hidden="true"></span>
+              <span class="run__face">RUN</span>
+            </button>
+            <p class="run__status caption" id="run-status">Power off — models idle.</p>
+            <p class="visually-hidden" id="run-status-sr" aria-live="polite"></p>
+          </div>
 
-      <dl class="hero__stats reveal" data-d="5">
-        <div><dt>Products shipped</dt><dd data-count="11">11</dd></div>
-        <div><dt>Platforms</dt><dd data-count="4">4</dd></div>
-        <div><dt>People</dt><dd data-count="1">1</dd></div>
-        <div><dt>Building since</dt><dd>2024</dd></div>
-      </dl>
+          <dl class="plaque plaque--facts reveal" data-d="6">
+            <div><dt>Status</dt><dd><span class="lamp lamp--live" aria-hidden="true"></span>Available — taking a small number of 2026 projects</dd></div>
+            <div><dt>Commissions</dt><dd><a href="mailto:admin@vxvo.co.uk">admin@vxvo.co.uk</a></dd></div>
+          </dl>
+        </div>
 
-      <a class="scroll" href="#studio" aria-label="Scroll to studio">
-        <span class="scroll__line"></span>
-      </a>
-    </section>
-
-    <!-- ── studio / manifesto ───────────────────────────────── -->
-    <section class="studio section" id="studio">
-      <div class="section__head">
-        <span class="kicker"><span class="kicker__no">00</span>Studio</span>
-      </div>
-      <div class="studio__grid">
-        <h2 class="studio__statement reveal">
-          One person who ships like a&nbsp;team. VXVO takes an idea from a blank
-          repo to production — <span class="u">design, frontend, backend, and AI</span> —
-          without the handoffs that slow everything down.
-        </h2>
-        <div class="studio__aside reveal" data-d="1">
-          <p>The result is software that feels considered and arrives fast: small surfaces,
-            deep care, and a model layer that only shows up where it genuinely earns its keep.</p>
-          <ul class="ticks">
-            <li>Idea to App&nbsp;Store, in-house</li>
-            <li>No templates, no agency markup</li>
-            <li>Production from week one</li>
+        <!-- floor plan: 1 person fanning out to 11 machines; doubles as navigation -->
+        <figure class="floorplan reveal" data-d="4" role="group" aria-label="Floor plan — one person, eleven products. Each machine links to its exhibit.">
+          <svg viewBox="0 0 460 420" class="floorplan__svg" preserveAspectRatio="none" aria-hidden="true">
+            <g class="chalkline draw" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <!-- the one person: a station at the bench -->
+              <rect x="22" y="186" width="86" height="48" rx="6" />
+              <line x1="40" y1="246" x2="90" y2="246" />
+            </g>
+            <!-- wires live outside the chalk filter: their dash animation must not re-rasterize it -->
+            <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".85">
+              <line x1="108" y1="210" x2="160" y2="210" class="wire" />
+              <path d="M160,210 C250,210 280,14 458,14" class="wire" />
+              <path d="M160,210 C250,210 280,53 458,53" class="wire" />
+              <path d="M160,210 C250,210 280,92 458,92" class="wire" />
+              <path d="M160,210 C250,210 280,132 458,132" class="wire" />
+              <path d="M160,210 C250,210 280,171 458,171" class="wire" />
+              <path d="M160,210 C300,210 300,210 458,210" class="wire" />
+              <path d="M160,210 C250,210 280,250 458,250" class="wire" />
+              <path d="M160,210 C250,210 280,289 458,289" class="wire" />
+              <path d="M160,210 C250,210 280,328 458,328" class="wire" />
+              <path d="M160,210 C250,210 280,368 458,368" class="wire" />
+              <path d="M160,210 C250,210 280,407 458,407" class="wire" />
+            </g>
+          </svg>
+          <p class="floorplan__who caption" aria-hidden="true">1 person<br />whole stack</p>
+          <ul class="floorplan__bays">
+            <li><a href="#pace"><i class="lamp lamp--live"></i><b>01</b> Pace</a></li>
+            <li><a href="#reader"><i class="lamp lamp--dim"></i><b>02</b> Reader</a></li>
+            <li><a href="#klaro"><i class="lamp lamp--live"></i><b>03</b> Klaro</a></li>
+            <li><a href="#flowers"><i class="lamp lamp--dim"></i><b>04</b> Flowers</a></li>
+            <li><a href="#copilot"><i class="lamp lamp--pilot"></i><b>05</b> Copilot</a></li>
+            <li><a href="#recruitment-os"><i class="lamp lamp--dim"></i><b>06</b> Recruit&nbsp;OS</a></li>
+            <li><a href="#trade"><i class="lamp lamp--dev"></i><b>07</b> Trade</a></li>
+            <li><a href="#translator"><i class="lamp lamp--dim"></i><b>08</b> Translator</a></li>
+            <li><a href="#auto-music"><i class="lamp lamp--dim"></i><b>09</b> Auto-music</a></li>
+            <li><a href="#lifeplanner"><i class="lamp lamp--off"></i><b>10</b> LifePlanner</a></li>
+            <li><a href="#knowledge"><i class="lamp lamp--off"></i><b>11</b> Extractor</a></li>
           </ul>
+        </figure>
+      </div>
+
+      <dl class="gauge-strip reveal" data-d="6" aria-label="Studio facts">
+        <div><dt>Products</dt><dd>11</dd></div>
+        <div><dt>Platforms</dt><dd>4</dd></div>
+        <div><dt>People</dt><dd>1</dd></div>
+        <div><dt>Est.</dt><dd>2024</dd></div>
+        <div><dt>Room time</dt><dd id="room-clock">—:—</dd></div>
+      </dl>
+    </section>
+
+    <!-- ── the floor ────────────────────────────────────────────── -->
+    <section class="floor section" id="floor" aria-labelledby="floor-title">
+      <header class="section__head">
+        <p class="kicker"><span class="kicker__no">Nº 01</span>The floor</p>
+        <h2 class="section__title" id="floor-title">Working models,<br />not screenshots.</h2>
+        <p class="section__sub">Eight of the exhibits below run inside this page — hand-written JavaScript,
+          no framework, no build step. The engraved plates say exactly what's real and what's staged.
+          View source: that's the second exhibition.</p>
+      </header>
+
+      <!-- 01 · PACE ─ flagship -->
+      <article class="bench bench--wide" id="pace" data-status="live" aria-labelledby="pace-name">
+        <div class="bench__stage" data-stage="pace">
+          <div class="pace">
+            <p class="pace__hint caption">Put a meal on the scale —</p>
+            <div class="pace__meals" role="group" aria-label="Sample meals">
+              <button class="pace__meal" type="button" data-meal="bowl" aria-pressed="false" aria-label="Weigh the grain bowl">
+                <svg viewBox="0 0 96 72" aria-hidden="true"><g class="chalkline" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M14,34 a34,20 0 0 0 68,0 z" /><path d="M22,34 q6,-12 14,-6 q6,-10 14,-4 q8,-8 14,0 q8,-4 10,10" />
+                  <path d="M40,16 q2,-6 0,-10 M52,18 q2,-6 0,-10" class="steam" /></g></svg>
+                <span class="caption">Grain bowl</span>
+              </button>
+              <button class="pace__meal" type="button" data-meal="salmon" aria-pressed="false" aria-label="Weigh the salmon plate">
+                <svg viewBox="0 0 96 72" aria-hidden="true"><g class="chalkline" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <ellipse cx="48" cy="40" rx="38" ry="18" /><path d="M28,38 q10,-10 26,-6 q8,2 10,8 q-12,8 -26,4 q-8,-2 -10,-6 z" />
+                  <path d="M36,38 l6,2 M44,36 l6,2 M52,36 l6,2" /></g></svg>
+                <span class="caption">Salmon plate</span>
+              </button>
+              <button class="pace__meal" type="button" data-meal="smoothie" aria-pressed="false" aria-label="Weigh the berry smoothie">
+                <svg viewBox="0 0 96 72" aria-hidden="true"><g class="chalkline" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M36,12 h24 l-4,48 h-16 z" /><path d="M38,24 h20" /><line x1="56" y1="6" x2="50" y2="22" /></g></svg>
+                <span class="caption">Smoothie</span>
+              </button>
+            </div>
+            <div class="pace__scale">
+              <svg viewBox="0 0 220 90" class="pace__platform" aria-hidden="true">
+                <g class="chalkline" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <line x1="30" y1="34" x2="190" y2="34" />
+                  <path d="M96,34 v10 h28 v-10 M110,44 v14" />
+                  <rect x="76" y="58" width="68" height="22" rx="3" />
+                  <circle cx="110" cy="69" r="6" class="pace__lamp" />
+                </g>
+              </svg>
+              <div class="pace__slot" id="pace-slot" aria-hidden="true"></div>
+            </div>
+            <dl class="pace__readout">
+              <div><dt>kcal</dt><dd data-g="kcal">0</dd></div>
+              <div><dt>protein</dt><dd><span data-g="protein">0</span>g</dd></div>
+              <div><dt>carbs</dt><dd><span data-g="carbs">0</span>g</dd></div>
+              <div><dt>fat</dt><dd><span data-g="fat">0</span>g</dd></div>
+            </dl>
+            <p class="visually-hidden" id="pace-sr" aria-live="polite"></p>
+          </div>
         </div>
-      </div>
-    </section>
-
-    <!-- ── selected work ────────────────────────────────────── -->
-    <section class="work section" id="work">
-      <div class="section__head">
-        <span class="kicker"><span class="kicker__no">01</span>Selected work</span>
-        <h2 class="section__title reveal">Eleven products,<br />and counting.</h2>
-      </div>
-
-      <div class="work__featured">
-
-        <!-- Pace -->
-        <article class="card card--feature reveal" data-tilt>
-          <div class="card__media">
-            <img src="/media/nutrition.png" alt="Pace app — a Today screen showing remaining calories, macros and a photo meal log" width="900" height="430" loading="lazy" decoding="async" />
-          </div>
-          <div class="card__body">
-            <div class="card__top">
-              <span class="card__no">01</span>
-              <span class="chip chip--live">Live</span>
-            </div>
-            <h3 class="card__name">Pace</h3>
-            <p class="card__role">AI nutrition coach</p>
-            <p class="card__desc">Snap a photo of a meal and get calories and macros back. Pace tracks
-              targets, water, steps and weight, and coaches you with a model that actually understands food.</p>
-            <ul class="stack">
-              <li>Next.js</li><li>Supabase</li><li>OpenAI</li><li>Capacitor</li>
-            </ul>
-            <a class="card__link" href="https://pace-nutrition.vercel.app" target="_blank" rel="noopener">
-              Visit pace-nutrition.vercel.app <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </article>
-
-        <!-- Klaro -->
-        <article class="card card--feature reveal" data-d="1" data-tilt>
-          <div class="card__media">
-            <img src="/media/klaro.png" alt="Klaro Academy homepage — early-career interview coaching landing page" width="900" height="430" loading="lazy" decoding="async" />
-          </div>
-          <div class="card__body">
-            <div class="card__top">
-              <span class="card__no">02</span>
-              <span class="chip chip--live">Live</span>
-            </div>
-            <h3 class="card__name">Klaro Academy</h3>
-            <p class="card__role">Brand &amp; marketing site</p>
-            <p class="card__desc">Identity, copy and build for a coaching academy that helps graduates land
-              the job they actually want — warm, two-week interview prep with no jargon.</p>
-            <ul class="stack">
-              <li>Brand</li><li>Design</li><li>HTML / CSS</li>
-            </ul>
-            <span class="card__link card__link--muted">
-              Trusted by 200+ early-career pros
-            </span>
-          </div>
-        </article>
-
-        <!-- Trade — designed specimen -->
-        <article class="card card--feature reveal" data-tilt>
-          <div class="card__media card__media--spec">
-            <div class="spec spec--trade" aria-hidden="true">
-              <div class="spec__bar">
-                <span class="spec__dot"></span> trade · forecast journal
-                <span class="spec__live">● calibrating</span>
-              </div>
-              <div class="spec__row">
-                <span class="spec__q">UK general election — turnout &gt; 60%</span>
-              </div>
-              <div class="spec__p">
-                <span class="spec__plabel">P(event)</span>
-                <span class="spec__pval grad">0.62</span>
-                <span class="spec__delta up">▲ 0.04</span>
-              </div>
-              <div class="spec__bars">
-                <i style="--h:38%"></i><i style="--h:62%"></i><i style="--h:54%"></i>
-                <i style="--h:71%"></i><i style="--h:48%"></i><i style="--h:66%"></i>
-                <i style="--h:59%"></i><i style="--h:80%"></i><i style="--h:44%"></i>
-              </div>
-              <div class="spec__foot">ensemble: 7 models · isotonic-calibrated · 14–30d horizon</div>
-            </div>
-          </div>
-          <div class="card__body">
-            <div class="card__top">
-              <span class="card__no">03</span>
-              <span class="chip chip--dev">In development</span>
-            </div>
-            <h3 class="card__name">Trade</h3>
-            <p class="card__role">Forecasting engine</p>
-            <p class="card__desc">An AI ensemble that forecasts politics and news, calibrates its own
-              confidence, and hunts long-horizon edges on UK-legal prediction markets.</p>
-            <ul class="stack">
-              <li>Python</li><li>Postgres + pgvector</li><li>LLM ensemble</li>
-            </ul>
-          </div>
-        </article>
-
-        <!-- Recruiter Copilot — designed specimen -->
-        <article class="card card--feature reveal" data-d="1" data-tilt>
-          <div class="card__media card__media--spec">
-            <div class="spec spec--copilot" aria-hidden="true">
-              <div class="spec__bar">
-                <span class="spec__dot spec__dot--rec"></span> live copilot
-                <span class="spec__live">● rec 12:04</span>
-              </div>
-              <p class="spec__t"><b>Candidate</b> &nbsp;…I managed a team of six through the migration…</p>
-              <p class="spec__t spec__t--int"><b>Recruiter</b> &nbsp;and how did the team change after?</p>
-              <div class="spec__coach">
-                <span class="spec__coachlabel">coach</span>
-                Ask about attrition during the migration — probe retention.
-              </div>
-              <div class="spec__checks">
-                <span class="ok">✓ Notice period</span>
-                <span class="ok">✓ Salary</span>
-                <span class="pend">• Visa status</span>
-              </div>
-            </div>
-          </div>
-          <div class="card__body">
-            <div class="card__top">
-              <span class="card__no">04</span>
-              <span class="chip chip--pilot">Pilot</span>
-            </div>
-            <h3 class="card__name">Recruiter Live Copilot</h3>
-            <p class="card__role">Desktop call assistant</p>
-            <p class="card__desc">A private desktop copilot for recruiters: live diarized transcription,
-              Claude-written prompt cards, a screening checklist, and post-call summaries — stored entirely locally.</p>
-            <ul class="stack">
-              <li>Electron</li><li>React</li><li>Deepgram</li><li>Claude</li>
-            </ul>
-          </div>
-        </article>
-
-      </div>
-
-      <!-- more from the studio -->
-      <h3 class="work__more-h reveal">More from the studio</h3>
-      <ul class="work__grid">
-        <li class="mini reveal" data-tilt>
-          <div class="mini__top"><span class="mini__no">05</span><span class="chip chip--sm">Local-first</span></div>
-          <h4>Recruitment OS</h4>
-          <p>A recruiting cockpit that discovers clients, matches and scores candidates — running entirely on local AI.</p>
-          <span class="mini__stack">SQLite · Ollama · React</span>
-        </li>
-        <li class="mini reveal" data-d="1" data-tilt>
-          <div class="mini__top"><span class="mini__no">06</span><span class="chip chip--sm">Web</span></div>
-          <h4>LifePlanner</h4>
-          <p>A calm personal operating system — goals, weeks and days on one considered surface.</p>
-          <span class="mini__stack">Web app</span>
-        </li>
-        <li class="mini reveal" data-d="2" data-tilt>
-          <div class="mini__top"><span class="mini__no">07</span><span class="chip chip--sm">App</span></div>
-          <h4>Friendship Flowers</h4>
-          <p>A garden where every friendship is a plant: it blooms when you stay in touch, and wilts when you drift.</p>
-          <span class="mini__stack">Design · App</span>
-        </li>
-        <li class="mini reveal" data-tilt>
-          <div class="mini__top"><span class="mini__no">08</span><span class="chip chip--sm">Web</span></div>
-          <h4>Translator</h4>
-          <p>A fast, no-friction translator built for everyday, real-world use.</p>
-          <span class="mini__stack">Web app</span>
-        </li>
-        <li class="mini reveal" data-d="1" data-tilt>
-          <div class="mini__top"><span class="mini__no">09</span><span class="chip chip--sm">Desktop</span></div>
-          <h4>Reader</h4>
-          <p>Paste text, hear it in sixteen natural voices, with each word highlighting as it's spoken.</p>
-          <span class="mini__stack">Python · edge-tts</span>
-        </li>
-        <li class="mini reveal" data-d="2" data-tilt>
-          <div class="mini__top"><span class="mini__no">10</span><span class="chip chip--sm">Tool</span></div>
-          <h4>Knowledge Extractor</h4>
-          <p>Turns YouTube videos and podcasts into compact study sheets — no paid AI required.</p>
-          <span class="mini__stack">Python</span>
-        </li>
-        <li class="mini reveal" data-tilt>
-          <div class="mini__top"><span class="mini__no">11</span><span class="chip chip--sm">Audio</span></div>
-          <h4>Auto-music</h4>
-          <p>Tooling that composes and renders music on autopilot, end to end.</p>
-          <span class="mini__stack">Audio · Python</span>
-        </li>
-      </ul>
-    </section>
-
-    <!-- ── capabilities ─────────────────────────────────────── -->
-    <section class="caps section" id="capabilities">
-      <div class="section__head">
-        <span class="kicker"><span class="kicker__no">02</span>Capabilities</span>
-        <h2 class="section__title reveal">Full-stack,<br />including the model layer.</h2>
-      </div>
-
-      <div class="caps__grid">
-        <article class="cap reveal">
-          <span class="cap__no">/ 01</span>
-          <h3>Product &amp; interface</h3>
-          <p>From first flow to the final pixel — design systems, prototypes, and the polish that makes software feel considered.</p>
-        </article>
-        <article class="cap reveal" data-d="1">
-          <span class="cap__no">/ 02</span>
-          <h3>Full-stack web</h3>
-          <p>Next.js, TypeScript, Supabase and Vercel. Auth, data, row-level security, the lot — production-ready from the start.</p>
-        </article>
-        <article class="cap reveal" data-d="2">
-          <span class="cap__no">/ 03</span>
-          <h3>AI &amp; ML</h3>
-          <p>OpenAI and Claude integration, local Ollama, vision, calibration and agents — used where models genuinely earn their place.</p>
-        </article>
-        <article class="cap reveal" data-d="3">
-          <span class="cap__no">/ 04</span>
-          <h3>Desktop &amp; mobile</h3>
-          <p>Electron desktop apps and Capacitor / PWA builds on iOS and Android — one codebase, native where it counts.</p>
-        </article>
-      </div>
-
-      <div class="marquee reveal" aria-hidden="true">
-        <div class="marquee__track">
-          <span>Next.js</span><span>TypeScript</span><span>React</span><span>Tailwind</span><span>Supabase</span><span>Postgres</span><span>pgvector</span><span>SQLite</span><span>OpenAI</span><span>Claude</span><span>Deepgram</span><span>Ollama</span><span>Electron</span><span>Capacitor</span><span>Vercel</span><span>Python</span><span>Playwright</span><span>Vitest</span>
-          <span>Next.js</span><span>TypeScript</span><span>React</span><span>Tailwind</span><span>Supabase</span><span>Postgres</span><span>pgvector</span><span>SQLite</span><span>OpenAI</span><span>Claude</span><span>Deepgram</span><span>Ollama</span><span>Electron</span><span>Capacitor</span><span>Vercel</span><span>Python</span><span>Playwright</span><span>Vitest</span>
+        <div class="bench__plate">
+          <p class="plate__no caption">Exhibit Nº 01 · <span class="plate__status"><i class="lamp lamp--live" aria-hidden="true"></i>Live</span></p>
+          <h3 class="plate__name" id="pace-name">Pace</h3>
+          <p class="plate__role">AI nutrition coach — photograph a meal, get calories and macros back.</p>
+          <p class="plate__case">Built for people who actually want to track without the friction of million-row
+            food databases. Pace reads the plate from a photo, then coaches targets, water, steps and weight
+            with a model that understands food. Designed to disappear into the day: the kind of app you open
+            ten times and notice zero times.</p>
+          <p class="plate__honesty caption">Demonstration data — the product reads real photographs with a vision model.</p>
+          <p class="plate__stack caption">Next.js · Supabase · OpenAI · Capacitor</p>
+          <a class="plate__link" href="https://pace-nutrition.vercel.app" target="_blank" rel="noopener">Inspect the production unit ↗</a>
         </div>
-      </div>
+        <figure class="bench__unit">
+          <img src="/media/nutrition.webp" alt="Pace in production — Today screen with remaining calories, macro bars and a photo meal log" width="900" height="439" loading="lazy" decoding="async" />
+          <figcaption class="caption">Production unit — pace-nutrition.vercel.app</figcaption>
+        </figure>
+      </article>
+
+      <!-- 02 · READER -->
+      <article class="bench" id="reader" data-status="shipped" aria-labelledby="reader-name">
+        <div class="bench__stage" data-stage="reader">
+          <blockquote class="reader__text" id="reader-text">
+            <p>Paste any text and hear it read back in a natural voice, each word lit as it is spoken —
+            built for proofreading your own writing with your ears instead of your eyes.</p>
+          </blockquote>
+          <div class="stagebar">
+            <button class="ctl" type="button" id="reader-play" aria-pressed="false"><span class="ctl__glyph" aria-hidden="true">▸</span> Read aloud</button>
+            <p class="caption stagebar__meta" id="reader-meta">Voice: your browser's</p>
+          </div>
+        </div>
+        <div class="bench__plate">
+          <p class="plate__no caption">Exhibit Nº 02 · <span class="plate__status"><i class="lamp lamp--dim" aria-hidden="true"></i>Shipped — desktop</span></p>
+          <h3 class="plate__name" id="reader-name">Reader</h3>
+          <p class="plate__role">Text to speech with word-by-word highlight, sixteen voices.</p>
+          <p class="plate__honesty caption">Runs in your browser, for real — your browser's voices shown; the product uses neural TTS.</p>
+          <p class="plate__stack caption">Python · edge-tts</p>
+        </div>
+      </article>
+
+      <!-- 03 · KLARO ─ flagship specimen plate -->
+      <article class="bench bench--wide" id="klaro" data-status="live" aria-labelledby="klaro-name">
+        <div class="bench__stage bench__stage--spec" data-stage="klaro">
+          <div class="klaro">
+            <p class="klaro__line">Land the job you <em>actually</em> want.</p>
+            <ul class="klaro__chips" aria-label="Klaro brand palette">
+              <li><i style="--swatch:#1F2A4D"></i><span class="caption">Ink navy</span></li>
+              <li><i style="--swatch:#F7F0E4"></i><span class="caption">Warm cream</span></li>
+              <li><i style="--swatch:#D9B36C"></i><span class="caption">Brass</span></li>
+            </ul>
+            <p class="klaro__proof">200<span>+</span></p>
+            <p class="caption">early-career professionals coached</p>
+          </div>
+        </div>
+        <div class="bench__plate">
+          <p class="plate__no caption">Exhibit Nº 03 · <span class="plate__status"><i class="lamp lamp--live" aria-hidden="true"></i>Live</span></p>
+          <h3 class="plate__name" id="klaro-name">Klaro Academy</h3>
+          <p class="plate__role">Identity, copy and site for an interview-coaching academy.</p>
+          <p class="plate__case">The brief was warmth without fluff: two-week interview prep for graduates,
+            no jargon, no fear-selling. VXVO built the name's voice, the brass-on-navy identity, every line
+            of copy, and the site itself. The proof isn't the palette — it's the 200-plus early-career
+            people coached through it.</p>
+          <p class="plate__honesty caption">Specimen plate — the production site is pictured below.</p>
+          <p class="plate__stack caption">Brand · Copy · Design · HTML/CSS</p>
+        </div>
+        <figure class="bench__unit">
+          <img src="/media/klaro.webp" alt="Klaro Academy in production — cream and navy landing page with the headline “Land the job you actually want”" width="900" height="563" loading="lazy" decoding="async" />
+          <figcaption class="caption">Production unit — Klaro Academy</figcaption>
+        </figure>
+      </article>
+
+      <!-- 04 · FRIENDSHIP FLOWERS -->
+      <article class="bench" id="flowers" data-status="shipped" aria-labelledby="flowers-name">
+        <div class="bench__stage" data-stage="flowers">
+          <svg viewBox="0 0 240 240" class="flower" id="flower-svg" aria-hidden="true">
+            <g class="chalkline" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M96,206 h48 l8,26 h-64 z" />
+              <path class="flower__stem" d="M120,206 C118,170 122,150 120,118" />
+              <path class="flower__leaf flower__leaf--l" d="M120,170 C100,166 92,150 94,140 C108,144 118,156 120,170 z" />
+              <path class="flower__leaf flower__leaf--r" d="M120,150 C140,146 148,130 146,120 C132,124 122,136 120,150 z" />
+              <g class="flower__head">
+                <circle cx="120" cy="106" r="9" />
+                <g class="flower__petals">
+                  <ellipse cx="120" cy="84" rx="8" ry="15" />
+                  <ellipse cx="120" cy="128" rx="8" ry="15" />
+                  <ellipse cx="98" cy="106" rx="15" ry="8" />
+                  <ellipse cx="142" cy="106" rx="15" ry="8" />
+                  <ellipse cx="105" cy="91" rx="11" ry="11" transform="rotate(-45 105 91)" />
+                  <ellipse cx="135" cy="91" rx="11" ry="11" transform="rotate(45 135 91)" />
+                  <ellipse cx="105" cy="121" rx="11" ry="11" transform="rotate(45 105 121)" />
+                  <ellipse cx="135" cy="121" rx="11" ry="11" transform="rotate(-45 135 121)" />
+                </g>
+              </g>
+            </g>
+          </svg>
+          <div class="stagebar">
+            <button class="ctl" type="button" id="flower-hold" aria-pressed="false"><span class="ctl__glyph" aria-hidden="true">●</span> Hold to keep in touch</button>
+            <p class="caption stagebar__meta" id="flower-meta" aria-live="polite">Neglected — wilting</p>
+          </div>
+        </div>
+        <div class="bench__plate">
+          <p class="plate__no caption">Exhibit Nº 04 · <span class="plate__status"><i class="lamp lamp--dim" aria-hidden="true"></i>Shipped — app</span></p>
+          <h3 class="plate__name" id="flowers-name">Friendship Flowers</h3>
+          <p class="plate__role">A garden where every friendship is a plant — it blooms when you stay in touch, wilts when you drift.</p>
+          <p class="plate__honesty caption">Runs in your browser, for real — this bloom is hand-drawn SVG; the product grows its garden procedurally.</p>
+          <p class="plate__stack caption">Design · App</p>
+        </div>
+      </article>
+
+      <!-- 05 · RECRUITER LIVE COPILOT -->
+      <article class="bench" id="copilot" data-status="pilot" aria-labelledby="copilot-name">
+        <div class="bench__stage" data-stage="copilot">
+          <div class="copilot">
+            <div class="copilot__feed" id="copilot-feed" role="group" aria-label="Demonstration call transcript">
+              <p class="copilot__line" data-t="0"><b>Candidate</b><span> — I managed a team of six through the migration…</span></p>
+              <p class="copilot__line copilot__line--int" data-t="1"><b>Recruiter</b><span> — and how did the team change after?</span></p>
+              <div class="copilot__coach" data-t="2"><span class="caption">coach</span>Ask about attrition during the migration — probe retention.</div>
+              <p class="copilot__line" data-t="3"><b>Candidate</b><span> — two left mid-way; I rehired and we kept the deadline…</span></p>
+            </div>
+            <ul class="copilot__checks caption" aria-label="Screening checklist">
+              <li data-t="1" class="copilot__check">Notice period</li>
+              <li data-t="3" class="copilot__check">Salary range</li>
+              <li data-t="4" class="copilot__check copilot__check--pend">Visa status</li>
+            </ul>
+            <div class="stagebar">
+              <button class="ctl" type="button" id="copilot-play" aria-pressed="false"><span class="ctl__glyph" aria-hidden="true">▸</span> Run the call</button>
+              <p class="caption stagebar__meta" id="copilot-meta">REC&nbsp;00:00</p>
+            </div>
+          </div>
+        </div>
+        <div class="bench__plate">
+          <p class="plate__no caption">Exhibit Nº 05 · <span class="plate__status"><i class="lamp lamp--pilot" aria-hidden="true"></i>Pilot</span></p>
+          <h3 class="plate__name" id="copilot-name">Recruiter Live Copilot</h3>
+          <p class="plate__role">Private desktop assistant — live diarized transcription, coaching cards, post-call summaries. Stored entirely locally.</p>
+          <p class="plate__honesty caption">Demonstration data — the product transcribes real calls, live.</p>
+          <p class="plate__stack caption">Electron · React · Deepgram · Claude</p>
+        </div>
+      </article>
+
+      <!-- 06 · RECRUITMENT OS -->
+      <article class="bench" id="recruitment-os" data-status="shipped" aria-labelledby="recos-name">
+        <div class="bench__stage" data-stage="recos">
+          <div class="recos">
+            <label class="visually-hidden" for="recos-q">Filter candidates</label>
+            <input class="recos__q" id="recos-q" type="text" placeholder="Try “python london” or “designer”…" autocomplete="off" spellcheck="false" />
+            <ul class="recos__rows" id="recos-rows" aria-label="Candidate records"></ul>
+            <p class="caption recos__meta" id="recos-meta" aria-live="polite">50 records on file</p>
+          </div>
+        </div>
+        <div class="bench__plate">
+          <p class="plate__no caption">Exhibit Nº 06 · <span class="plate__status"><i class="lamp lamp--dim" aria-hidden="true"></i>Shipped — local-first</span></p>
+          <h3 class="plate__name" id="recos-name">Recruitment OS</h3>
+          <p class="plate__role">A recruiting cockpit that discovers clients and scores candidates — running entirely on local AI.</p>
+          <p class="plate__honesty caption">Fictional candidates — the scan is real, timed live, and never leaves this page.</p>
+          <p class="plate__stack caption">SQLite · Ollama · React</p>
+        </div>
+      </article>
+
+      <!-- 07 · TRADE -->
+      <article class="bench" id="trade" data-status="dev" aria-labelledby="trade-name">
+        <div class="bench__stage" data-stage="trade">
+          <div class="trade">
+            <p class="caption">UK general election — turnout &gt; 60%</p>
+            <div class="trade__dial">
+              <svg viewBox="0 0 220 130" aria-hidden="true">
+                <g class="chalkline" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M30,110 A80,80 0 0 1 190,110" />
+                  <g class="trade__ticks"></g>
+                  <line class="trade__needle" id="trade-needle" x1="110" y1="110" x2="110" y2="44" />
+                  <circle cx="110" cy="110" r="5" />
+                </g>
+              </svg>
+              <p class="trade__p"><span class="caption">P(event)</span> <output id="trade-out" for="trade-range">0.62</output></p>
+            </div>
+            <label class="caption" for="trade-range">Drag the ensemble's confidence</label>
+            <input type="range" id="trade-range" min="2" max="98" value="62" step="1" />
+            <p class="caption stagebar__meta" id="trade-meta">7 models · isotonic-calibrated · 14–30d horizon</p>
+          </div>
+        </div>
+        <div class="bench__plate">
+          <p class="plate__no caption">Exhibit Nº 07 · <span class="plate__status"><i class="lamp lamp--dev" aria-hidden="true"></i>In development</span></p>
+          <h3 class="plate__name" id="trade-name">Trade</h3>
+          <p class="plate__role">An AI ensemble that forecasts politics and news, calibrates its own confidence, and hunts long-horizon edges on UK-legal prediction markets.</p>
+          <p class="plate__honesty caption">Demonstration instrument — the ensemble is on the workbench, not in this page.</p>
+          <p class="plate__stack caption">Python · Postgres + pgvector · LLM ensemble</p>
+        </div>
+      </article>
+
+      <!-- 08 · TRANSLATOR -->
+      <article class="bench" id="translator" data-status="shipped" aria-labelledby="translator-name">
+        <div class="bench__stage" data-stage="translator">
+          <div class="translator">
+            <p class="translator__line" id="translator-line" lang="en">Software, shipped.</p>
+            <div class="translator__langs" role="group" aria-label="Translate the studio motto">
+              <button class="chiplet" type="button" data-lang="en" aria-pressed="true">EN</button>
+              <button class="chiplet" type="button" data-lang="fr" aria-pressed="false">FR</button>
+              <button class="chiplet" type="button" data-lang="de" aria-pressed="false">DE</button>
+              <button class="chiplet" type="button" data-lang="es" aria-pressed="false">ES</button>
+              <button class="chiplet" type="button" data-lang="pt" aria-pressed="false">PT</button>
+              <button class="chiplet" type="button" data-lang="pl" aria-pressed="false">PL</button>
+              <button class="chiplet" type="button" data-lang="ja" aria-pressed="false">JA</button>
+              <button class="chiplet" type="button" data-lang="ko" aria-pressed="false">KO</button>
+              <button class="chiplet" type="button" data-lang="zh" aria-pressed="false">ZH</button>
+              <button class="chiplet" type="button" data-lang="ar" aria-pressed="false">AR</button>
+              <button class="chiplet" type="button" data-lang="hi" aria-pressed="false">HI</button>
+            </div>
+          </div>
+        </div>
+        <div class="bench__plate">
+          <p class="plate__no caption">Exhibit Nº 08 · <span class="plate__status"><i class="lamp lamp--dim" aria-hidden="true"></i>Shipped — web</span></p>
+          <h3 class="plate__name" id="translator-name">Translator</h3>
+          <p class="plate__role">A fast, no-friction translator built for everyday, real-world use.</p>
+          <p class="plate__honesty caption">Pre-computed lines — the product translates anything, live.</p>
+          <p class="plate__stack caption">Web app</p>
+        </div>
+      </article>
+
+      <!-- 09 · AUTO-MUSIC -->
+      <article class="bench" id="auto-music" data-status="shipped" aria-labelledby="music-name">
+        <div class="bench__stage" data-stage="music">
+          <div class="music">
+            <svg viewBox="0 0 460 120" class="music__staff" id="music-staff" aria-hidden="true">
+              <g class="chalkline" stroke="currentColor" stroke-width="1" opacity=".5">
+                <line x1="10" y1="20" x2="450" y2="20" /><line x1="10" y1="40" x2="450" y2="40" />
+                <line x1="10" y1="60" x2="450" y2="60" /><line x1="10" y1="80" x2="450" y2="80" />
+                <line x1="10" y1="100" x2="450" y2="100" />
+              </g>
+              <g id="music-notes" fill="currentColor" stroke="none"></g>
+            </svg>
+            <div class="stagebar">
+              <button class="ctl" type="button" id="music-play" aria-pressed="false"><span class="ctl__glyph" aria-hidden="true">▸</span> Compose</button>
+              <p class="caption stagebar__meta" id="music-meta">Idle — A minor pentatonic, 72 bpm</p>
+            </div>
+          </div>
+        </div>
+        <div class="bench__plate">
+          <p class="plate__no caption">Exhibit Nº 09 · <span class="plate__status"><i class="lamp lamp--dim" aria-hidden="true"></i>Shipped — audio</span></p>
+          <h3 class="plate__name" id="music-name">Auto-music</h3>
+          <p class="plate__role">Tooling that composes and renders music on autopilot, end to end.</p>
+          <p class="plate__honesty caption">Composed live in your browser — this piece exists only for this visit.</p>
+          <p class="plate__stack caption">Audio · Python · WebAudio (this model)</p>
+        </div>
+      </article>
+
+      <!-- 10 · LIFEPLANNER ─ drawing -->
+      <article class="bench bench--drawing" id="lifeplanner" data-status="fab" aria-labelledby="lifeplanner-name">
+        <div class="bench__stage" data-stage="drawing">
+          <svg viewBox="0 0 460 200" aria-hidden="true">
+            <g class="chalkline draw" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <rect x="20" y="30" width="420" height="150" rx="4" />
+              <line x1="20" y1="64" x2="440" y2="64" />
+              <line x1="80" y1="30" x2="80" y2="180" /><line x1="140" y1="30" x2="140" y2="180" />
+              <line x1="200" y1="30" x2="200" y2="180" /><line x1="260" y1="30" x2="260" y2="180" />
+              <line x1="320" y1="30" x2="320" y2="180" /><line x1="380" y1="30" x2="380" y2="180" />
+              <rect x="90" y="76" width="40" height="22" rx="3" /><rect x="150" y="106" width="40" height="34" rx="3" />
+              <rect x="270" y="76" width="40" height="48" rx="3" /><rect x="390" y="130" width="40" height="22" rx="3" />
+              <circle cx="50" cy="47" r="8" /><path d="M384,40 a8,8 0 1 0 8,12" />
+            </g>
+          </svg>
+          <p class="stamp caption" aria-hidden="true">Model in fabrication</p>
+        </div>
+        <div class="bench__plate">
+          <p class="plate__no caption">Exhibit Nº 10 · <span class="plate__status"><i class="lamp lamp--off" aria-hidden="true"></i>Model in fabrication</span></p>
+          <h3 class="plate__name" id="lifeplanner-name">LifePlanner</h3>
+          <p class="plate__role">A calm personal operating system — goals, weeks and days on one considered surface.</p>
+          <p class="plate__honesty caption">Working model in fabrication — drawing only, the product is real.</p>
+          <p class="plate__stack caption">Web app</p>
+        </div>
+      </article>
+
+      <!-- 11 · KNOWLEDGE EXTRACTOR ─ drawing -->
+      <article class="bench bench--drawing" id="knowledge" data-status="fab" aria-labelledby="knowledge-name">
+        <div class="bench__stage" data-stage="drawing">
+          <svg viewBox="0 0 460 200" aria-hidden="true">
+            <g class="chalkline draw" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <rect x="30" y="40" width="130" height="84" rx="6" />
+              <path d="M82,68 l28,14 l-28,14 z" />
+              <path d="M170,82 h40 M210,82 l-8,-6 M210,82 l-8,6" />
+              <path d="M230,52 l60,30 v0 l-60,30 z" />
+              <path d="M300,82 h30 M330,82 l-8,-6 M330,82 l-8,6" />
+              <rect x="348" y="36" width="82" height="104" rx="3" />
+              <line x1="360" y1="58" x2="418" y2="58" /><line x1="360" y1="74" x2="418" y2="74" />
+              <line x1="360" y1="90" x2="404" y2="90" /><line x1="360" y1="106" x2="412" y2="106" />
+              <line x1="360" y1="122" x2="396" y2="122" />
+            </g>
+          </svg>
+          <p class="stamp caption" aria-hidden="true">Model in fabrication</p>
+        </div>
+        <div class="bench__plate">
+          <p class="plate__no caption">Exhibit Nº 11 · <span class="plate__status"><i class="lamp lamp--off" aria-hidden="true"></i>Model in fabrication</span></p>
+          <h3 class="plate__name" id="knowledge-name">Knowledge Extractor</h3>
+          <p class="plate__role">Turns YouTube videos and podcasts into compact study sheets — no paid AI required.</p>
+          <p class="plate__honesty caption">Working model in fabrication — drawing only, the product is real.</p>
+          <p class="plate__stack caption">Python</p>
+        </div>
+      </article>
     </section>
 
-    <!-- ── how we work ──────────────────────────────────────── -->
-    <section class="how section" id="how">
-      <div class="section__head">
-        <span class="kicker"><span class="kicker__no">03</span>How we work</span>
-      </div>
-      <ol class="how__list">
-        <li class="how__item reveal">
-          <span class="how__no">01</span>
-          <h3>Ship, then refine.</h3>
-          <p>Real software in front of real users beats a perfect plan. Production from week one.</p>
-        </li>
-        <li class="how__item reveal" data-d="1">
-          <span class="how__no">02</span>
-          <h3>One mind, whole stack.</h3>
-          <p>Design, frontend, backend and AI decided by the same person — nothing gets lost in handoff.</p>
-        </li>
-        <li class="how__item reveal" data-d="2">
-          <span class="how__no">03</span>
-          <h3>AI where it earns it.</h3>
-          <p>Models do the work they're genuinely good at. Everything else is solid, boring engineering.</p>
-        </li>
-        <li class="how__item reveal" data-d="3">
-          <span class="how__no">04</span>
-          <h3>Small surface, deep care.</h3>
-          <p>Few screens, considered to the pixel. Restraint is a feature.</p>
-        </li>
+    <!-- ── studio ───────────────────────────────────────────────── -->
+    <section class="studio section" id="studio" aria-labelledby="studio-title">
+      <header class="section__head">
+        <p class="kicker"><span class="kicker__no">Nº 02</span>The studio</p>
+        <h2 class="section__title" id="studio-title">One person who<br />ships like a team.</h2>
+        <p class="section__sub">VXVO takes an idea from a blank repo to production — design, frontend, backend
+          and AI — without the handoffs that slow everything down. Small surfaces, deep care, and a model
+          layer that only shows up where it genuinely earns its keep.</p>
+      </header>
+
+      <ol class="creed" aria-label="Working principles">
+        <li class="plaque"><p class="caption">Principle 01</p><h3>Ship, then refine.</h3><p>Real software in front of real users beats a perfect plan. Production from week one.</p></li>
+        <li class="plaque"><p class="caption">Principle 02</p><h3>One mind, whole stack.</h3><p>Design, frontend, backend and AI decided by the same person — nothing lost in handoff.</p></li>
+        <li class="plaque"><p class="caption">Principle 03</p><h3>AI where it earns it.</h3><p>Models do the work they're genuinely good at. Everything else is solid, boring engineering.</p></li>
+        <li class="plaque"><p class="caption">Principle 04</p><h3>Small surface, deep care.</h3><p>Few screens, considered to the pixel. Restraint is a feature.</p></li>
       </ol>
+
+      <div class="commission plaque">
+        <p class="caption">What you can commission</p>
+        <ul class="commission__list">
+          <li><b>Product &amp; interface</b> — first flow to final pixel: design systems, prototypes, polish.</li>
+          <li><b>Full-stack web</b> — Next.js, TypeScript, Supabase, Vercel. Auth, data, RLS — production-ready from the start.</li>
+          <li><b>AI &amp; ML</b> — OpenAI and Claude integration, local Ollama, vision, calibration, agents.</li>
+          <li><b>Desktop &amp; mobile</b> — Electron and Capacitor/PWA on iOS and Android. One codebase, native where it counts.</li>
+        </ul>
+        <p class="caption commission__stack">Instruments on the bench — Next.js · TypeScript · React · Tailwind · Supabase · Postgres · pgvector · SQLite · OpenAI · Claude · Deepgram · Ollama · Electron · Capacitor · Vercel · Python · Playwright · Vitest</p>
+      </div>
     </section>
 
-    <!-- ── contact ──────────────────────────────────────────── -->
-    <section class="contact section" id="contact">
-      <div class="section__head">
-        <span class="kicker"><span class="kicker__no">04</span>Contact</span>
-      </div>
-      <div class="contact__inner">
-        <h2 class="contact__title reveal">
-          Have something<br />to build? <em class="grad">Let's talk.</em>
-        </h2>
-        <p class="contact__sub reveal" data-d="1">Currently taking on a small number of new projects for 2026.
-          Tell me what you're making and I'll tell you honestly whether I'm the right studio for it.</p>
-        <div class="contact__cta reveal" data-d="2">
-          <a class="btn btn--solid btn--lg" href="mailto:admin@vxvo.co.uk">admin@vxvo.co.uk<span class="btn__arr">→</span></a>
+    <!-- ── hire: the reserved bench ─────────────────────────────── -->
+    <section class="hire section" id="hire" aria-labelledby="hire-title">
+      <header class="section__head">
+        <p class="kicker"><span class="kicker__no">Nº 03</span>Commissions</p>
+        <h2 class="section__title" id="hire-title">The next bench<br />is empty.</h2>
+      </header>
+
+      <div class="reserved">
+        <svg viewBox="0 0 460 180" class="reserved__bench" aria-hidden="true">
+          <g class="chalkline draw" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="6 7">
+            <rect x="40" y="50" width="380" height="18" rx="2" />
+            <line x1="70" y1="68" x2="70" y2="150" /><line x1="390" y1="68" x2="390" y2="150" />
+            <line x1="58" y1="150" x2="82" y2="150" /><line x1="378" y1="150" x2="402" y2="150" />
+            <circle cx="230" cy="34" r="10" />
+          </g>
+        </svg>
+        <div class="reserved__plaque plaque">
+          <p class="caption">Exhibit Nº 12 — reserved for your project · commissioned 2026</p>
+          <p class="reserved__copy">VXVO takes a small number of projects a year. Tell me what you're
+            making and I'll tell you honestly whether I'm the right studio for it.</p>
+          <div class="reserved__cta">
+            <a class="btn" href="mailto:admin@vxvo.co.uk">admin@vxvo.co.uk <span aria-hidden="true">→</span></a>
+            <button class="btn btn--ghost" type="button" id="copy-mail">Copy address</button>
+          </div>
+          <p class="caption reserved__copied" id="copy-note" aria-live="polite"></p>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- ── footer ───────────────────────────────────────────── -->
-  <footer class="foot">
-    <div class="foot__inner">
-      <a class="brand brand--foot" href="#top">
-        <span class="brand__word">VXVO</span>
-      </a>
-      <nav class="foot__nav" aria-label="Footer">
-        <a href="#work">Work</a>
+  <!-- ── colophon ─────────────────────────────────────────────── -->
+  <footer class="colophon">
+    <div class="colophon__in">
+      <div class="colophon__plate plaque">
+        <p class="caption">Demonstration Room v1.0 — release notes</p>
+        <p>v1.0 · Jun 2026 — room opened. Eight models powered, one specimen plate, two in fabrication, one bench reserved.</p>
+        <p class="caption">Hand-built: no framework, no build step, no tracking. Fonts self-hosted.
+          Fully readable without JavaScript — the lights are a bonus.</p>
+      </div>
+      <nav class="colophon__nav" aria-label="Footer">
+        <a href="#floor">The Floor</a>
         <a href="#studio">Studio</a>
-        <a href="#capabilities">Capabilities</a>
-        <a href="#contact">Contact</a>
+        <a href="#hire">Hire</a>
+        <a href="mailto:admin@vxvo.co.uk">admin@vxvo.co.uk</a>
       </nav>
-      <p class="foot__note">Independent software studio.<br />Designed &amp; built in-house. © <span id="yr">2026</span> VXVO.</p>
+      <p class="caption colophon__note">VXVO — independent software studio · designed &amp; built in-house · © <span id="yr">2026</span></p>
     </div>
   </footer>
 

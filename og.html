@@ -1,0 +1,70 @@
+<!doctype html>
+<!-- og:image source — screenshot at 1200×630, not deployed -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face {
+    font-family: 'Bricolage Grotesque';
+    font-weight: 200 800;
+    font-stretch: 75% 100%;
+    src: url('/fonts/bricolage-grotesque-var-latin.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Spline Sans Mono';
+    font-weight: 300 700;
+    src: url('/fonts/spline-sans-mono-var-latin.woff2') format('woff2');
+  }
+  * { margin: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    background-color: #0C1F18;
+    background-image:
+      repeating-linear-gradient(to right, rgba(237,234,226,.04) 0 1px, transparent 1px 56px),
+      repeating-linear-gradient(to bottom, rgba(237,234,226,.04) 0 1px, transparent 1px 56px);
+    color: #EDEAE2;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    padding: 72px 84px;
+    position: relative;
+  }
+  .kicker {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 17px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+    color: #A7BCAF; margin-bottom: 38px;
+  }
+  h1 {
+    font-size: 148px; font-weight: 760; font-stretch: 87%;
+    line-height: .94; letter-spacing: -.025em;
+  }
+  h1 .dot { color: #FF4F00; }
+  .sub {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 19px; font-weight: 460; letter-spacing: .14em; text-transform: uppercase;
+    color: #A7BCAF; margin-top: 44px;
+  }
+  .run {
+    position: absolute; right: 84px; top: 64px;
+    width: 130px; height: 130px; border-radius: 50%;
+    background: #10261E; border: 1px solid #28453A;
+    display: grid; place-items: center;
+  }
+  .run::before {
+    content: ''; position: absolute; inset: 9px; border-radius: 50%;
+    border: 3px solid #FF4F00; box-shadow: 0 0 30px rgba(255,79,0,.55);
+  }
+  .run span {
+    font-family: 'Spline Sans Mono', monospace; font-size: 19px; font-weight: 600;
+    letter-spacing: .22em; text-indent: .22em;
+  }
+  .plus { position: absolute; font-family: 'Spline Sans Mono', monospace; color: #5F7A6D; font-size: 20px; }
+</style>
+</head>
+<body>
+  <span class="plus" style="left:30px;top:22px">+</span>
+  <span class="plus" style="right:30px;bottom:22px">+</span>
+  <p class="kicker">VXVO · Independent software studio · Demonstration Room Nº 01</p>
+  <h1>Software,<br />shipped<span class="dot">.</span></h1>
+  <p class="sub">Eight working models — everything on this page runs.</p>
+  <div class="run"><span>RUN</span></div>
+</body>
+</html>
