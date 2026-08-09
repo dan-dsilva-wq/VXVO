@@ -61,6 +61,8 @@ body.velocity-demo { min-width: 320px; min-height: 100vh; margin: 0; color: var(
 .demo-breadcrumb strong { color: var(--d-ink); }
 .demo-menu-button { display: none; padding: 5px 8px; border: 1px solid var(--d-line); border-radius: 7px; color: var(--d-ink); background: var(--d-surface); cursor: pointer; font-size: 16px; }
 .demo-topbar-actions { display: flex; align-items: center; gap: 15px; }
+.demo-colour-lab-link { color: #b9ef61; font-size: 11px; font-weight: 650; letter-spacing: .01em; text-decoration: none; }
+.demo-colour-lab-link:hover { color: #e4ffb2; text-decoration: underline; }
 .demo-readonly { display: flex; align-items: center; gap: 7px; color: var(--d-muted); font-size: 11px; }
 .demo-readonly i, .demo-live i { display: inline-block; width: 6px; height: 6px; border-radius: 99px; background: var(--d-lime); box-shadow: 0 0 0 3px rgba(185,239,97,.1); }
 .demo-avatar { display: grid; place-items: center; width: 31px; height: 31px; color: #dff4ff; background: #225274; border: 1px solid #407aa6; border-radius: 50%; font: 10px "Spline", monospace; }
@@ -204,6 +206,7 @@ body.velocity-demo { min-width: 320px; min-height: 100vh; margin: 0; color: var(
 @media (max-width: 680px) {
   .demo-topbar { min-height: 61px; padding: 0 16px; }
   .demo-topbar-actions { gap: 9px; }
+  .demo-colour-lab-link { font-size: 10px; }
   .demo-readonly { display: none; }
   .demo-main { padding: 18px 15px 25px; }
   .demo-heading { display: block; padding: 30px 0 19px; }
