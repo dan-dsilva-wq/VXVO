@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Velocity Teams — Home demo</title>
+    <meta name="description" content="A read-only preview of the Velocity Teams home dashboard using illustrative data." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#09111d" />
+    <link rel="canonical" href="https://vxvo.co.uk/velocity-demo.html" />
+    <link rel="stylesheet" href="/velocity-demo.css" />
+    <script src="/velocity-demo.js" defer></script>
+  </head>
+  <body class="velocity-demo">
+    <a class="demo-skip" href="#demo-home">Skip to home dashboard</a>
+    <div class="demo-app">
+      <aside class="demo-sidebar" id="demo-sidebar" aria-label="Demo navigation">
+        <div class="demo-brand-row">
+          <div class="demo-brand-mark" aria-hidden="true">V</div>
+          <div><strong>Velocity</strong><span>Teams</span></div>
+          <button class="demo-sidebar-close" type="button" data-close-menu aria-label="Close menu">×</button>
+        </div>
+
+        <div class="demo-workspace"><span>Workspace</span><strong>RSD Recruitment</strong><small>Illustrative team</small></div>
+
+        <nav class="demo-nav" aria-label="Velocity Teams sections">
+          <span class="demo-nav-label">Desk</span>
+          <a class="active" href="#demo-home" aria-current="page" data-close-menu><span aria-hidden="true">⌂</span>Home</a>
+          <span class="demo-nav-item disabled"><span aria-hidden="true">◷</span>Today<small>preview</small></span>
+          <span class="demo-nav-item disabled"><span aria-hidden="true">◎</span>Candidates<small>preview</small></span>
+          <span class="demo-nav-item disabled"><span aria-hidden="true">▣</span>Clients<small>preview</small></span>
+          <span class="demo-nav-item disabled"><span aria-hidden="true">⌁</span>Market radar<small>preview</small></span>
+        </nav>
+
+        <div class="demo-sidebar-foot">
+          <div class="demo-lock"><span aria-hidden="true">◉</span><div><strong>Read-only demo</strong><small>Sample data only</small></div></div>
+          <p>Only the Home view is available in this preview.</p>
+        </div>
+      </aside>
+
+      <button class="demo-scrim" type="button" data-close-menu aria-label="Close navigation"></button>
+
+      <div class="demo-content">
+        <header class="demo-topbar">
+          <div class="demo-breadcrumb"><button class="demo-menu-button" type="button" data-open-menu aria-label="Open menu">☰</button><span>Velocity Teams</span><b>/</b><strong>Home</strong></div>
+          <div class="demo-topbar-actions"><span class="demo-readonly"><i aria-hidden="true"></i>Read-only demo</span><span class="demo-avatar" aria-label="Alex Morgan">AM</span></div>
+        </header>
+
+        <main class="demo-main" id="demo-home">
+          <div class="demo-notice" role="note"><span aria-hidden="true">✦</span><span><strong>Illustrative demo</strong> — names, companies, numbers and activity below are fictional. No live candidate records or actions are connected.</span></div>
+
+          <section class="demo-heading" aria-labelledby="demo-title">
+            <div><p class="demo-eyebrow">Velocity League · Home</p><h1 id="demo-title">Good morning, Alex.</h1><p>See the score, find the smallest next win, and keep the team moving.</p></div>
+            <div class="demo-period-wrap"><div class="demo-period" role="tablist" aria-label="Score period"><button type="button" role="tab" data-period="week" aria-selected="true" class="active">This week</button><button type="button" role="tab" data-period="month" aria-selected="false">This month</button></div><span data-reset>Resets every Monday</span></div>
+          </section>
+
+          <section class="demo-hero-grid" aria-label="Score and reward">
+            <article class="demo-card demo-score-card">
+              <div class="demo-card-topline"><span>Your current score</span><strong data-rank-label>#2 · 24 pts to #1</strong></div>
+              <div class="demo-score-number" data-score aria-live="polite">186</div>
+              <div class="demo-score-label">Velocity points · <span data-period-copy>this week</span></div>
+              <div class="demo-score-meta"><span>Team total <b data-team-total>612</b></span><span>4 people in view</span><span class="demo-status green" data-status>Within a sprint</span></div>
+
+              <div class="demo-route">
+                <div class="demo-route-head"><div><span>Fastest route to #1</span><strong data-route-title>Turn a good week into a great one</strong></div><b data-route-total>+35 pts in view</b></div>
+                <p data-route-copy>Start with a few manageable wins. The rest of the board can wait.</p>
+                <div class="demo-route-actions"><div><b data-route-one>Book 1 interview</b><span data-route-one-points>+15 pts</span></div><div><b data-route-two>Send 3 approved CVs</b><span data-route-two-points>+12 pts</span></div><div><b data-route-three>Close 2 call notes</b><span data-route-three-points>+8 pts</span></div></div>
+                <a class="demo-primary-button" href="#demo-today">Open Today queue <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+
+            <article class="demo-card demo-reward-card">
+              <div class="demo-reward-icon" aria-hidden="true">✦</div>
+              <p class="demo-reward-label">Reward cycle · <span data-period-copy>this week</span></p>
+              <h2>First place</h2>
+              <strong class="demo-reward-value" data-reward>£250 team reward</strong>
+              <p data-reward-detail>A team lunch and a half-day finish for first place.</p>
+              <div class="demo-reward-rule"><span>Current leader</span><b data-leader>Priya Shah</b></div>
+              <div class="demo-reward-rule"><span>Cycle</span><b data-cycle>10–16 August 2026</b></div>
+              <div class="demo-reward-note">Points reset at the start of each cycle. The history stays visible.</div>
+            </article>
+          </section>
+
+          <section class="demo-kpis" aria-label="Team KPI totals">
+            <article class="demo-kpi"><span class="demo-dot sky" aria-hidden="true"></span><span>Calls attempted</span><b data-metric="calls">42</b><small data-metric-note="calls">18 connected</small></article>
+            <article class="demo-kpi"><span class="demo-dot lime" aria-hidden="true"></span><span>CVs sent</span><b data-metric="cvs">16</b><small data-metric-note="cvs">approved activity</small></article>
+            <article class="demo-kpi"><span class="demo-dot violet" aria-hidden="true"></span><span>Interviews booked</span><b data-metric="interviews">8</b><small data-metric-note="interviews">6 attended</small></article>
+            <article class="demo-kpi"><span class="demo-dot amber" aria-hidden="true"></span><span>Offers</span><b data-metric="offers">3</b><small data-metric-note="offers">1 placement</small></article>
+            <article class="demo-kpi"><span class="demo-dot coral" aria-hidden="true"></span><span>Collected turnover</span><b data-metric="turnover">£8,400</b><small>shown separately from points</small></article>
+          </section>
+
+          <div class="demo-lower-grid">
+            <section class="demo-card demo-leaderboard-card" aria-labelledby="leaderboard-title">
+              <header class="demo-section-head"><div><p class="demo-eyebrow">Team view</p><h2 id="leaderboard-title">Team leaderboard</h2><span>Full KPI tracking, split by employee.</span></div><span class="demo-scope">Company view</span></header>
+              <div class="demo-table-wrap"><table class="demo-table"><thead><tr><th scope="col">Rank</th><th scope="col">Employee</th><th scope="col">Score pace</th><th scope="col">Calls</th><th scope="col">CVs</th><th scope="col">Interviews</th><th scope="col">Starts</th><th scope="col">Turnover</th><th scope="col">Status</th></tr></thead><tbody>
+                <tr><td><span class="demo-rank">🥇</span></td><td><div class="demo-person"><span class="demo-person-avatar">PS</span><span><b>Priya Shah</b><small>Senior consultant</small></span></div></td><td><div class="demo-pace"><span><i style="width:100%"></i></span><b>210</b></div></td><td>47</td><td>18</td><td>9</td><td>2</td><td>£9,800</td><td><span class="demo-status green">Leading</span></td></tr>
+                <tr class="mine"><td><span class="demo-rank">🥈</span></td><td><div class="demo-person"><span class="demo-person-avatar">AM</span><span><b>Alex Morgan · You</b><small>Principal consultant</small></span></div></td><td><div class="demo-pace"><span><i style="width:89%"></i></span><b>186</b></div></td><td>42</td><td>16</td><td>6</td><td>1</td><td>£8,400</td><td><span class="demo-status sky">Within a sprint</span></td></tr>
+                <tr><td><span class="demo-rank">🥉</span></td><td><div class="demo-person"><span class="demo-person-avatar">MB</span><span><b>Marcus Bell</b><small>Consultant</small></span></div></td><td><div class="demo-pace"><span><i style="width:68%"></i></span><b>142</b></div></td><td>35</td><td>11</td><td>5</td><td>1</td><td>£5,600</td><td><span class="demo-status amber">In the hunt</span></td></tr>
+                <tr><td><span class="demo-rank">#4</span></td><td><div class="demo-person"><span class="demo-person-avatar">JC</span><span><b>Jo Carter</b><small>Associate consultant</small></span></div></td><td><div class="demo-pace"><span><i style="width:35%"></i></span><b>74</b></div></td><td>22</td><td>7</td><td>2</td><td>0</td><td>£1,900</td><td><span class="demo-status">Building momentum</span></td></tr>
+              </tbody></table></div>
+            </section>
+
+            <div class="demo-side-column">
+              <section class="demo-card demo-pulse-card" aria-labelledby="pulse-title">
+                <header class="demo-section-head"><div><p class="demo-eyebrow">Conversion view</p><h2 id="pulse-title">Team pulse</h2><span>Where momentum is moving.</span></div><span class="demo-live"><i></i>Live view</span></header>
+                <div class="demo-funnel-row"><span>Calls <b>→</b> CVs</span><strong>38%</strong><i><em style="width:38%"></em></i></div>
+                <div class="demo-funnel-row"><span>CVs <b>→</b> interviews</span><strong>50%</strong><i><em style="width:50%"></em></i></div>
+                <div class="demo-funnel-row"><span>Interviews <b>→</b> starts</span><strong>17%</strong><i><em style="width:17%"></em></i></div>
+                <div class="demo-pulse-foot"><span>Strongest signal</span><b>CV → interview</b></div>
+              </section>
+              <details class="demo-card demo-rules-card"><summary><span><b>How points work</b><small>Keep the game transparent</small></span><span aria-hidden="true">+</span></summary><div class="demo-rules"><div><span>Connected call</span><b>+3</b></div><div><span>Approved CV sent</span><b>+4</b></div><div><span>Interview booked</span><b>+15</b></div><div><span>Placement started</span><b>+40</b></div><p>Illustrative rules only. Managers configure the real programme inside the desk.</p></div></details>
+            </div>
+          </div>
+
+          <section class="demo-bottom-grid" id="demo-today" aria-label="Today preview and activity">
+            <article class="demo-card demo-today-card"><header class="demo-section-head"><div><p class="demo-eyebrow">Next actions</p><h2>Today queue</h2><span>Three small wins selected for Alex.</span></div><span class="demo-scope">3 open</span></header><div class="demo-queue"><div><span class="demo-queue-check">1</span><span><b>Write the call note</b><small>Northstar Health · Platform Engineer</small></span><em>+4 pts</em></div><div><span class="demo-queue-check">2</span><span><b>Send approved shortlist</b><small>Helix Labs · Clinical Implementation Lead</small></span><em>+4 pts</em></div><div><span class="demo-queue-check">3</span><span><b>Confirm interview time</b><small>Lumen Care · Product Support Specialist</small></span><em>+15 pts</em></div></div></article>
+            <article class="demo-card demo-activity-card"><header class="demo-section-head"><div><p class="demo-eyebrow">Recent movement</p><h2>Activity</h2><span>Approved events in the sample workspace.</span></div></header><div class="demo-activity"><div><span class="demo-activity-dot lime"></span><time>09:12</time><span><b>Interview booked</b><small>Platform Engineer · Northstar Health</small></span></div><div><span class="demo-activity-dot sky"></span><time>08:46</time><span><b>Candidate brief approved</b><small>Clinical Implementation Lead · Helix Labs</small></span></div><div><span class="demo-activity-dot amber"></span><time>Yesterday</time><span><b>Offer accepted</b><small>Product Support Specialist · Lumen Care</small></span></div></div></article>
+          </section>
+
+          <footer class="demo-footer"><span>Velocity Teams · Home preview</span><span>Sample workspace · No live data · No actions available</span></footer>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
