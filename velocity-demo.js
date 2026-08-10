@@ -106,14 +106,41 @@
     const picked = document.querySelector("[data-palette-picked]");
     const status = document.querySelector("[data-palette-status]");
     const pickButton = document.querySelector("[data-palette-pick]");
+    const total = document.querySelector("[data-palette-total]");
+    const customPanel = document.querySelector("[data-custom-palette]");
+    const customInputs = [...document.querySelectorAll("[data-custom-color]")];
+    const customThemeProperties = ["--d-bg", "--d-sidebar", "--d-surface", "--d-line", "--d-ink", "--d-muted", "--d-muted-2", "--d-lime", "--d-sky", "--d-violet", "--d-amber", "--d-coral", "--d-glow", "--d-glow-2", "--d-sidebar-glass", "--d-topbar", "--d-card", "--d-score-card", "--d-reward-card", "--d-accent-soft", "--d-accent-wash", "--d-accent-ink", "--d-route-bg", "--d-row-bg", "--d-track", "--d-table-text", "--d-avatar-bg", "--d-avatar-ink", "--d-notice-bg", "--d-notice-line", "--d-status-neutral", "--d-status-neutral-bg", "--d-status-green", "--d-status-green-bg", "--d-status-sky", "--d-status-sky-bg", "--d-status-amber", "--d-status-amber-bg", "--d-violet-soft", "--d-sidebar-ink", "--d-sidebar-muted", "--d-sidebar-muted-2"];
+
+    const hexRgb = (hex) => {
+      const value = hex.replace("#", "");
+      return { r: parseInt(value.slice(0, 2), 16), g: parseInt(value.slice(2, 4), 16), b: parseInt(value.slice(4, 6), 16) };
+    };
+    const rgbHex = ({ r, g, b }) => `#${[r, g, b].map((channel) => Math.round(channel).toString(16).padStart(2, "0")).join("")}`;
+    const mixHex = (first, second, amount) => {
+      const a = hexRgb(first); const b = hexRgb(second);
+      return rgbHex({ r: a.r + (b.r - a.r) * amount, g: a.g + (b.g - a.g) * amount, b: a.b + (b.b - a.b) * amount });
+    };
+    const alphaHex = (hex, opacity) => { const { r, g, b } = hexRgb(hex); return `rgba(${r},${g},${b},${opacity})`; };
+    const luminance = (hex) => {
+      const { r, g, b } = hexRgb(hex);
+      const channels = [r, g, b].map((channel) => channel / 255).map((channel) => channel <= .03928 ? channel / 12.92 : ((channel + .055) / 1.055) ** 2.4);
+      return .2126 * channels[0] + .7152 * channels[1] + .0722 * channels[2];
+    };
+    const readableOn = (hex) => luminance(hex) > .45 ? "#111111" : "#ffffff";
+    const readCustomValues = () => Object.fromEntries(customInputs.map((input) => [input.dataset.customColor, input.value.toLowerCase()]));
+    const clearCustomTheme = () => { customThemeProperties.forEach((property) => root.style.removeProperty(property)); root.style.removeProperty("color-scheme"); };
+    const updateCustomValueLabels = (values) => Object.entries(values).forEach(([key, value]) => { const label = document.querySelector(`[data-custom-value="${key}"]`); if (label) label.textContent = value.toUpperCase(); });
 
     paletteTabs.innerHTML = paletteOptions.map((option) => `<button class="demo-palette-tab" type="button" role="tab" data-palette-tab="${option.id}" aria-selected="false" aria-label="View ${option.number} ${option.name}"><b>${option.number}</b><span>${option.name}</span><i class="demo-palette-tab-colours" aria-hidden="true">${option.palette.map((colour) => `<i style="--swatch:${colour}"></i>`).join("")}</i></button>`).join("");
 
     const renderPalette = (nextIndex, announce = true) => {
       paletteIndex = (nextIndex + paletteOptions.length) % paletteOptions.length;
       const option = paletteOptions[paletteIndex];
+      clearCustomTheme();
       root.dataset.palette = option.id;
+      customPanel?.classList.remove("custom-active");
       position.textContent = option.number;
+      total.textContent = "/ 10";
       descriptor.textContent = option.descriptor;
       name.textContent = option.name;
       why.textContent = option.why;
@@ -139,16 +166,87 @@
       }
     };
 
+    const applyCustomPalette = () => {
+      const values = readCustomValues();
+      const { primary, secondary, ink, canvas } = values;
+      const canvasIsLight = luminance(canvas) > .45;
+      const surface = canvasIsLight ? mixHex(canvas, "#ffffff", .72) : mixHex(canvas, "#ffffff", .12);
+      const surfaceAlt = mixHex(surface, canvas, .35);
+      const sidebarInk = readableOn(ink);
+      const sidebarMuted = mixHex(sidebarInk, ink, .48);
+      const sidebarMuted2 = mixHex(sidebarInk, ink, .3);
+      const accentInk = readableOn(primary);
+      root.dataset.palette = "custom";
+      root.style.setProperty("color-scheme", canvasIsLight ? "light" : "dark");
+      root.style.setProperty("--d-bg", canvas);
+      root.style.setProperty("--d-sidebar", ink);
+      root.style.setProperty("--d-surface", surface);
+      root.style.setProperty("--d-line", alphaHex(ink, .17));
+      root.style.setProperty("--d-ink", ink);
+      root.style.setProperty("--d-muted", mixHex(ink, canvas, .52));
+      root.style.setProperty("--d-muted-2", mixHex(ink, canvas, .34));
+      root.style.setProperty("--d-lime", primary);
+      root.style.setProperty("--d-sky", secondary);
+      root.style.setProperty("--d-violet", secondary);
+      root.style.setProperty("--d-amber", secondary);
+      root.style.setProperty("--d-coral", primary);
+      root.style.setProperty("--d-glow", alphaHex(primary, .16));
+      root.style.setProperty("--d-glow-2", alphaHex(secondary, .1));
+      root.style.setProperty("--d-sidebar-glass", alphaHex(ink, .97));
+      root.style.setProperty("--d-topbar", alphaHex(canvas, .92));
+      root.style.setProperty("--d-card", `linear-gradient(145deg, ${surface}, ${surfaceAlt})`);
+      root.style.setProperty("--d-score-card", `linear-gradient(145deg, ${mixHex(surface, primary, .12)}, ${surface})`);
+      root.style.setProperty("--d-reward-card", `linear-gradient(155deg, ${mixHex(surface, secondary, .12)}, ${surface})`);
+      root.style.setProperty("--d-accent-soft", alphaHex(primary, .14));
+      root.style.setProperty("--d-accent-wash", alphaHex(primary, .12));
+      root.style.setProperty("--d-accent-ink", accentInk);
+      root.style.setProperty("--d-route-bg", alphaHex(ink, .06));
+      root.style.setProperty("--d-row-bg", alphaHex(ink, .05));
+      root.style.setProperty("--d-track", mixHex(canvas, ink, .2));
+      root.style.setProperty("--d-table-text", mixHex(ink, canvas, .22));
+      root.style.setProperty("--d-avatar-bg", mixHex(ink, primary, .35));
+      root.style.setProperty("--d-avatar-ink", readableOn(mixHex(ink, primary, .35)));
+      root.style.setProperty("--d-notice-bg", alphaHex(secondary, .09));
+      root.style.setProperty("--d-notice-line", alphaHex(secondary, .24));
+      root.style.setProperty("--d-status-neutral", mixHex(ink, canvas, .48));
+      root.style.setProperty("--d-status-neutral-bg", alphaHex(ink, .06));
+      root.style.setProperty("--d-status-green", readableOn(primary) === "#ffffff" ? mixHex(primary, "#ffffff", .4) : mixHex(primary, ink, .25));
+      root.style.setProperty("--d-status-green-bg", alphaHex(primary, .12));
+      root.style.setProperty("--d-status-sky", readableOn(secondary) === "#ffffff" ? mixHex(secondary, "#ffffff", .35) : mixHex(secondary, ink, .2));
+      root.style.setProperty("--d-status-sky-bg", alphaHex(secondary, .12));
+      root.style.setProperty("--d-status-amber", readableOn(secondary) === "#ffffff" ? mixHex(secondary, "#ffffff", .35) : mixHex(secondary, ink, .2));
+      root.style.setProperty("--d-status-amber-bg", alphaHex(secondary, .12));
+      root.style.setProperty("--d-violet-soft", alphaHex(secondary, .25));
+      customPanel?.classList.add("custom-active");
+      palettePicker.classList.remove("picked");
+      pickedPalette = null;
+      position.textContent = "DIY";
+      total.textContent = "/ custom";
+      descriptor.textContent = "Your own four-colour system";
+      name.textContent = "Custom palette";
+      why.textContent = "Your colours are live on the Home page now. Keep adjusting the four core tones until the dashboard feels right.";
+      current.textContent = "Custom palette";
+      swatches.innerHTML = [primary, secondary, ink, canvas].map((colour) => `<i style="--swatch:${colour}" title="${colour}" aria-label="${colour}"></i>`).join("");
+      paletteTabs.querySelectorAll("[data-palette-tab]").forEach((tab) => { tab.setAttribute("aria-selected", "false"); tab.tabIndex = -1; });
+      picked.textContent = "Viewing ";
+      const customLabel = document.createElement("b"); customLabel.textContent = "Custom palette"; picked.append(customLabel);
+      pickButton.innerHTML = "THAT ONE! <span aria-hidden=\"true\">→</span>";
+      status.textContent = "Custom palette live — change any swatch to keep exploring.";
+      updateCustomValueLabels(values);
+    };
+
     paletteTabs.querySelectorAll("[data-palette-tab]").forEach((tab) => tab.addEventListener("click", () => renderPalette(paletteOptions.findIndex((option) => option.id === tab.dataset.paletteTab))));
     document.querySelector("[data-palette-prev]")?.addEventListener("click", () => renderPalette(paletteIndex - 1));
     document.querySelector("[data-palette-next]")?.addEventListener("click", () => renderPalette(paletteIndex + 1));
+    customInputs.forEach((input) => input.addEventListener("input", applyCustomPalette));
     pickButton?.addEventListener("click", () => {
       const option = paletteOptions[paletteIndex];
-      pickedPalette = option.id;
+      const custom = root.dataset.palette === "custom";
+      pickedPalette = custom ? "custom" : option.id;
       palettePicker.classList.add("picked");
       pickButton.innerHTML = "CHOSEN ✓ <span aria-hidden=\"true\">→</span>";
-      picked.textContent = `Chosen: ${option.number} · ${option.name}`;
-      status.textContent = `Chosen: ${option.number} · ${option.name}. Tell Robert this is the one.`;
+      picked.textContent = custom ? "Chosen: Custom palette" : `Chosen: ${option.number} · ${option.name}`;
+      status.textContent = custom ? "Chosen: your custom palette. Tell Robert this is the one." : `Chosen: ${option.number} · ${option.name}. Tell Robert this is the one.`;
     });
     palettePicker.addEventListener("keydown", (event) => {
       if (event.key === "ArrowLeft") { event.preventDefault(); renderPalette(paletteIndex - 1); }

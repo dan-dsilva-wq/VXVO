@@ -52,7 +52,7 @@
           <section class="demo-palette-picker demo-card" id="demo-palette-picker" aria-labelledby="palette-picker-title" tabindex="-1">
             <div class="demo-picker-heading">
               <div><p class="demo-eyebrow">Brand direction · Pick one</p><h2 id="palette-picker-title">Which face of Velocity feels right?</h2><p>Flick through the palettes, then hit <strong>THAT ONE!</strong> when you see the one Robert would choose.</p></div>
-              <div class="demo-picker-counter" aria-live="polite"><b data-palette-position>01</b><span>/ 10</span></div>
+              <div class="demo-picker-counter" aria-live="polite"><b data-palette-position>01</b><span data-palette-total>/ 10</span></div>
             </div>
 
             <div class="demo-palette-stage" data-palette-stage>
@@ -72,6 +72,15 @@
             </div>
 
             <div class="demo-palette-controls"><button class="demo-palette-arrow" type="button" data-palette-prev aria-label="Previous colour direction">←</button><div class="demo-palette-tabs" role="tablist" aria-label="Colour directions" data-palette-tabs></div><button class="demo-palette-arrow" type="button" data-palette-next aria-label="Next colour direction">→</button></div>
+            <div class="demo-custom-palette" data-custom-palette>
+              <div class="demo-custom-heading"><div><p class="demo-eyebrow">Still not quite it?</p><strong>Make your own palette</strong><span>Change any of these four colours and the Home page updates immediately.</span></div><span class="demo-custom-live"><i aria-hidden="true"></i>Live editor</span></div>
+              <div class="demo-custom-controls">
+                <label><span><b>Primary</b><small>Brand / active</small></span><input type="color" value="#2d898d" data-custom-color="primary" aria-label="Choose primary colour" /><code data-custom-value="primary">#2D898D</code></label>
+                <label><span><b>Secondary</b><small>Support / signal</small></span><input type="color" value="#e27b2e" data-custom-color="secondary" aria-label="Choose secondary colour" /><code data-custom-value="secondary">#E27B2E</code></label>
+                <label><span><b>Ink / shell</b><small>Text / navigation</small></span><input type="color" value="#112a32" data-custom-color="ink" aria-label="Choose ink and shell colour" /><code data-custom-value="ink">#112A32</code></label>
+                <label><span><b>Canvas</b><small>Page background</small></span><input type="color" value="#eff8f7" data-custom-color="canvas" aria-label="Choose canvas colour" /><code data-custom-value="canvas">#EFF8F7</code></label>
+              </div>
+            </div>
             <p class="demo-palette-hint" data-palette-status aria-live="polite">Use the arrows, the numbered strip or swipe the palette panel.</p>
           </section>
 

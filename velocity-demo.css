@@ -177,6 +177,22 @@ body.velocity-demo { min-width: 320px; min-height: 100vh; margin: 0; color: var(
 .demo-palette-hint { margin-top: 10px; color: var(--d-muted-2); font-size: 10px; text-align: center; }
 .demo-palette-tab-colours { display: flex; justify-content: center; gap: 2px; margin-top: 1px; }
 .demo-palette-tab-colours i { display: block; width: 7px; height: 7px; background: var(--swatch); border: 1px solid rgba(255,255,255,.24); border-radius: 50%; }
+.demo-custom-palette { margin-top: 15px; padding: 12px 14px; background: var(--d-row-bg); border: 1px solid var(--d-line); border-radius: 9px; }
+.demo-custom-palette.custom-active { border-color: var(--d-lime); box-shadow: 0 0 0 2px var(--d-accent-soft); }
+.demo-custom-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+.demo-custom-heading > div { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; }
+.demo-custom-heading .demo-eyebrow { color: var(--d-lime); }
+.demo-custom-heading strong { font-size: 12px; }
+.demo-custom-heading > div > span { color: var(--d-muted); font-size: 10px; }
+.demo-custom-live { display: flex; align-items: center; gap: 6px; color: var(--d-muted-2); font: 9px "Spline", monospace; white-space: nowrap; }
+.demo-custom-live i { display: block; width: 6px; height: 6px; background: var(--d-lime); border-radius: 50%; box-shadow: 0 0 0 3px var(--d-accent-soft); }
+.demo-custom-controls { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 7px; margin-top: 10px; }
+.demo-custom-controls label { display: grid; grid-template-columns: minmax(0,1fr) 29px auto; align-items: center; gap: 7px; min-width: 0; padding: 7px 8px; background: var(--d-surface); border: 1px solid var(--d-line); border-radius: 7px; cursor: pointer; }
+.demo-custom-controls label > span { display: grid; gap: 1px; min-width: 0; }
+.demo-custom-controls label b { overflow: hidden; color: var(--d-ink); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.demo-custom-controls label small { overflow: hidden; color: var(--d-muted-2); font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.demo-custom-controls input { width: 29px; height: 27px; padding: 2px; background: var(--d-surface); border: 1px solid var(--d-line); border-radius: 5px; cursor: pointer; }
+.demo-custom-controls code { color: var(--d-muted-2); font: 8px "Spline", monospace; }
 
 /* Keep the real Home dashboard as the main event; the switcher is its control bar. */
 .demo-palette-preview { display: none; }
@@ -194,6 +210,15 @@ body.velocity-demo { min-width: 320px; min-height: 100vh; margin: 0; color: var(
   .demo-palette-copy { display: flex; padding: 0 2px; }
   .demo-palette-swatches { margin-top: 16px; }
   .demo-palette-pick { margin-top: 17px; }
+  .demo-custom-heading { display: block; }
+  .demo-custom-heading > div { display: grid; gap: 3px; }
+  .demo-custom-heading > div > span { margin-top: 2px; }
+  .demo-custom-live { margin-top: 9px; }
+  .demo-custom-controls { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+@media (max-width: 420px) {
+  .demo-custom-controls { grid-template-columns: 1fr; }
 }
 
 .demo-hero-grid { display: grid; grid-template-columns: minmax(0,1.55fr) minmax(260px,.75fr); gap: 15px; }
