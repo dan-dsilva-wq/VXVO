@@ -175,6 +175,26 @@ body.velocity-demo { min-width: 320px; min-height: 100vh; margin: 0; color: var(
 .demo-palette-tab[aria-selected="true"] { color: var(--d-ink); background: var(--d-accent-wash); border-color: var(--d-lime); box-shadow: inset 0 -3px var(--d-lime); }
 .demo-palette-tab[aria-selected="true"] b { color: var(--d-lime); }
 .demo-palette-hint { margin-top: 10px; color: var(--d-muted-2); font-size: 10px; text-align: center; }
+.demo-palette-tab-colours { display: flex; justify-content: center; gap: 2px; margin-top: 1px; }
+.demo-palette-tab-colours i { display: block; width: 7px; height: 7px; background: var(--swatch); border: 1px solid rgba(255,255,255,.24); border-radius: 50%; }
+
+/* Keep the real Home dashboard as the main event; the switcher is its control bar. */
+.demo-palette-preview { display: none; }
+.demo-palette-stage { display: block; margin-top: 20px; }
+@media (min-width: 681px) {
+  .demo-palette-copy { display: grid; grid-template-columns: minmax(170px,.65fr) minmax(0,1fr) auto; grid-template-rows: auto auto; gap: 7px 20px; align-items: center; padding: 0; }
+  .demo-palette-descriptor { grid-column: 1; grid-row: 1; }
+  .demo-palette-copy h3 { grid-column: 1; grid-row: 2; margin-top: 0; }
+  .demo-palette-copy > p[data-palette-why] { grid-column: 2; grid-row: 1 / span 2; max-width: 510px; margin: 0; }
+  .demo-palette-swatches { grid-column: 3; grid-row: 1; margin: 0; }
+  .demo-palette-pick { grid-column: 3; grid-row: 2; min-width: 145px; margin: 0; }
+  .demo-palette-picked { grid-column: 2; grid-row: 3; margin-top: 1px; }
+}
+@media (max-width: 680px) {
+  .demo-palette-copy { display: flex; padding: 0 2px; }
+  .demo-palette-swatches { margin-top: 16px; }
+  .demo-palette-pick { margin-top: 17px; }
+}
 
 .demo-hero-grid { display: grid; grid-template-columns: minmax(0,1.55fr) minmax(260px,.75fr); gap: 15px; }
 .demo-score-card { min-height: 337px; padding: 23px; background: radial-gradient(circle at 20% 10%, var(--d-accent-soft), transparent 21rem), var(--d-score-card); }
@@ -309,12 +329,6 @@ body.velocity-demo[data-palette="mono-orange"] { color-scheme: light; --d-bg:#f6
   body[data-menu-open="true"] .demo-scrim { position: fixed; inset: 0; z-index: 25; display: block; border: 0; background: rgba(1,6,12,.68); cursor: pointer; }
   .demo-hero-grid, .demo-lower-grid { grid-template-columns: 1fr; }
   .demo-side-column { grid-template-columns: 1fr 1fr; align-items: start; }
-  .demo-palette-stage { grid-template-columns: 1fr; }
-  .demo-palette-copy { display: grid; grid-template-columns: minmax(0,1fr) minmax(190px,.55fr); column-gap: 20px; align-items: center; padding: 0 5px; }
-  .demo-palette-copy h3, .demo-palette-copy > p:not(.demo-palette-descriptor):not(.demo-palette-picked), .demo-palette-descriptor { grid-column: 1; }
-  .demo-palette-swatches, .demo-palette-pick, .demo-palette-picked { grid-column: 2; }
-  .demo-palette-copy h3 { grid-row: 1 / span 2; }
-  .demo-palette-copy > p:not(.demo-palette-descriptor):not(.demo-palette-picked) { grid-row: 3; }
 }
 @media (max-width: 680px) {
   .demo-topbar { min-height: 61px; padding: 0 16px; }

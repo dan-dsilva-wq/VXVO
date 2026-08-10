@@ -107,7 +107,7 @@
     const status = document.querySelector("[data-palette-status]");
     const pickButton = document.querySelector("[data-palette-pick]");
 
-    paletteTabs.innerHTML = paletteOptions.map((option) => `<button class="demo-palette-tab" type="button" role="tab" data-palette-tab="${option.id}" aria-selected="false" aria-label="View ${option.number} ${option.name}"><b>${option.number}</b><span>${option.name}</span></button>`).join("");
+    paletteTabs.innerHTML = paletteOptions.map((option) => `<button class="demo-palette-tab" type="button" role="tab" data-palette-tab="${option.id}" aria-selected="false" aria-label="View ${option.number} ${option.name}"><b>${option.number}</b><span>${option.name}</span><i class="demo-palette-tab-colours" aria-hidden="true">${option.palette.map((colour) => `<i style="--swatch:${colour}"></i>`).join("")}</i></button>`).join("");
 
     const renderPalette = (nextIndex, announce = true) => {
       paletteIndex = (nextIndex + paletteOptions.length) % paletteOptions.length;
