@@ -6,12 +6,12 @@
     <title>Velocity Teams — Home demo</title>
     <meta name="description" content="A read-only preview of the Velocity Teams home dashboard using illustrative data." />
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="theme-color" content="#09111d" />
+    <meta name="theme-color" content="#eff8f7" />
     <link rel="canonical" href="https://vxvo.co.uk/velocity-demo.html" />
     <link rel="stylesheet" href="/velocity-demo.css" />
     <script src="/velocity-demo.js" defer></script>
   </head>
-  <body class="velocity-demo">
+  <body class="velocity-demo" data-palette="rsd-aqua">
     <a class="demo-skip" href="#demo-home">Skip to home dashboard</a>
     <div class="demo-app">
       <aside class="demo-sidebar" id="demo-sidebar" aria-label="Demo navigation">
@@ -43,11 +43,37 @@
       <div class="demo-content">
         <header class="demo-topbar">
           <div class="demo-breadcrumb"><button class="demo-menu-button" type="button" data-open-menu aria-label="Open menu">☰</button><span>Velocity Teams</span><b>/</b><strong>Home</strong></div>
-          <div class="demo-topbar-actions"><a class="demo-colour-lab-link" href="/velocity-colour-options.html">Compare colours <span aria-hidden="true">→</span></a><span class="demo-readonly"><i aria-hidden="true"></i>Read-only demo</span><span class="demo-avatar" aria-label="Alex Morgan">AM</span></div>
+          <div class="demo-topbar-actions"><a class="demo-colour-lab-link" href="#demo-palette-picker">Pick a colour <span aria-hidden="true">↓</span></a><span class="demo-readonly"><i aria-hidden="true"></i>Read-only demo</span><span class="demo-avatar" aria-label="Alex Morgan">AM</span></div>
         </header>
 
         <main class="demo-main" id="demo-home">
           <div class="demo-notice" role="note"><span aria-hidden="true">✦</span><span><strong>Illustrative demo</strong> — names, companies, numbers and activity below are fictional. No live candidate records or actions are connected.</span></div>
+
+          <section class="demo-palette-picker demo-card" id="demo-palette-picker" aria-labelledby="palette-picker-title" tabindex="-1">
+            <div class="demo-picker-heading">
+              <div><p class="demo-eyebrow">Brand direction · Pick one</p><h2 id="palette-picker-title">Which face of Velocity feels right?</h2><p>Flick through the palettes, then hit <strong>THAT ONE!</strong> when you see the one Robert would choose.</p></div>
+              <div class="demo-picker-counter" aria-live="polite"><b data-palette-position>01</b><span>/ 10</span></div>
+            </div>
+
+            <div class="demo-palette-stage" data-palette-stage>
+              <div class="demo-palette-preview" aria-label="Live palette preview">
+                <aside class="demo-palette-preview-sidebar"><div class="demo-palette-preview-logo">V</div><strong>Velocity</strong><small>Teams</small><nav><b class="active">Home</b><b>Today</b><b>Clients</b></nav><span>RSD</span></aside>
+                <div class="demo-palette-preview-main"><header><span>Velocity Teams&nbsp; / &nbsp;<b>Home</b></span><em>Read-only</em></header><div><p>VELOCITY LEAGUE</p><h3>Good morning, Alex.</h3><small>Illustrative data</small><section><article><span>Current score</span><strong>186</strong><em>#2 · 24 pts to #1</em></article><article><span>First place</span><strong>£250</strong><em>Team reward</em></article></section><ul><li><span>Calls</span><b>42</b></li><li><span>CVs</span><b>16</b></li><li><span>Interviews</span><b>8</b></li><li><span>Offers</span><b>3</b></li></ul><footer><span>Team leaderboard</span><b>Company view</b><i><em></em></i><i><em></em></i><i><em></em></i></footer></div></div>
+              </div>
+
+              <div class="demo-palette-copy">
+                <p class="demo-palette-descriptor" data-palette-descriptor>Closest to the live RSD website</p>
+                <h3 data-palette-name>RSD Aqua</h3>
+                <p data-palette-why>Aqua/teal energy with an orange action colour — the clearest RSD hand-off.</p>
+                <div class="demo-palette-swatches" data-palette-swatches aria-label="Current palette colours"></div>
+                <button class="demo-palette-pick" type="button" data-palette-pick>THAT ONE! <span aria-hidden="true">→</span></button>
+                <p class="demo-palette-picked" data-palette-picked aria-live="polite">Viewing <b data-palette-current>01 · RSD Aqua</b></p>
+              </div>
+            </div>
+
+            <div class="demo-palette-controls"><button class="demo-palette-arrow" type="button" data-palette-prev aria-label="Previous colour direction">←</button><div class="demo-palette-tabs" role="tablist" aria-label="Colour directions" data-palette-tabs></div><button class="demo-palette-arrow" type="button" data-palette-next aria-label="Next colour direction">→</button></div>
+            <p class="demo-palette-hint" data-palette-status aria-live="polite">Use the arrows, the numbered strip or swipe the large preview.</p>
+          </section>
 
           <section class="demo-heading" aria-labelledby="demo-title">
             <div><p class="demo-eyebrow">Velocity League · Home</p><h1 id="demo-title">Good morning, Alex.</h1><p>See the score, find the smallest next win, and keep the team moving.</p></div>
