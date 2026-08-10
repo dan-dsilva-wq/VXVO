@@ -126,7 +126,21 @@
       const channels = [r, g, b].map((channel) => channel / 255).map((channel) => channel <= .03928 ? channel / 12.92 : ((channel + .055) / 1.055) ** 2.4);
       return .2126 * channels[0] + .7152 * channels[1] + .0722 * channels[2];
     };
+    const contrastRatio = (first, second) => {
+      const lighter = Math.max(luminance(first), luminance(second));
+      const darker = Math.min(luminance(first), luminance(second));
+      return (lighter + .05) / (darker + .05);
+    };
     const readableOn = (hex) => luminance(hex) > .45 ? "#111111" : "#ffffff";
+    const ensureContrast = (preferred, background, minimum = 4.5) => {
+      if (contrastRatio(preferred, background) >= minimum) return preferred;
+      const target = readableOn(background);
+      for (let amount = .1; amount <= 1; amount += .1) {
+        const candidate = mixHex(preferred, target, amount);
+        if (contrastRatio(candidate, background) >= minimum) return candidate;
+      }
+      return target;
+    };
     const readCustomValues = () => Object.fromEntries(customInputs.map((input) => [input.dataset.customColor, input.value.toLowerCase()]));
     const clearCustomTheme = () => { customThemeProperties.forEach((property) => root.style.removeProperty(property)); root.style.removeProperty("color-scheme"); };
     const updateCustomValueLabels = (values) => Object.entries(values).forEach(([key, value]) => { const label = document.querySelector(`[data-custom-value="${key}"]`); if (label) label.textContent = value.toUpperCase(); });
@@ -172,6 +186,9 @@
       const canvasIsLight = luminance(canvas) > .45;
       const surface = canvasIsLight ? mixHex(canvas, "#ffffff", .72) : mixHex(canvas, "#ffffff", .12);
       const surfaceAlt = mixHex(surface, canvas, .35);
+      const contentInk = ensureContrast(ink, canvas);
+      const contentMuted = ensureContrast(mixHex(contentInk, canvas, .52), canvas, 3);
+      const contentMuted2 = ensureContrast(mixHex(contentInk, canvas, .34), canvas, 2.3);
       const sidebarInk = readableOn(ink);
       const sidebarMuted = mixHex(sidebarInk, ink, .48);
       const sidebarMuted2 = mixHex(sidebarInk, ink, .3);
@@ -182,9 +199,9 @@
       root.style.setProperty("--d-sidebar", ink);
       root.style.setProperty("--d-surface", surface);
       root.style.setProperty("--d-line", alphaHex(ink, .17));
-      root.style.setProperty("--d-ink", ink);
-      root.style.setProperty("--d-muted", mixHex(ink, canvas, .52));
-      root.style.setProperty("--d-muted-2", mixHex(ink, canvas, .34));
+      root.style.setProperty("--d-ink", contentInk);
+      root.style.setProperty("--d-muted", contentMuted);
+      root.style.setProperty("--d-muted-2", contentMuted2);
       root.style.setProperty("--d-lime", primary);
       root.style.setProperty("--d-sky", secondary);
       root.style.setProperty("--d-violet", secondary);
@@ -203,12 +220,12 @@
       root.style.setProperty("--d-route-bg", alphaHex(ink, .06));
       root.style.setProperty("--d-row-bg", alphaHex(ink, .05));
       root.style.setProperty("--d-track", mixHex(canvas, ink, .2));
-      root.style.setProperty("--d-table-text", mixHex(ink, canvas, .22));
+      root.style.setProperty("--d-table-text", mixHex(contentInk, canvas, .22));
       root.style.setProperty("--d-avatar-bg", mixHex(ink, primary, .35));
       root.style.setProperty("--d-avatar-ink", readableOn(mixHex(ink, primary, .35)));
       root.style.setProperty("--d-notice-bg", alphaHex(secondary, .09));
       root.style.setProperty("--d-notice-line", alphaHex(secondary, .24));
-      root.style.setProperty("--d-status-neutral", mixHex(ink, canvas, .48));
+      root.style.setProperty("--d-status-neutral", contentMuted);
       root.style.setProperty("--d-status-neutral-bg", alphaHex(ink, .06));
       root.style.setProperty("--d-status-green", readableOn(primary) === "#ffffff" ? mixHex(primary, "#ffffff", .4) : mixHex(primary, ink, .25));
       root.style.setProperty("--d-status-green-bg", alphaHex(primary, .12));
