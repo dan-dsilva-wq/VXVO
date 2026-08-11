@@ -37,7 +37,7 @@
   };
 
   const paletteOptions = [
-    { id: "rsd-aqua", number: "01", name: "RSD Website", descriptor: "The exact RSD Recruitment palette", why: "Blue, turquoise, orange, grey and white taken from the current RSD Recruitment website.", palette: ["#0a4c8a", "#42b2b7", "#e57812", "#bdbdb8", "#ffffff"] },
+    { id: "rsd-aqua", number: "01", name: "RSD Website", descriptor: "The exact RSD Recruitment palette", why: "Blue, turquoise, orange and grey from the current RSD Recruitment website.", palette: ["#0a4c8a", "#42b2b7", "#e57812", "#bdbdb8"] },
     { id: "harbour-blue", number: "02", name: "Harbour Blue", descriptor: "Professional, open and dependable", why: "Trusty blue structure with teal warmth and orange action cues.", palette: ["#0a4c8a", "#42b2b7", "#d17a22", "#eef4fa"] },
     { id: "deep-teal", number: "03", name: "Deep Teal", descriptor: "Confident brand colour with a calm canvas", why: "A grown-up dark teal with mint and amber signals that do not depend on red and green.", palette: ["#163d45", "#6fd0bf", "#ffb15b", "#0d2830"] },
     { id: "paper-cobalt", number: "04", name: "Paper + Cobalt", descriptor: "Editorial, bright and easy to scan", why: "A light-first direction for long desk sessions, with cobalt structure and warm action.", palette: ["#235db7", "#e38b2f", "#102a43", "#f7f5ef"] },
@@ -182,58 +182,62 @@
 
     const applyCustomPalette = () => {
       const values = readCustomValues();
-      const { primary, secondary, ink, canvas } = values;
-      const canvasIsLight = luminance(canvas) > .45;
-      const surface = canvasIsLight ? mixHex(canvas, "#ffffff", .72) : mixHex(canvas, "#ffffff", .12);
-      const surfaceAlt = mixHex(surface, canvas, .35);
+      const { primary, secondary, action, neutral } = values;
+      const canvas = "#ffffff";
+      const ink = "#1f2124";
+      const surface = mixHex("#ffffff", neutral, .12);
+      const surfaceAlt = mixHex(surface, neutral, .32);
       const contentInk = ensureContrast(ink, canvas);
-      const contentMuted = ensureContrast(mixHex(contentInk, canvas, .52), canvas, 3);
-      const contentMuted2 = ensureContrast(mixHex(contentInk, canvas, .34), canvas, 2.3);
-      const sidebarInk = readableOn(ink);
-      const sidebarMuted = mixHex(sidebarInk, ink, .48);
-      const sidebarMuted2 = mixHex(sidebarInk, ink, .3);
+      const contentMuted = ensureContrast(mixHex(contentInk, "#ffffff", .52), canvas, 3);
+      const contentMuted2 = ensureContrast(mixHex(contentInk, "#ffffff", .34), canvas, 2.3);
+      const sidebarInk = readableOn(primary);
+      const sidebarMuted = mixHex(sidebarInk, primary, .48);
+      const sidebarMuted2 = mixHex(sidebarInk, primary, .3);
       const accentInk = readableOn(primary);
       root.dataset.palette = "custom";
-      root.style.setProperty("color-scheme", canvasIsLight ? "light" : "dark");
+      root.style.setProperty("color-scheme", "light");
       root.style.setProperty("--d-bg", canvas);
-      root.style.setProperty("--d-sidebar", ink);
+      root.style.setProperty("--d-sidebar", primary);
       root.style.setProperty("--d-surface", surface);
-      root.style.setProperty("--d-line", alphaHex(ink, .17));
+      root.style.setProperty("--d-line", alphaHex(neutral, .55));
       root.style.setProperty("--d-ink", contentInk);
       root.style.setProperty("--d-muted", contentMuted);
       root.style.setProperty("--d-muted-2", contentMuted2);
       root.style.setProperty("--d-lime", primary);
       root.style.setProperty("--d-sky", secondary);
-      root.style.setProperty("--d-violet", secondary);
-      root.style.setProperty("--d-amber", secondary);
-      root.style.setProperty("--d-coral", primary);
+      root.style.setProperty("--d-violet", neutral);
+      root.style.setProperty("--d-amber", action);
+      root.style.setProperty("--d-coral", action);
       root.style.setProperty("--d-glow", alphaHex(primary, .16));
-      root.style.setProperty("--d-glow-2", alphaHex(secondary, .1));
-      root.style.setProperty("--d-sidebar-glass", alphaHex(ink, .97));
-      root.style.setProperty("--d-topbar", alphaHex(canvas, .92));
+      root.style.setProperty("--d-glow-2", alphaHex(action, .1));
+      root.style.setProperty("--d-sidebar-glass", alphaHex(primary, .98));
+      root.style.setProperty("--d-topbar", "rgba(255,255,255,.94)");
       root.style.setProperty("--d-card", `linear-gradient(145deg, ${surface}, ${surfaceAlt})`);
       root.style.setProperty("--d-score-card", `linear-gradient(145deg, ${mixHex(surface, primary, .12)}, ${surface})`);
-      root.style.setProperty("--d-reward-card", `linear-gradient(155deg, ${mixHex(surface, secondary, .12)}, ${surface})`);
+      root.style.setProperty("--d-reward-card", `linear-gradient(155deg, ${mixHex(surface, action, .12)}, ${surface})`);
       root.style.setProperty("--d-accent-soft", alphaHex(primary, .14));
       root.style.setProperty("--d-accent-wash", alphaHex(primary, .12));
       root.style.setProperty("--d-accent-ink", accentInk);
-      root.style.setProperty("--d-route-bg", alphaHex(ink, .06));
-      root.style.setProperty("--d-row-bg", alphaHex(ink, .05));
-      root.style.setProperty("--d-track", mixHex(canvas, ink, .2));
+      root.style.setProperty("--d-route-bg", alphaHex(primary, .06));
+      root.style.setProperty("--d-row-bg", alphaHex(neutral, .22));
+      root.style.setProperty("--d-track", neutral);
       root.style.setProperty("--d-table-text", mixHex(contentInk, canvas, .22));
-      root.style.setProperty("--d-avatar-bg", mixHex(ink, primary, .35));
-      root.style.setProperty("--d-avatar-ink", readableOn(mixHex(ink, primary, .35)));
+      root.style.setProperty("--d-avatar-bg", secondary);
+      root.style.setProperty("--d-avatar-ink", readableOn(secondary));
       root.style.setProperty("--d-notice-bg", alphaHex(secondary, .09));
       root.style.setProperty("--d-notice-line", alphaHex(secondary, .24));
       root.style.setProperty("--d-status-neutral", contentMuted);
-      root.style.setProperty("--d-status-neutral-bg", alphaHex(ink, .06));
-      root.style.setProperty("--d-status-green", readableOn(primary) === "#ffffff" ? mixHex(primary, "#ffffff", .4) : mixHex(primary, ink, .25));
+      root.style.setProperty("--d-status-neutral-bg", alphaHex(neutral, .2));
+      root.style.setProperty("--d-status-green", primary);
       root.style.setProperty("--d-status-green-bg", alphaHex(primary, .12));
       root.style.setProperty("--d-status-sky", readableOn(secondary) === "#ffffff" ? mixHex(secondary, "#ffffff", .35) : mixHex(secondary, ink, .2));
       root.style.setProperty("--d-status-sky-bg", alphaHex(secondary, .12));
-      root.style.setProperty("--d-status-amber", readableOn(secondary) === "#ffffff" ? mixHex(secondary, "#ffffff", .35) : mixHex(secondary, ink, .2));
-      root.style.setProperty("--d-status-amber-bg", alphaHex(secondary, .12));
-      root.style.setProperty("--d-violet-soft", alphaHex(secondary, .25));
+      root.style.setProperty("--d-status-amber", readableOn(action) === "#ffffff" ? mixHex(action, "#ffffff", .35) : mixHex(action, ink, .2));
+      root.style.setProperty("--d-status-amber-bg", alphaHex(action, .12));
+      root.style.setProperty("--d-violet-soft", alphaHex(neutral, .38));
+      root.style.setProperty("--d-sidebar-ink", sidebarInk);
+      root.style.setProperty("--d-sidebar-muted", sidebarMuted);
+      root.style.setProperty("--d-sidebar-muted-2", sidebarMuted2);
       customPanel?.classList.add("custom-active");
       palettePicker.classList.remove("picked");
       pickedPalette = null;
@@ -241,9 +245,9 @@
       total.textContent = "/ custom";
       descriptor.textContent = "Your own four-colour system";
       name.textContent = "Custom palette";
-      why.textContent = "Your colours are live on the Home page now. Keep adjusting the four core tones until the dashboard feels right.";
+      why.textContent = "Your four RSD colours are live on the Home page now. Keep adjusting blue, turquoise, orange and grey until the dashboard feels right.";
       current.textContent = "Custom palette";
-      swatches.innerHTML = [primary, secondary, ink, canvas].map((colour) => `<i style="--swatch:${colour}" title="${colour}" aria-label="${colour}"></i>`).join("");
+      swatches.innerHTML = [primary, secondary, action, neutral].map((colour) => `<i style="--swatch:${colour}" title="${colour}" aria-label="${colour}"></i>`).join("");
       paletteTabs.querySelectorAll("[data-palette-tab]").forEach((tab) => { tab.setAttribute("aria-selected", "false"); tab.tabIndex = -1; });
       picked.textContent = "Viewing ";
       const customLabel = document.createElement("b"); customLabel.textContent = "Custom palette"; picked.append(customLabel);
