@@ -37,7 +37,7 @@
   };
 
   const paletteOptions = [
-    { id: "rsd-aqua", number: "01", name: "RSD Aqua", descriptor: "Closest to the live RSD website", why: "Aqua/teal energy with an orange action colour — the clearest RSD hand-off.", palette: ["#2d898d", "#e27b2e", "#112a32", "#eff8f7"] },
+    { id: "rsd-aqua", number: "01", name: "RSD Website", descriptor: "The exact RSD Recruitment palette", why: "Blue, turquoise, orange, grey and white taken from the current RSD Recruitment website.", palette: ["#0a4c8a", "#42b2b7", "#e57812", "#bdbdb8", "#ffffff"] },
     { id: "harbour-blue", number: "02", name: "Harbour Blue", descriptor: "Professional, open and dependable", why: "Trusty blue structure with teal warmth and orange action cues.", palette: ["#0a4c8a", "#42b2b7", "#d17a22", "#eef4fa"] },
     { id: "deep-teal", number: "03", name: "Deep Teal", descriptor: "Confident brand colour with a calm canvas", why: "A grown-up dark teal with mint and amber signals that do not depend on red and green.", palette: ["#163d45", "#6fd0bf", "#ffb15b", "#0d2830"] },
     { id: "paper-cobalt", number: "04", name: "Paper + Cobalt", descriptor: "Editorial, bright and easy to scan", why: "A light-first direction for long desk sessions, with cobalt structure and warm action.", palette: ["#235db7", "#e38b2f", "#102a43", "#f7f5ef"] },
