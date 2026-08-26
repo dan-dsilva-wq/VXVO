@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vxvo.co.uk/sitemap.xml

@@ -1,43 +1,31 @@
-# VXVO — The Demonstration Room
+# VXVO board-game storefront
 
-Studio site. Static — no framework, no build step, no tracking.
+Static, framework-free site for the trade-launch phase of VXVO, an occasion-led UK board-game retailer.
 
-The site is a maker's demonstration room: every product is an exhibit, and eight of them
-genuinely run in the page as hand-written vanilla-JS miniatures (speech, WebAudio,
-procedural SVG, live-timed local search). Engraved plates state what's real vs. staged.
+## Current state
+
+- Supplier-viewable brand and retailer overview
+- Opening-range briefs with no invented products, prices or stock
+- Launch-state help, privacy, website terms, delivery/returns and accessibility pages
+- Checkout intentionally disabled until stock, fulfilment, payment and public-address gates are complete
+- No analytics, contact forms, accounts or third-party scripts
 
 ## Run locally
 
 ```powershell
-# any static server works
 python -m http.server 8347
-# or
-npx serve .
 ```
 
-## Deploy to Vercel
+Open `http://127.0.0.1:8347/`.
 
-```powershell
-npx vercel --prod
-```
+## Deployment
 
-`vercel.json` sets long-cache headers and a strict CSP (everything is same-origin:
-fonts are self-hosted, no third-party requests at all).
+The repository is connected to the existing VXVO Vercel project. Feature branches create preview deployments. Production remains on the preserved software-site commit until the owner explicitly approves the domain cutover.
 
-## Files
+## Business identity
 
-- `index.html` — the whole room (semantic, fully readable without JS)
-- `styles.css` — design system: chalk on machinists' enamel, Bricolage Grotesque + Spline Sans Mono
-- `script.js` — engine room: RUN power bus, audio bus, eight working models
-- `fonts/` — self-hosted variable woff2 (latin subsets)
-- `media/` — production screenshots (Pace, Klaro)
-- `favicon.svg` / `og.png` — square mark / social card (`og.html` is the og source; re-screenshot at 1200×630 after edits)
-- `vercel.json` — caching + CSP headers
-- `_archive/` — previous versions of the site (not linked)
-- `concepts/` — older design explorations (not linked)
+Daniel Benjamin D'silva trading as VXVO; sole trader; no company number; not VAT registered. Private residential details are intentionally excluded from the public preview.
 
-## Conventions
+## Restore point
 
-- International orange `#FF4F00` is reserved for the RUN switch and live signals — never decoration.
-- Every demo carries an honesty label: "runs in your browser" vs. "demonstration data". Keep them true.
-- Release notes live in the colophon ("Demonstration Room v1.x") — bump them when the room changes.
+The former VXVO software site remains recoverable from Git commit `9047c1baa1df8a884cbae0720b034cc552e9ce7c` and its immutable Vercel deployment. A separate verified source archive is held in the Boardgames workspace.
