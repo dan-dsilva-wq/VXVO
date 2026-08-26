@@ -22,10 +22,6 @@ Open `http://127.0.0.1:8347/`.
 
 The repository is connected to the existing VXVO Vercel project. Feature branches create preview deployments. Production remains on the preserved software-site commit until the owner explicitly approves the domain cutover.
 
-## Business identity
-
-Daniel Benjamin D'silva trading as VXVO; sole trader; no company number; not VAT registered. Private residential details are intentionally excluded from the public preview.
-
 ## Restore point
 
 The former VXVO software site remains recoverable from Git commit `9047c1baa1df8a884cbae0720b034cc552e9ce7c` and its immutable Vercel deployment. A separate verified source archive is held in the Boardgames workspace.
